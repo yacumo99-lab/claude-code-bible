@@ -427,20 +427,33 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">모델</span><span class="ct">/model — AI 모델 변경</span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
-    <div class="dtitle">각 모델의 특징</div>
-    <div class="drow"><span class="dlabel">Opus</span><span class="dval">가장 똑똑하고 능력이 높음. 복잡한 설계, 어려운 문제에 사용. 속도는 느리고 비용이 높음.</span></div>
-    <div class="drow"><span class="dlabel">Sonnet</span><span class="dval">성능과 속도의 균형. 일반적인 코딩 작업에 최적. 기본 추천 모델.</span></div>
-    <div class="drow"><span class="dlabel">Haiku</span><span class="dval">가장 빠르고 저렴. 간단한 질문, 단순 코드 수정에 사용.</span></div>
+    <div class="dtitle">모델 별칭(Alias) — 6가지 선택지</div>
+    <div class="drow"><span class="dlabel">default</span><span class="dval">구독 등급에 따라 자동 선택. Max / Team Premium → Opus, Pro / Team Standard → Sonnet</span></div>
+    <div class="drow"><span class="dlabel">sonnet</span><span class="dval">claude-sonnet-4-6. 성능·속도 균형, 일반 코딩에 최적. <strong>기본 추천</strong></span></div>
+    <div class="drow"><span class="dlabel">opus</span><span class="dval">claude-opus-4-6. 가장 강력, 복잡한 설계·추론 문제에 사용. 느리고 비용 높음</span></div>
+    <div class="drow"><span class="dlabel">haiku</span><span class="dval">claude-haiku-4-5. 가장 빠르고 저렴. 단순 질문·간단한 코드 수정에 사용</span></div>
+    <div class="drow"><span class="dlabel">sonnet[1m] <span class="bnew">NEW</span></span><span class="dval">1M 토큰 컨텍스트 윈도우 (베타). 초대형 코드베이스·방대한 문서 분석에 활용</span></div>
+    <div class="drow"><span class="dlabel">opusplan <span class="bnew">NEW</span></span><span class="dval"><strong>오퍼스플랜 모드</strong>: Plan 모드에서 Opus로 계획 수립 → 실행 단계에서 Sonnet으로 자동 전환. 품질↑ 비용↓</span></div>
   </div>
-  <div class="cmd"><span class="pr">/</span><span class="co">model claude-opus-4-6</span><button class="cpb" data-cmd="/model claude-opus-4-6" onclick="cp(this)">복사</button></div>
-  <div class="cmd"><span class="pr">/</span><span class="co">model claude-sonnet-4-6</span><button class="cpb" data-cmd="/model claude-sonnet-4-6" onclick="cp(this)">복사</button></div>
-  <div class="cmd"><span class="pr">/</span><span class="co">model claude-haiku-4-5</span><button class="cpb" data-cmd="/model claude-haiku-4-5" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">model sonnet</span><button class="cpb" data-cmd="/model sonnet" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">model opus</span><button class="cpb" data-cmd="/model opus" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">model haiku</span><button class="cpb" data-cmd="/model haiku" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">model opusplan</span><button class="cpb" data-cmd="/model opusplan" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">model sonnet[1m]</span><button class="cpb" data-cmd="/model sonnet[1m]" onclick="cp(this)">복사</button></div>
   <div class="detail">
-    <div class="dtitle">Effort Level 조절 <span class="bnew">NEW</span></div>
-    <div class="drow"><span class="dlabel">방법</span><span class="dval">/model 실행 후 모델 선택 화면에서 <strong>← → 방향키</strong>로 thinking 노력 수준 조절 가능</span></div>
-    <div class="drow"><span class="dlabel">효과</span><span class="dval">effort 높을수록 더 깊이 생각하지만 느려짐. 복잡한 수학/알고리즘 문제에 올리고, 단순 작업엔 낮추세요.</span></div>
+    <div class="dtitle">전체 모델 ID로도 지정 가능</div>
+    <div class="drow"><span class="dlabel">Opus 4.6</span><span class="dval">claude-opus-4-6</span></div>
+    <div class="drow"><span class="dlabel">Sonnet 4.6</span><span class="dval">claude-sonnet-4-6 · claude-sonnet-4-6[1m]</span></div>
+    <div class="drow"><span class="dlabel">Haiku 4.5</span><span class="dval">claude-haiku-4-5-20251001</span></div>
   </div>
-  <div class="tip">잘 모르겠으면 sonnet 쓰세요. 대부분의 코딩에 가장 적합해요!</div>
+  <div class="detail">
+    <div class="dtitle">Effort Level 조절 (← → 방향키)</div>
+    <div class="drow"><span class="dlabel">방법</span><span class="dval">/model 실행 후 모델 선택 화면에서 <strong>← → 방향키</strong>로 thinking 노력 수준을 low / medium / high로 조절</span></div>
+    <div class="drow"><span class="dlabel">low</span><span class="dval">빠른 답변. 단순 작업·단순 질문에 사용</span></div>
+    <div class="drow"><span class="dlabel">medium</span><span class="dval">기본값. 일반적인 코딩 작업에 적합</span></div>
+    <div class="drow"><span class="dlabel">high</span><span class="dval">깊은 사고. 복잡한 수학·알고리즘·아키텍처 설계 문제에 사용</span></div>
+  </div>
+  <div class="tip">모르겠으면 <strong>sonnet</strong>. Plan 모드 품질↑ 비용↓이 필요하면 <strong>opusplan</strong>이 최적!</div>
 </div>
 </div>
 
