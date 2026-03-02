@@ -381,7 +381,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/clear</span></td>
-  <td><span class="td">대화 기록 완전 초기화</span><div class="ts">새로운 작업을 시작하거나, 대화가 너무 길어졌을 때 사용. 클로드는 이전 내용을 기억 못 하게 돼요.</div><div class="tex">언제: 전혀 다른 작업 시작 시</div></td>
+  <td><span class="td">대화 기록 완전 초기화</span><div class="ts">별칭: <code>/reset</code>, <code>/new</code>. 새로운 작업 시작 시. 이전 대화는 저장돼 /resume으로 다시 불러올 수 있어요.</div><div class="tex">언제: 전혀 다른 작업 시작 시</div></td>
 </tr>
 <tr>
   <td><span class="tn">/compact</span></td>
@@ -389,7 +389,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/exit</span></td>
-  <td><span class="td">클로드 코드 종료</span><div class="ts">Ctrl+C 두 번과 동일. 작업 마칠 때 사용.</div></td>
+  <td><span class="td">클로드 코드 종료</span><div class="ts">별칭: <code>/quit</code>. Ctrl+D와 동일. 작업 마칠 때 사용.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/cost</span></td>
@@ -435,6 +435,11 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
   <div class="cmd"><span class="pr">/</span><span class="co">model claude-opus-4-6</span><button class="cpb" data-cmd="/model claude-opus-4-6" onclick="cp(this)">복사</button></div>
   <div class="cmd"><span class="pr">/</span><span class="co">model claude-sonnet-4-6</span><button class="cpb" data-cmd="/model claude-sonnet-4-6" onclick="cp(this)">복사</button></div>
   <div class="cmd"><span class="pr">/</span><span class="co">model claude-haiku-4-5</span><button class="cpb" data-cmd="/model claude-haiku-4-5" onclick="cp(this)">복사</button></div>
+  <div class="detail">
+    <div class="dtitle">Effort Level 조절 <span class="bnew">NEW</span></div>
+    <div class="drow"><span class="dlabel">방법</span><span class="dval">/model 실행 후 모델 선택 화면에서 <strong>← → 방향키</strong>로 thinking 노력 수준 조절 가능</span></div>
+    <div class="drow"><span class="dlabel">효과</span><span class="dval">effort 높을수록 더 깊이 생각하지만 느려짐. 복잡한 수학/알고리즘 문제에 올리고, 단순 작업엔 낮추세요.</span></div>
+  </div>
   <div class="tip">잘 모르겠으면 sonnet 쓰세요. 대부분의 코딩에 가장 적합해요!</div>
 </div>
 </div>
@@ -443,8 +448,10 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">수정관리</span><span class="ct">/diff · /undo — 수정 내용 확인 &amp; 되돌리기</span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
-    <div class="dtitle">/diff 란?</div>
-    <div class="drow"><span class="dlabel">기능</span><span class="dval">클로드가 파일을 수정했을 때, 수정 전과 수정 후를 비교해서 보여줘요. 빨간색 = 삭제, 초록색 = 추가.</span></div>
+    <div class="dtitle">/diff — 인터랙티브 diff 뷰어</div>
+    <div class="drow"><span class="dlabel">기능</span><span class="dval">미커밋 변경사항 + 클로드 턴별 diff를 인터랙티브하게 확인. 빨간색 = 삭제, 초록색 = 추가.</span></div>
+    <div class="drow"><span class="dlabel">← → 키</span><span class="dval">현재 git diff ↔ 클로드 각 턴별 diff 전환</span></div>
+    <div class="drow"><span class="dlabel">↑ ↓ 키</span><span class="dval">변경된 파일 목록 탐색</span></div>
   </div>
   <div class="cmd"><span class="pr">/</span><span class="co">diff</span><button class="cpb" data-cmd="/diff" onclick="cp(this)">복사</button></div>
   <div class="dv"></div>
@@ -489,28 +496,80 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
   <td><span class="td">클로드 코드 설치 상태 자가 진단</span><div class="ts">뭔가 이상하게 작동할 때 먼저 실행해보세요. 문제점을 자동으로 찾아줘요.</div></td>
 </tr>
 <tr>
-  <td><span class="tn">/bug</span></td>
-  <td><span class="td">클로드 코드 버그 신고 (Anthropic에 전송)</span><div class="ts">클로드 코드 자체에 버그가 있을 때 개발팀에 알릴 수 있어요.</div></td>
+  <td><span class="tn">/feedback</span></td>
+  <td><span class="td">클로드 코드 피드백/버그 신고</span><div class="ts">별칭: <code>/bug</code>. 클로드 코드 자체에 버그가 있을 때 개발팀에 알릴 수 있어요.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/mcp</span></td>
-  <td><span class="td">MCP 서버 연결 상태 확인</span><div class="ts">MCP 서버가 제대로 연결됐는지 확인할 때</div></td>
+  <td><span class="td">MCP 서버 연결 상태 확인 + OAuth 인증</span><div class="ts">MCP 서버 연결·인증 관리. OAuth 흐름도 여기서 처리.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/permissions</span></td>
-  <td><span class="td">현재 허용된 도구 &amp; 권한 목록</span><div class="ts">클로드가 어떤 파일을 수정/실행할 수 있는지 확인</div></td>
+  <td><span class="td">허용 도구 &amp; 권한 목록 관리</span><div class="ts">별칭: <code>/allowed-tools</code>. 클로드가 어떤 파일·도구를 쓸 수 있는지 확인 및 수정.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/terminal-setup</span></td>
-  <td><span class="td">터미널 환경 최적화 도우미</span><div class="ts">터미널 설정을 클로드 코드에 맞게 자동 설정해줘요</div></td>
+  <td><span class="td">터미널 키바인딩 설정</span><div class="ts">VS Code, Alacritty, Warp 등 기본 미지원 터미널에서 Shift+Enter 등 단축키 등록.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/keybindings</span></td>
+  <td><span class="td">커스텀 키바인딩 파일 열기 <span class="bnew">NEW</span></span><div class="ts">~/.claude/keybindings.json 파일을 열어 키 설정 직접 편집.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/vim</span></td>
-  <td><span class="td">Vim 에디터 방식으로 입력</span><div class="ts">Vim 에디터에 익숙한 개발자용. 초보자는 안 써도 돼요.</div></td>
+  <td><span class="td">Vim 에디터 모드 토글</span><div class="ts">Vim에 익숙한 개발자용. i/a/o로 INSERT, Esc로 NORMAL, h/j/k/l 이동.</div></td>
 </tr>
 <tr>
-  <td><span class="tn">/pr_comments</span></td>
-  <td><span class="td">GitHub PR 코멘트 불러오기</span><div class="ts">GitHub Pull Request의 리뷰 댓글을 클로드가 읽고 처리할 수 있어요</div></td>
+  <td><span class="tn">/pr-comments [PR]</span></td>
+  <td><span class="td">GitHub PR 코멘트 불러오기</span><div class="ts">PR 번호 또는 URL 전달. 생략하면 현재 브랜치 PR 자동 감지. gh CLI 필요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/insights</span></td>
+  <td><span class="td">세션 분석 리포트 생성 <span class="bnew">NEW</span></span><div class="ts">내 클로드 코드 사용 패턴, 자주 다루는 프로젝트 영역, 마찰 지점 등을 분석한 보고서 생성.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/security-review</span></td>
+  <td><span class="td">현재 브랜치 보안 취약점 분석 <span class="bnew">NEW</span></span><div class="ts">git diff를 분석해 인젝션·인증 문제·데이터 노출 등 보안 리스크 식별.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/sandbox</span></td>
+  <td><span class="td">샌드박스 모드 토글 <span class="bnew">NEW</span></span><div class="ts">지원 플랫폼에서만 사용 가능. 격리된 환경에서 코드 실행.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/statusline</span></td>
+  <td><span class="td">상태표시줄 설정 <span class="bnew">NEW</span></span><div class="ts">셸 프롬프트에 클로드 상태 정보 표시. 인수 없이 실행 시 자동 설정.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/desktop</span></td>
+  <td><span class="td">데스크탑 앱에서 계속하기 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/app</code>. 현재 세션을 Claude Code Desktop 앱으로 전환. macOS/Windows 전용.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/mobile</span></td>
+  <td><span class="td">모바일 앱 QR 코드 표시 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/ios</code>, <code>/android</code>. Claude 모바일 앱 다운로드 QR 코드 표시.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/remote-control</span></td>
+  <td><span class="td">원격 제어 세션 활성화 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/rc</code>. 이 세션을 claude.ai에서 원격 제어 가능하게 공개.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/install-github-app</span></td>
+  <td><span class="td">GitHub Actions 앱 설치 <span class="bnew">NEW</span></span><div class="ts">저장소에 Claude GitHub Actions 설정. 저장소 선택 및 통합 설정 안내.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/install-slack-app</span></td>
+  <td><span class="td">Slack 앱 설치 <span class="bnew">NEW</span></span><div class="ts">Claude Slack 앱 OAuth 인증 흐름 시작. 브라우저가 열림.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/upgrade</span></td>
+  <td><span class="td">요금제 업그레이드 페이지 열기 <span class="bnew">NEW</span></span><div class="ts">Pro/Max 플랜 전환 페이지. 해당 플랜 구독자에게만 표시.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/privacy-settings</span></td>
+  <td><span class="td">개인정보 설정 <span class="bnew">NEW</span></span><div class="ts">Pro/Max 플랜 전용. 내 데이터 처리 관련 설정 확인 및 변경.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/extra-usage</span></td>
+  <td><span class="td">추가 사용량 설정 <span class="bnew">NEW</span></span><div class="ts">요금 한도 도달 시 계속 작업하기 위한 추가 사용량 구성.</div></td>
 </tr>
 </table>
 </div>
@@ -522,12 +581,12 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <table class="tbl">
 <tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
 <tr>
-  <td><span class="tn">/resume</span></td>
-  <td><span class="td">이전 세션 재개 <span class="bnew">NEW</span></span><div class="ts">저장된 이전 대화 목록에서 선택해서 이어서 작업. claude -c 와 동일한 효과</div><div class="tex">= /continue</div></td>
+  <td><span class="tn">/resume [세션ID]</span></td>
+  <td><span class="td">이전 세션 재개 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/continue</code>. 인수 없이 실행하면 세션 피커 열림. ID/이름으로 바로 재개 가능.</div><div class="tex">/resume my-feature-session</div></td>
 </tr>
 <tr>
-  <td><span class="tn">/fork</span></td>
-  <td><span class="td">현재 대화 분기점 생성 <span class="bnew">NEW</span></span><div class="ts">현재 상태에서 새 대화를 분기. 같은 시작점에서 여러 방향 시도할 때</div></td>
+  <td><span class="tn">/fork [이름]</span></td>
+  <td><span class="td">현재 대화 분기점 생성 <span class="bnew">NEW</span></span><div class="ts">이름을 붙여 분기 가능. 같은 시작점에서 여러 방향을 독립적으로 시도할 때.</div><div class="tex">/fork 리팩토링-시도</div></td>
 </tr>
 <tr>
   <td><span class="tn">/rename</span></td>
@@ -539,7 +598,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/rewind</span></td>
-  <td><span class="td">대화/코드를 이전 시점으로 되돌리기 <span class="bnew">NEW</span></span><div class="ts">/undo보다 강력. Esc+Esc 단축키로도 사용 가능. = /checkpoint</div></td>
+  <td><span class="td">대화/코드를 이전 시점으로 되돌리기 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/checkpoint</code>. Esc+Esc 단축키와 동일. 대화만 롤백 or 코드만 롤백 or 둘 다 선택 가능.</div></td>
 </tr>
 </table>
 </div>
@@ -552,23 +611,29 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
 <tr>
   <td><span class="tn">/plan</span></td>
-  <td><span class="td">Plan 모드 진입 <span class="bnew">NEW</span></span><div class="ts">코드 실행 없이 계획만 세우는 모드. 큰 작업 전 검토할 때. Shift+Tab으로도 전환 가능</div></td>
+  <td><span class="td">Plan 모드 진입 <span class="bnew">NEW</span></span><div class="ts">코드 실행 없이 계획만 세우는 모드. 구현 전에 전략을 검토하고 싶을 때. <strong>Shift+Tab</strong>으로도 전환 가능. Plan 모드에서는 파일 수정·실행이 차단됨.</div></td>
 </tr>
 <tr>
-  <td><span class="tn">/fast</span></td>
-  <td><span class="td">Fast 모드 토글 <span class="bnew">NEW</span></span><div class="ts">같은 Opus 모델이지만 더 빠른 출력 속도. 토글 방식으로 켜고 끔</div></td>
+  <td><span class="tn">/fast [on|off]</span></td>
+  <td><span class="td">Fast 모드 토글 <span class="bnew">NEW</span></span><div class="ts">같은 모델이지만 더 빠른 출력. <code>/fast on</code> / <code>/fast off</code> 또는 인수 없이 토글</div></td>
 </tr>
 <tr>
   <td><span class="tn">/context</span></td>
-  <td><span class="td">현재 컨텍스트 사용량 시각화 <span class="bnew">NEW</span></span><div class="ts">남은 컨텍스트 용량 확인. /status 보다 시각적으로 표시</div></td>
+  <td><span class="td">컨텍스트 사용량 시각화 <span class="bnew">NEW</span></span><div class="ts">색상 그리드로 현재 컨텍스트 점유율 표시. 스킬이 너무 많으면 제외된 스킬 경고도 표시됨.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/copy</span></td>
-  <td><span class="td">마지막 응답 클립보드 복사 <span class="bnew">NEW</span></span><div class="ts">클로드의 마지막 응답 전체를 클립보드에 복사</div></td>
+  <td><span class="td">마지막 응답 클립보드 복사 <span class="bnew">NEW</span></span><div class="ts">코드 블록이 있으면 인터랙티브 피커로 특정 블록만 선택 복사 가능. 전체 응답도 선택 가능.</div></td>
 </tr>
 <tr>
-  <td><span class="tn">/output-style</span></td>
-  <td><span class="td">출력 스타일 변경 <span class="bnew">NEW</span></span><div class="ts">기본 / 설명형 / 학습형 스타일 중 선택</div></td>
+  <td><span class="tn">/output-style [style]</span></td>
+  <td><span class="td">출력 스타일 변경 <span class="bnew">NEW</span></span>
+    <div class="ts"><strong>Default</strong>: 일반 모드 | <strong>Explanatory</strong>: 구현 결정 이유·패턴 교육적 설명 추가 | <strong>Learning</strong>: 중간중간 직접 코드 작성 과제 출제 (학습용)</div>
+    <div class="tex">/output-style explanatory</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/compact [지시어]</span></td>
+  <td><span class="td">대화 압축 (선택적 포커스)</span><div class="ts">오래된 대화를 요약하여 컨텍스트 절약. 지시어를 넣으면 해당 주제 중심으로 압축.</div><div class="tex">/compact 인증 관련 부분만 유지해줘</div></td>
 </tr>
 </table>
 </div>
