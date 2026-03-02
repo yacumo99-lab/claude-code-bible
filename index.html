@@ -404,22 +404,20 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">파일관리</span><span class="ct">/add · /remove · /review — 파일 컨텍스트 관리</span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">PR리뷰</span><span class="ct">/review — PR 코드 품질 리뷰</span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
-    <div class="dtitle">컨텍스트(Context)란?</div>
-    <div class="drow"><span class="dlabel">의미</span><span class="dval">클로드가 현재 "보고 있는" 파일들의 목록이에요. 컨텍스트에 없는 파일은 클로드가 알 수 없어요.</span></div>
-    <div class="drow"><span class="dlabel">한계</span><span class="dval">컨텍스트에 너무 많은 파일을 넣으면 용량이 꽉 차서 오류가 날 수 있어요. 꼭 필요한 파일만!</span></div>
+    <div class="dtitle">/review 기능</div>
+    <div class="drow"><span class="dlabel">기능</span><span class="dval">GitHub PR의 코드 품질·정확성·보안·테스트 커버리지를 분석해 리뷰. PR 번호를 넘기거나 생략 시 열린 PR 목록을 표시.</span></div>
+    <div class="drow"><span class="dlabel">필요 조건</span><span class="dval">gh CLI 설치 및 인증 필요 (<code>gh auth login</code>)</span></div>
   </div>
-  <div class="lbl">파일 추가</div>
-  <div class="cmd"><span class="pr">/</span><span class="co">add <span class="va">main.py</span></span><button class="cpb" data-cmd="/add main.py" onclick="cp(this)">복사</button></div>
-  <div class="cmd"><span class="pr">/</span><span class="co">add <span class="va">src/</span>         ← 폴더 전체 추가</span><button class="cpb" data-cmd="/add src/" onclick="cp(this)">복사</button></div>
-  <div class="cmd"><span class="pr">/</span><span class="co">add <span class="va">*.py</span>          ← 확장자로 전체 추가</span><button class="cpb" data-cmd="/add *.py" onclick="cp(this)">복사</button></div>
-  <div class="lbl">추가된 파일 목록 확인</div>
+  <div class="lbl">현재 브랜치 PR 자동 감지</div>
   <div class="cmd"><span class="pr">/</span><span class="co">review</span><button class="cpb" data-cmd="/review" onclick="cp(this)">복사</button></div>
-  <div class="lbl">파일 제거</div>
-  <div class="cmd"><span class="pr">/</span><span class="co">remove <span class="va">main.py</span></span><button class="cpb" data-cmd="/remove main.py" onclick="cp(this)">복사</button></div>
-  <div class="tip">대용량 파일(이미지, 데이터셋 등)은 추가 안 하는 게 좋아요. 컨텍스트 꽉 차면 /compact 쓰세요!</div>
+  <div class="lbl">특정 PR 번호 지정</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">review <span class="va">42</span></span><button class="cpb" data-cmd="/review 42" onclick="cp(this)">복사</button></div>
+  <div class="lbl">디렉토리를 작업 경로에 추가</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">add-dir <span class="va">../lib</span></span><button class="cpb" data-cmd="/add-dir ../lib" onclick="cp(this)">복사</button></div>
+  <div class="tip">파일을 클로드에게 참조시키려면 @파일명 멘션 또는 "main.py 읽어줘"처럼 자연어로 요청하면 돼요!</div>
 </div>
 </div>
 
@@ -563,6 +561,10 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <tr>
   <td><span class="tn">/remote-control</span></td>
   <td><span class="td">원격 제어 세션 활성화 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/rc</code>. 이 세션을 claude.ai에서 원격 제어 가능하게 공개.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/remote-env</span></td>
+  <td><span class="td">Teleport 세션 기본 원격 환경 설정 <span class="bnew">NEW</span></span><div class="ts">웹 세션을 로컬 터미널로 가져올 때(teleport) 사용할 기본 원격 환경 구성.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/install-github-app</span></td>
@@ -825,12 +827,28 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
   <td><span class="td">입력창에서 줄 맨 뒤로 이동</span></td>
 </tr>
 <tr>
+  <td><span class="sk">Ctrl+D</span></td>
+  <td><span class="td">Claude Code 세션 종료</span><div class="ts">EOF 신호로 세션 종료. /exit 와 동일.</div></td>
+</tr>
+<tr>
   <td><span class="sk">Ctrl+K</span></td>
-  <td><span class="td">커서부터 줄 끝까지 삭제</span></td>
+  <td><span class="td">커서부터 줄 끝까지 삭제</span><div class="ts">삭제된 텍스트는 Ctrl+Y로 붙여넣기 가능</div></td>
 </tr>
 <tr>
   <td><span class="sk">Ctrl+U</span></td>
-  <td><span class="td">입력창 전체 내용 삭제</span><div class="ts">잘못 입력하고 처음부터 다시 쓰고 싶을 때</div></td>
+  <td><span class="td">입력창 전체 내용 삭제</span><div class="ts">잘못 입력하고 처음부터 다시 쓰고 싶을 때. 삭제된 텍스트는 Ctrl+Y로 복구 가능</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+Y</span></td>
+  <td><span class="td">삭제한 텍스트 붙여넣기</span><div class="ts">Ctrl+K / Ctrl+U 로 삭제한 텍스트를 복원</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Alt+Y</span></td>
+  <td><span class="td">붙여넣기 기록 순환</span><div class="ts">Ctrl+Y 이후 눌러서 이전에 삭제했던 텍스트들을 순서대로 순환. macOS는 Option+Y</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Alt+B / Alt+F</span></td>
+  <td><span class="td">단어 단위 커서 이동 (앞/뒤)</span><div class="ts">macOS는 Option+B / Option+F. 터미널에서 Option = Meta 설정 필요.</div></td>
 </tr>
 </table>
 </div>
@@ -842,7 +860,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <table class="tbl">
 <tr><th>단축키</th><th>기능 &amp; 상세 설명</th></tr>
 <tr>
-  <td><span class="sk">Shift+Tab</span></td>
+  <td><span class="sk">Shift+Tab · Alt+M</span></td>
   <td><span class="td">권한 모드 순환 전환</span><div class="ts">일반 → Plan 모드 → 자동승인 순서로 전환. 현재 모드가 프롬프트 옆에 표시돼요.</div></td>
 </tr>
 <tr>
@@ -880,6 +898,10 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <tr>
   <td><span class="sk">Alt+T</span></td>
   <td><span class="td">확장 사고(Thinking) 모드 토글</span><div class="ts">클로드가 답변 전에 더 깊이 생각하는 모드를 켜고 끔. 복잡한 문제에 효과적.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Option+Enter</span></td>
+  <td><span class="td">줄바꿈 (macOS 기본)</span><div class="ts">macOS에서 기본으로 동작하는 멀티라인 입력. iTerm2, Terminal.app 등.</div></td>
 </tr>
 <tr>
   <td><span class="sk">\ + Enter</span></td>
@@ -1007,14 +1029,6 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
     <div class="desc">클로드의 <strong>역할이나 행동 방식을 사전에 지정</strong></div>
     <div class="why">CLAUDE.md 없이 빠르게 역할을 지정하고 싶을 때</div>
     <div class="ex">claude --system-prompt "너는 한국어로만 답하는 파이썬 전문가야"</div>
-  </div>
-</div>
-
-<div class="fi">
-  <div class="fn">--no-markdown</div>
-  <div class="fd">
-    <div class="desc">마크다운 형식 없이 <strong>순수 텍스트로 출력</strong></div>
-    <div class="why">출력을 다른 프로그램으로 넘길 때, 마크다운이 불필요할 때</div>
   </div>
 </div>
 
@@ -1157,6 +1171,166 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
     <div class="desc">사용 가능 도구 제한</div>
     <div class="why">특정 도구만 허용해서 안전하게 실행할 때</div>
     <div class="ex">claude --tools Read,Write,Bash</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">고급플래그</span><span class="ct">고급 & 전문 플래그 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+
+<div class="fi">
+  <div class="fn">--allowedTools "패턴"</div>
+  <div class="fd">
+    <div class="desc">허가 요청 없이 자동 실행 허용할 도구 지정</div>
+    <div class="why">특정 git 명령 등 자주 쓰는 안전한 도구를 매번 승인 없이 실행할 때</div>
+    <div class="ex">claude --allowedTools "Bash(git log *)" "Bash(git diff *)" "Read"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--disallowedTools "패턴"</div>
+  <div class="fd">
+    <div class="desc">특정 도구를 컨텍스트에서 완전히 제거 (사용 불가)</div>
+    <div class="why">파일 수정을 막고 읽기 전용으로 실행할 때</div>
+    <div class="ex">claude --disallowedTools "Edit" "Write"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--disable-slash-commands</div>
+  <div class="fd">
+    <div class="desc">이 세션에서 모든 슬래시 명령어 및 스킬 비활성화</div>
+    <div class="why">보안이 중요한 자동화 환경에서 명령어 실행 차단</div>
+    <div class="ex">claude --disable-slash-commands</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--fork-session</div>
+  <div class="fd">
+    <div class="desc">재개(resume/continue) 시 원본을 유지하고 새 세션 ID로 분기</div>
+    <div class="why">기존 세션을 보존하면서 새 분기를 만들 때</div>
+    <div class="ex">claude --resume abc123 --fork-session</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--from-pr "PR번호 또는 URL"</div>
+  <div class="fd">
+    <div class="desc">특정 GitHub PR에 연결된 세션 재개</div>
+    <div class="why">PR 작업 중 중단된 세션을 해당 PR 번호로 이어서 계속</div>
+    <div class="ex">claude --from-pr 123</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--init &nbsp;/&nbsp; --init-only</div>
+  <div class="fd">
+    <div class="desc">초기화 훅(hook) 실행. --init은 이후 대화 시작, --init-only는 실행 후 종료</div>
+    <div class="why">프로젝트 초기 셋업 훅을 한 번만 실행하고 싶을 때</div>
+    <div class="ex">claude --init-only</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--no-chrome</div>
+  <div class="fd">
+    <div class="desc">이 세션에서만 Chrome 브라우저 통합 비활성화</div>
+    <div class="why">Chrome 통합이 전역 설정되어 있어도 특정 세션에서만 끌 때</div>
+    <div class="ex">claude --no-chrome</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--no-session-persistence</div>
+  <div class="fd">
+    <div class="desc">세션을 디스크에 저장하지 않음 (재개 불가)</div>
+    <div class="why">민감한 작업 세션을 기록으로 남기지 않을 때 (print 모드 전용)</div>
+    <div class="ex">claude -p --no-session-persistence "비밀 분석해줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--plugin-dir "경로"</div>
+  <div class="fd">
+    <div class="desc">이 세션에만 특정 디렉토리에서 플러그인 로드</div>
+    <div class="why">전역 설치 없이 로컬 플러그인을 임시로 테스트할 때</div>
+    <div class="ex">claude --plugin-dir ./my-plugins</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--remote "설명"</div>
+  <div class="fd">
+    <div class="desc">claude.ai에 새 웹 세션 생성 (웹에서 작업 시작)</div>
+    <div class="why">로컬이 아닌 웹 환경에서 작업을 시작할 때</div>
+    <div class="ex">claude --remote "로그인 버그 수정해줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--session-id "UUID"</div>
+  <div class="fd">
+    <div class="desc">특정 세션 ID를 대화에 사용</div>
+    <div class="why">자동화 스크립트에서 세션 ID를 직접 제어할 때</div>
+    <div class="ex">claude --session-id "550e8400-e29b-41d4-a716-446655440000"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--settings "경로 또는 JSON"</div>
+  <div class="fd">
+    <div class="desc">추가 설정 파일(JSON) 또는 JSON 문자열을 로드</div>
+    <div class="why">프로젝트별 설정 파일을 동적으로 지정할 때</div>
+    <div class="ex">claude --settings ./project-settings.json</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--strict-mcp-config</div>
+  <div class="fd">
+    <div class="desc">--mcp-config 에서 지정한 MCP 서버만 사용 (기존 설정 무시)</div>
+    <div class="why">특정 MCP 서버만 사용하는 격리 환경을 만들 때</div>
+    <div class="ex">claude --strict-mcp-config --mcp-config ./mcp.json</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--system-prompt-file "경로"</div>
+  <div class="fd">
+    <div class="desc">파일에서 시스템 프롬프트 로드 (기본 프롬프트 완전 교체, print 모드 전용)</div>
+    <div class="why">팀 공유용 프롬프트를 버전 관리 파일로 관리할 때</div>
+    <div class="ex">claude -p --system-prompt-file ./prompts/review.txt "리뷰해줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--teammate-mode auto|in-process|tmux</div>
+  <div class="fd">
+    <div class="desc">에이전트 팀 표시 방식 설정 (에이전트 팀 기능 활성화 시)</div>
+    <div class="why">in-process: 모든 팀원을 메인 터미널 내에서 실행 / tmux: 각 팀원을 별도 창에 표시</div>
+    <div class="ex">claude --teammate-mode in-process</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--teleport</div>
+  <div class="fd">
+    <div class="desc">claude.ai 웹 세션을 로컬 터미널로 가져오기</div>
+    <div class="why">웹에서 시작한 작업을 로컬 터미널 환경으로 이어서 계속</div>
+    <div class="ex">claude --teleport</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--betas "헤더명"</div>
+  <div class="fd">
+    <div class="desc">API 요청에 베타 헤더 포함 (API 키 사용자 전용)</div>
+    <div class="why">interleaved-thinking 등 베타 기능을 활성화할 때</div>
+    <div class="ex">claude --betas interleaved-thinking</div>
   </div>
 </div>
 
@@ -1553,6 +1727,58 @@ logs/      - 거래 로그
     작업 완료 후 변경 사항 요약해줘.
   </div>
   <div class="tip">에이전트에게 명확한 완료 조건을 주면 훨씬 잘 작동해요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">에이전트팀</span><span class="ct">에이전트 팀 — 여러 Claude가 협력 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">에이전트 팀이란? (실험적 기능)</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">여러 Claude Code 인스턴스가 팀을 구성. Team Lead(조율)가 Teammates(실행)에게 작업 분배. 팀원끼리 직접 메시지 주고받기 가능.</span></div>
+    <div class="drow"><span class="dlabel">서브에이전트와 차이</span><span class="dval">서브에이전트: 결과만 메인에 보고 / 에이전트 팀: 팀원끼리 직접 소통·토론 가능</span></div>
+    <div class="drow"><span class="dlabel">활성화 방법</span><span class="dval">settings.json에 <code>CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: "1"</code> 추가 (기본 비활성)</span></div>
+    <div class="drow"><span class="dlabel">적합한 경우</span><span class="dval">리서치·리뷰·버그 조사·신규 모듈 등 병렬 탐색이 필요한 작업</span></div>
+    <div class="drow"><span class="dlabel">주의사항</span><span class="dval">토큰 비용이 팀원 수만큼 증가. 순차 작업은 단일 세션이 효율적.</span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">구성 요소</div>
+    <div class="drow"><span class="dlabel">Team Lead</span><span class="dval">메인 세션. 팀 생성·작업 배분·결과 종합</span></div>
+    <div class="drow"><span class="dlabel">Teammates</span><span class="dval">독립적인 Claude Code 인스턴스 (각자 별도 컨텍스트)</span></div>
+    <div class="drow"><span class="dlabel">Shared Task List</span><span class="dval">팀 전체가 공유하는 작업 목록. 팀원이 자율적으로 작업을 가져감</span></div>
+    <div class="drow"><span class="dlabel">Mailbox</span><span class="dval">에이전트 간 직접 메시지 시스템</span></div>
+  </div>
+  <div class="lbl">설정 활성화</div>
+  <div class="fb">
+    <div class="fb-name">📄 ~/.claude/settings.json</div>
+    <div class="fb-code"><span class="kw">{</span>
+  <span class="st">"env"</span><span class="kw">:</span> <span class="kw">{</span>
+    <span class="st">"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS"</span><span class="kw">:</span> <span class="va">"1"</span>
+  <span class="kw">}</span>,
+  <span class="st">"teammateMode"</span><span class="kw">:</span> <span class="va">"in-process"</span>
+<span class="kw">}</span></div>
+  </div>
+  <div class="lbl">팀 생성 프롬프트 예시</div>
+  <div class="pb">
+    이 CLI 도구를 여러 관점에서 분석할 에이전트 팀을 만들어줘:<br>
+    - 팀원 1: UX 관점에서 분석<br>
+    - 팀원 2: 기술 아키텍처 관점<br>
+    - 팀원 3: 보안 취약점 관점<br>
+    각 팀원이 분석 후 서로 의견을 공유하고 최종 보고서 작성해줘.
+  </div>
+  <div class="detail">
+    <div class="dtitle">팀 제어 단축키 및 명령</div>
+    <div class="drow"><span class="dlabel">Shift+Down</span><span class="dval">팀원 간 이동 (in-process 모드). 마지막 팀원 다음은 Lead로 순환</span></div>
+    <div class="drow"><span class="dlabel">Ctrl+T</span><span class="dval">공유 태스크 리스트 토글</span></div>
+    <div class="drow"><span class="dlabel">--teammate-mode</span><span class="dval">auto (기본) / in-process (단일 터미널) / tmux (팀원별 별도 창)</span></div>
+    <div class="drow"><span class="dlabel">split-pane 모드</span><span class="dval">팀원마다 별도 창. tmux 또는 iTerm2 필요</span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">저장 경로</div>
+    <div class="drow"><span class="dlabel">팀 설정</span><span class="dval"><code>~/.claude/teams/{team-name}/config.json</code></span></div>
+    <div class="drow"><span class="dlabel">태스크 목록</span><span class="dval"><code>~/.claude/tasks/{team-name}/</code></span></div>
+  </div>
+  <div class="tip">3~5명이 최적. 팀원이 많을수록 비용 급증. 처음엔 리서치/리뷰 작업부터 시작해 보세요!</div>
 </div>
 </div>
 </div><!-- /s6 -->
