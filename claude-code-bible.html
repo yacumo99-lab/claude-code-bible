@@ -1,0 +1,2241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>클로드 코드 바이블</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070f;--card:#0f0f1e;--card2:#161628;
+  --a1:#ff6b35;--a2:#00d4aa;--a3:#7c5cfc;--a4:#ffbe0b;--a5:#ff4d8d;--a6:#4dabf7;
+  --text:#e8e8f2;--muted:#6e6e90;--border:#1e1e38;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;padding-bottom:60px;}
+
+/* HEADER */
+.hdr{background:linear-gradient(160deg,#0c0c22,#07070f);border-bottom:1px solid var(--border);padding:26px 16px 18px;text-align:center;position:relative;overflow:hidden;}
+.hdr::after{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:320px;height:240px;background:radial-gradient(ellipse,rgba(124,92,252,.16) 0%,transparent 70%);pointer-events:none;}
+.hdr .badge{display:inline-block;background:rgba(124,92,252,.16);border:1px solid rgba(124,92,252,.4);border-radius:20px;font-size:.68rem;font-weight:700;color:#b39dff;padding:3px 12px;margin-bottom:10px;letter-spacing:1px;}
+.hdr h1{font-size:1.65rem;font-weight:900;background:linear-gradient(135deg,#fff 0%,#b39dff 55%,var(--a3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;}
+.hdr p{color:var(--muted);font-size:.77rem;margin-top:7px;}
+.stats{display:flex;justify-content:center;gap:16px;margin-top:12px;}
+.stat{text-align:center;}
+.stat .n{font-size:1.1rem;font-weight:900;color:var(--a3);}
+.stat .l{font-size:.65rem;color:var(--muted);}
+
+/* SEARCH */
+.srch{padding:12px 14px 0;}
+.srch-box{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 14px;}
+.srch-box input{background:none;border:none;outline:none;color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:.86rem;flex:1;}
+.srch-box input::placeholder{color:var(--muted);}
+#srch-count{font-size:.7rem;color:var(--muted);white-space:nowrap;}
+
+/* TABS */
+.tabs-wrap{padding:10px 14px 0;position:sticky;top:0;background:var(--bg);z-index:100;border-bottom:1px solid var(--border);padding-bottom:10px;}
+.tabs{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;padding:6px 11px;border-radius:18px;font-size:.72rem;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:var(--card);color:var(--muted);transition:all .2s;white-space:nowrap;}
+.tab.active{border-color:var(--a3);color:#fff;background:rgba(124,92,252,.2);}
+
+/* SECTION */
+.section{display:none;padding:12px 14px 0;}
+.section.active{display:block;}
+
+/* SEC HEADER */
+.sh{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;margin-bottom:10px;}
+.sh.c1{background:rgba(255,107,53,.09);border-left:4px solid var(--a1);}
+.sh.c2{background:rgba(0,212,170,.09);border-left:4px solid var(--a2);}
+.sh.c3{background:rgba(124,92,252,.09);border-left:4px solid var(--a3);}
+.sh.c4{background:rgba(255,190,11,.09);border-left:4px solid var(--a4);}
+.sh.c5{background:rgba(255,77,141,.09);border-left:4px solid var(--a5);}
+.sh.c6{background:rgba(77,171,247,.09);border-left:4px solid var(--a6);}
+.sh .ic{font-size:1.5rem;}
+.sh h2{font-size:.95rem;font-weight:900;}
+.sh p{font-size:.7rem;color:var(--muted);margin-top:1px;}
+
+/* CARD */
+.card{background:var(--card);border-radius:12px;margin-bottom:8px;border:1px solid var(--border);overflow:hidden;}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;cursor:pointer;user-select:none;}
+.chl{display:flex;align-items:center;gap:8px;}
+.tag{font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:5px;white-space:nowrap;}
+.to{background:rgba(255,107,53,.18);color:var(--a1);}
+.tg{background:rgba(0,212,170,.15);color:var(--a2);}
+.tp{background:rgba(124,92,252,.18);color:var(--a3);}
+.ty{background:rgba(255,190,11,.15);color:var(--a4);}
+.tm{background:rgba(255,77,141,.18);color:var(--a5);}
+.tb{background:rgba(77,171,247,.18);color:var(--a6);}
+.ct{font-size:.86rem;font-weight:700;}
+.ca{color:var(--muted);font-size:.72rem;transition:transform .2s;}
+.card.open .ca{transform:rotate(180deg);}
+.cb{display:none;padding:0 13px 13px;border-top:1px solid var(--border);}
+.card.open .cb{display:block;}
+
+/* CMD */
+.cmd{background:#06060e;border:1px solid #1a1a30;border-radius:9px;padding:8px 36px 8px 11px;margin:7px 0 3px;position:relative;display:flex;align-items:flex-start;gap:6px;}
+.cmd .pr{color:var(--a2);font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;padding-top:1px;flex-shrink:0;}
+.cmd .co{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:#c8f7e4;line-height:1.65;word-break:break-all;flex:1;}
+.cmd .co .op{color:var(--a4);}
+.cmd .co .va{color:#ff9e9e;}
+.cpb{position:absolute;top:5px;right:5px;background:var(--border);border:none;border-radius:4px;color:var(--muted);font-size:.63rem;padding:2px 6px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .15s;}
+.cpb:active{background:var(--a2);color:#000;}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;margin-top:9px;}
+.tbl th{text-align:left;font-size:.67rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:5px 7px;border-bottom:1px solid var(--border);}
+.tbl td{padding:8px 7px;border-bottom:1px solid #121224;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tn{font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--a2);font-weight:600;white-space:nowrap;}
+.td{font-size:.77rem;color:var(--text);line-height:1.45;}
+.ts{font-size:.68rem;color:var(--muted);margin-top:3px;line-height:1.4;}
+.tex{font-size:.68rem;color:var(--a4);font-family:'JetBrains Mono',monospace;margin-top:3px;}
+
+/* SHORTCUT TABLE */
+.sk{font-family:'JetBrains Mono',monospace;font-size:.7rem;background:#131326;border:1px solid #232342;border-radius:4px;padding:2px 6px;color:var(--a4);white-space:nowrap;display:inline-block;}
+
+/* FLAG ITEM */
+.fi{border:1px solid var(--border);border-radius:9px;margin-bottom:7px;overflow:hidden;}
+.fn{background:var(--card2);padding:7px 11px;font-family:'JetBrains Mono',monospace;font-size:.77rem;color:var(--a4);font-weight:600;}
+.fd{padding:8px 11px;}
+.fd .desc{font-size:.78rem;line-height:1.55;}
+.fd .why{font-size:.73rem;color:var(--a2);margin-top:5px;font-weight:600;}
+.fd .ex{font-size:.7rem;color:var(--muted);margin-top:3px;font-family:'JetBrains Mono',monospace;}
+.fd .warn{font-size:.71rem;color:var(--a1);margin-top:4px;}
+
+/* LABELS & HELPERS */
+.lbl{font-size:.68rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:11px;margin-bottom:2px;}
+.desc{font-size:.79rem;color:var(--muted);line-height:1.55;margin-top:3px;}
+.desc strong{color:var(--text);}
+.tip{background:rgba(255,190,11,.07);border:1px solid rgba(255,190,11,.2);border-radius:7px;padding:7px 9px;font-size:.75rem;color:#e8d070;margin-top:7px;line-height:1.5;}
+.tip::before{content:'💡 ';}
+.warn{background:rgba(255,107,53,.07);border:1px solid rgba(255,107,53,.2);border-radius:7px;padding:7px 9px;font-size:.75rem;color:#ff9a7a;margin-top:7px;line-height:1.5;}
+.warn::before{content:'⚠️ ';}
+.info{background:rgba(77,171,247,.07);border:1px solid rgba(77,171,247,.2);border-radius:7px;padding:7px 9px;font-size:.75rem;color:#90caff;margin-top:7px;line-height:1.5;}
+.info::before{content:'ℹ️ ';}
+.ok{background:rgba(0,212,170,.07);border:1px solid rgba(0,212,170,.2);border-radius:7px;padding:7px 9px;font-size:.75rem;color:#70e8cc;margin-top:7px;line-height:1.5;}
+.ok::before{content:'✅ ';}
+.dv{height:1px;background:var(--border);margin:9px 0;}
+.ql{list-style:none;margin-top:7px;}
+.ql li{display:flex;align-items:flex-start;gap:7px;padding:6px 0;border-bottom:1px solid var(--border);font-size:.79rem;line-height:1.45;}
+.ql li:last-child{border-bottom:none;}
+.ql li .n{color:var(--a3);font-weight:700;font-size:.68rem;padding-top:2px;flex-shrink:0;min-width:14px;}
+.pb{background:#06060e;border:1px solid rgba(124,92,252,.22);border-radius:9px;padding:9px 11px;margin:7px 0;font-size:.79rem;line-height:1.65;color:#d4c5ff;}
+.pb .hl{color:var(--a2);font-weight:700;}
+.pb .ph{color:var(--a4);font-style:italic;}
+
+/* WORKFLOW */
+.ws{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.ws:last-child{border-bottom:none;}
+.wn{width:24px;height:24px;border-radius:50%;background:rgba(124,92,252,.18);border:1px solid rgba(124,92,252,.35);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:var(--a3);flex-shrink:0;}
+.wc{flex:1;}
+.wt{font-size:.82rem;font-weight:700;margin-bottom:3px;}
+.wd{font-size:.74rem;color:var(--muted);line-height:1.4;}
+
+/* FILE BLOCK */
+.fb{background:#06060e;border:1px solid #1a1a30;border-radius:9px;margin:7px 0;}
+.fb-name{padding:5px 11px;background:#101020;border-bottom:1px solid #1a1a30;font-family:'JetBrains Mono',monospace;font-size:.69rem;color:var(--muted);border-radius:9px 9px 0 0;}
+.fb-code{padding:9px 11px;font-family:'JetBrains Mono',monospace;font-size:.72rem;line-height:1.7;color:#c8e6c9;white-space:pre;overflow-x:auto;}
+.fb-code .kw{color:var(--a3);}
+.fb-code .cm{color:var(--muted);}
+.fb-code .st{color:var(--a4);}
+
+/* DETAIL BOX — 각 명령어 상세 설명 */
+.detail{background:rgba(124,92,252,.05);border:1px solid rgba(124,92,252,.15);border-radius:8px;padding:9px 11px;margin:8px 0;}
+.detail .dtitle{font-size:.73rem;font-weight:700;color:var(--a3);margin-bottom:5px;}
+.detail .drow{display:flex;gap:6px;margin-bottom:5px;font-size:.76rem;line-height:1.45;}
+.detail .drow:last-child{margin-bottom:0;}
+.detail .dlabel{color:var(--a4);font-weight:700;flex-shrink:0;min-width:44px;}
+.detail .dval{color:var(--text);}
+
+/* BADGE NEW */
+.bnew{display:inline-block;background:rgba(255,77,141,.18);border:1px solid rgba(255,77,141,.35);border-radius:4px;font-size:.58rem;font-weight:700;color:var(--a5);padding:1px 4px;margin-left:3px;vertical-align:middle;}
+
+/* HIDDEN / HIGHLIGHT */
+.hidden{display:none!important;}
+mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
+
+/* FOOTER */
+.footer{text-align:center;margin:28px 14px 0;color:var(--muted);font-size:.7rem;line-height:2;border-top:1px solid var(--border);padding-top:18px;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="badge">📚 CLAUDE CODE BIBLE v3.0</div>
+  <h1>클로드 코드<br>완전 바이블</h1>
+  <p>모든 명령어 + Skills · Hooks · 고급기능 총정리</p>
+  <div class="stats">
+    <div class="stat"><div class="n">14</div><div class="l">카테고리</div></div>
+    <div class="stat"><div class="n">120+</div><div class="l">명령어</div></div>
+    <div class="stat"><div class="n">상세</div><div class="l">설명</div></div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="srch">
+  <div class="srch-box">
+    <span>🔍</span>
+    <input type="text" id="si" placeholder="명령어 검색... (예: /clear, --model, git)" oninput="doSearch(this.value)">
+    <span id="srch-count"></span>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <div class="tab active" onclick="showTab(0)">🚀 시작</div>
+    <div class="tab" onclick="showTab(1)">💬 슬래시</div>
+    <div class="tab" onclick="showTab(2)">⌨️ 단축키</div>
+    <div class="tab" onclick="showTab(3)">🏳️ 플래그</div>
+    <div class="tab" onclick="showTab(4)">📄 CLAUDE.md</div>
+    <div class="tab" onclick="showTab(5)">🔌 MCP</div>
+    <div class="tab" onclick="showTab(6)">🤖 에이전트</div>
+    <div class="tab" onclick="showTab(7)">🔑 API키</div>
+    <div class="tab" onclick="showTab(8)">📦 Git</div>
+    <div class="tab" onclick="showTab(9)">✍️ 프롬프트</div>
+    <div class="tab" onclick="showTab(10)">🚨 에러</div>
+    <div class="tab" onclick="showTab(11)">💼 워크플로우</div>
+    <div class="tab" onclick="showTab(12)">🎯 스킬&Hooks</div>
+    <div class="tab" onclick="showTab(13)">⚡ 고급기능</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SEC 0 : 시작 / 설치
+═══════════════════════════════════════ -->
+<div class="section active" id="s0">
+<div class="sh c1"><span class="ic">🚀</span><div><h2>시작 &amp; 설치</h2><p>클로드 코드 처음 세팅부터 실행까지</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">사전준비</span><span class="ct">Node.js 설치 확인 (필수!)</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">왜 Node.js가 필요한가?</div>
+    <div class="drow"><span class="dlabel">이유</span><span class="dval">클로드 코드 자체가 Node.js 기반으로 만들어진 프로그램이에요. Node.js가 없으면 설치 자체가 안 돼요.</span></div>
+    <div class="drow"><span class="dlabel">버전</span><span class="dval">Node.js 18 이상이 필요해요. 낮은 버전이면 오류가 나요.</span></div>
+  </div>
+  <div class="lbl">현재 버전 확인</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">node --version</span><button class="cpb" onclick="cp(this,'node --version')">복사</button></div>
+  <div class="desc">v20.0.0 처럼 나오면 정상. v18 미만이면 nodejs.org에서 새 버전 설치</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">npm --version</span><button class="cpb" onclick="cp(this,'npm --version')">복사</button></div>
+  <div class="tip">Node.js 설치하면 npm은 자동으로 같이 설치돼요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">설치</span><span class="ct">클로드 코드 설치 · 업데이트 · 제거</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">npm install -g 란?</div>
+    <div class="drow"><span class="dlabel">-g</span><span class="dval">global(전역)의 줄임말. 내 컴퓨터 어디서나 claude 명령어를 쓸 수 있게 설치해줘요.</span></div>
+    <div class="drow"><span class="dlabel">@</span><span class="dval">@anthropic-ai/claude-code 는 패키지 이름이에요. npm 저장소에서 자동으로 내려받아요.</span></div>
+  </div>
+  <div class="lbl">처음 설치 (최초 1회)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">npm install -g @anthropic-ai/claude-code</span><button class="cpb" onclick="cp(this,'npm install -g @anthropic-ai/claude-code')">복사</button></div>
+  <div class="lbl">최신 버전으로 업데이트</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">npm update -g @anthropic-ai/claude-code</span><button class="cpb" onclick="cp(this,'npm update -g @anthropic-ai/claude-code')">복사</button></div>
+  <div class="desc">새 기능이 추가되거나 버그가 고쳐지면 업데이트하면 돼요.</div>
+  <div class="lbl">설치된 버전 확인</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude --version</span><button class="cpb" onclick="cp(this,'claude --version')">복사</button></div>
+  <div class="lbl">완전 제거 (삭제)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">npm uninstall -g @anthropic-ai/claude-code</span><button class="cpb" onclick="cp(this,'npm uninstall -g @anthropic-ai/claude-code')">복사</button></div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">실행</span><span class="ct">클로드 코드 실행 방법 전체</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">기본 실행 — 대화형 모드</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude</span><button class="cpb" onclick="cp(this,'claude')">복사</button></div>
+  <div class="detail">
+    <div class="dtitle">대화형 모드란?</div>
+    <div class="drow"><span class="dlabel">의미</span><span class="dval">클로드가 계속 켜져 있고, 내가 질문하면 바로 답해주는 채팅 방식이에요. 일반적으로 가장 많이 쓰는 방식.</span></div>
+  </div>
+  <div class="lbl">특정 파일을 열면서 시작</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="va">파일명.py</span></span><button class="cpb" onclick="cp(this,'claude 파일명.py')">복사</button></div>
+  <div class="desc">클로드가 시작하면서 그 파일을 자동으로 읽어둬요. "이 파일 어때?" 바로 물어볼 수 있어요.</div>
+  <div class="lbl">질문 하나만 하고 바로 종료 (비대화형)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">-p</span> <span class="va">"이 코드 분석해줘"</span></span><button class="cpb" onclick="cp(this,'claude -p \"이 코드 분석해줘\"')">복사</button></div>
+  <div class="detail">
+    <div class="dtitle">-p 옵션이란?</div>
+    <div class="drow"><span class="dlabel">의미</span><span class="dval">--print 의 줄임. 대화 창 없이 질문 하나 던지고 답 받고 바로 종료해요. 자동화 스크립트에서 많이 써요.</span></div>
+  </div>
+  <div class="lbl">파일 내용을 입력으로 넘기기</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">cat <span class="va">파일명.py</span> | claude <span class="op">-p</span> <span class="va">"설명해줘"</span></span><button class="cpb" onclick="cp(this,'cat 파일명.py | claude -p \"설명해줘\"')">복사</button></div>
+  <div class="desc">cat 으로 파일을 읽어서 | (파이프)로 클로드에 전달해요. 파일을 직접 첨부하지 않아도 돼요.</div>
+  <div class="lbl">작업 폴더 지정하면서 시작</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--cwd</span> <span class="va">/경로/폴더명</span></span><button class="cpb" onclick="cp(this,'claude --cwd /경로/폴더명')">복사</button></div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">터미널</span><span class="ct">터미널 기본 명령어 완전 정리</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">폴더 이동 (cd = Change Directory)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">cd <span class="va">폴더이름</span></span><button class="cpb" onclick="cp(this,'cd 폴더이름')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">cd ..       ← 상위 폴더(부모)로</span><button class="cpb" onclick="cp(this,'cd ..')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">cd ~        ← 홈 폴더 (내 사용자 폴더)</span><button class="cpb" onclick="cp(this,'cd ~')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">cd /        ← 루트(최상위) 폴더</span><button class="cpb" onclick="cp(this,'cd /')">복사</button></div>
+  <div class="lbl">현재 위치 확인 (pwd = Print Working Directory)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">pwd         ← 맥/리눅스</span><button class="cpb" onclick="cp(this,'pwd')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">cd          ← 윈도우 (파라미터 없이)</span><button class="cpb" onclick="cp(this,'cd')">복사</button></div>
+  <div class="lbl">파일 목록 보기 (ls / dir)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">ls          ← 맥/리눅스 기본</span><button class="cpb" onclick="cp(this,'ls')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">ls -la      ← 숨김파일 포함 + 자세한 정보</span><button class="cpb" onclick="cp(this,'ls -la')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">dir         ← 윈도우</span><button class="cpb" onclick="cp(this,'dir')">복사</button></div>
+  <div class="lbl">폴더 만들기 (mkdir = Make Directory)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">mkdir <span class="va">폴더이름</span></span><button class="cpb" onclick="cp(this,'mkdir 폴더이름')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">mkdir -p <span class="va">상위/중간/하위</span>  ← 중간 폴더도 자동 생성</span><button class="cpb" onclick="cp(this,'mkdir -p 상위/중간/하위')">복사</button></div>
+  <div class="lbl">파일 내용 출력 (cat)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">cat <span class="va">파일명.txt</span></span><button class="cpb" onclick="cp(this,'cat 파일명.txt')">복사</button></div>
+  <div class="lbl">파일 복사 / 이동 / 삭제</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">cp <span class="va">원본.py</span> <span class="va">복사본.py</span></span><button class="cpb" onclick="cp(this,'cp 원본.py 복사본.py')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">mv <span class="va">파일.py</span> <span class="va">새이름.py</span>  ← 이름 변경도 가능</span><button class="cpb" onclick="cp(this,'mv 파일.py 새이름.py')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">rm <span class="va">파일.py</span>            ← 파일 삭제</span><button class="cpb" onclick="cp(this,'rm 파일.py')">복사</button></div>
+  <div class="warn">rm 은 복구 불가! 삭제 전 확인 필수!</div>
+  <div class="lbl">파이썬 실행</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">python <span class="va">파일명.py</span>       ← 윈도우</span><button class="cpb" onclick="cp(this,'python 파일명.py')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">python3 <span class="va">파일명.py</span>      ← 맥/리눅스</span><button class="cpb" onclick="cp(this,'python3 파일명.py')">복사</button></div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">pip</span><span class="ct">Python 패키지 관리 (pip) 완전 정리</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">pip 이란?</div>
+    <div class="drow"><span class="dlabel">정의</span><span class="dval">Python Package Installer. 파이썬에서 쓸 수 있는 외부 라이브러리(패키지)를 인터넷에서 자동으로 내려받아 설치해줘요.</span></div>
+    <div class="drow"><span class="dlabel">예시</span><span class="dval">pandas (데이터 분석), requests (웹 요청), openpyxl (엑셀) 등을 pip으로 설치해요.</span></div>
+  </div>
+  <div class="cmd"><span class="pr">$</span><span class="co">pip install <span class="va">패키지이름</span></span><button class="cpb" onclick="cp(this,'pip install 패키지이름')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">pip install <span class="va">pandas requests openpyxl</span>  ← 여러 개</span><button class="cpb" onclick="cp(this,'pip install pandas requests openpyxl')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">pip install <span class="op">-r</span> requirements.txt       ← 목록 파일로 한번에</span><button class="cpb" onclick="cp(this,'pip install -r requirements.txt')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">pip install <span class="op">--upgrade</span> <span class="va">패키지이름</span>     ← 업데이트</span><button class="cpb" onclick="cp(this,'pip install --upgrade 패키지이름')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">pip uninstall <span class="va">패키지이름</span></span><button class="cpb" onclick="cp(this,'pip uninstall 패키지이름')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">pip list                       ← 설치된 패키지 전체</span><button class="cpb" onclick="cp(this,'pip list')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">pip show <span class="va">패키지이름</span>               ← 특정 패키지 상세 정보</span><button class="cpb" onclick="cp(this,'pip show 패키지이름')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">pip freeze > requirements.txt   ← 현재 패키지 목록 저장</span><button class="cpb" onclick="cp(this,'pip freeze > requirements.txt')">복사</button></div>
+  <div class="tip">pip freeze > requirements.txt 하면 나중에 pip install -r requirements.txt 로 한방에 재설치 가능!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">venv</span><span class="ct">가상환경 (venv) — 왜 써야 하나?</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">가상환경이 왜 필요한가?</div>
+    <div class="drow"><span class="dlabel">문제</span><span class="dval">프로젝트 A는 pandas 1.0, 프로젝트 B는 pandas 2.0이 필요할 때 — 둘을 같이 쓰면 충돌나요.</span></div>
+    <div class="drow"><span class="dlabel">해결</span><span class="dval">프로젝트마다 독립된 파이썬 환경(가상환경)을 만들면 각각 다른 버전을 쓸 수 있어요.</span></div>
+    <div class="drow"><span class="dlabel">비유</span><span class="dval">가상환경 = 각 프로젝트만을 위한 전용 방. 다른 방 물건이 섞이지 않아요.</span></div>
+  </div>
+  <div class="lbl">① 가상환경 만들기 (최초 1회)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">python -m venv venv</span><button class="cpb" onclick="cp(this,'python -m venv venv')">복사</button></div>
+  <div class="desc">프로젝트 폴더 안에 'venv'라는 폴더가 생겨요. 이 안에 독립된 파이썬이 들어있어요.</div>
+  <div class="lbl">② 가상환경 켜기 (매번 작업 시작할 때)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">venv\Scripts\activate          ← 윈도우</span><button class="cpb" onclick="cp(this,'venv\\Scripts\\activate')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">source venv/bin/activate       ← 맥/리눅스</span><button class="cpb" onclick="cp(this,'source venv/bin/activate')">복사</button></div>
+  <div class="ok">켜지면 터미널 앞에 (venv) 표시! 이 상태에서 pip install 해야 가상환경에 설치돼요.</div>
+  <div class="lbl">③ 가상환경 끄기</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">deactivate</span><button class="cpb" onclick="cp(this,'deactivate')">복사</button></div>
+  <div class="tip">venv/ 폴더는 .gitignore에 추가해서 깃허브에 올리지 마세요! 용량이 엄청 커요.</div>
+</div>
+</div>
+</div><!-- /s0 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 1 : 슬래시 명령어
+═══════════════════════════════════════ -->
+<div class="section" id="s1">
+<div class="sh c2"><span class="ic">💬</span><div><h2>슬래시(/) 명령어 전체</h2><p>클로드 코드 대화창 안에서 사용하는 명령어</p></div></div>
+<div class="info">이 명령어들은 클로드 코드 <strong>대화창 안</strong>에서만 작동해요. 터미널에서 입력하면 안 돼요!</div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">기본</span><span class="ct">기본 명령어들</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>명령어</th><th>설명 &amp; 상세</th></tr>
+<tr>
+  <td><span class="tn">/help</span></td>
+  <td><span class="td">사용 가능한 모든 명령어 목록 표시</span><div class="ts">처음 시작할 때 한번 입력해보면 좋아요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/clear</span></td>
+  <td><span class="td">대화 기록 완전 초기화</span><div class="ts">새로운 작업을 시작하거나, 대화가 너무 길어졌을 때 사용. 클로드는 이전 내용을 기억 못 하게 돼요.</div><div class="tex">언제: 전혀 다른 작업 시작 시</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/compact</span></td>
+  <td><span class="td">대화 내용을 요약해서 압축</span><div class="ts">/clear 와 달리 내용은 유지하되 압축해서 컨텍스트 공간을 절약해요. 대화가 길어졌는데 기억은 유지하고 싶을 때.</div><div class="tex">언제: 대화가 길어졌지만 맥락은 유지하고 싶을 때</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/exit</span></td>
+  <td><span class="td">클로드 코드 종료</span><div class="ts">Ctrl+C 두 번과 동일. 작업 마칠 때 사용.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/cost</span></td>
+  <td><span class="td">현재 대화에서 사용한 토큰 수와 예상 비용</span><div class="ts">API 키를 사용할 때 비용을 확인하고 싶으면 언제든 입력하세요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/status</span></td>
+  <td><span class="td">현재 모델, 설정, 컨텍스트 상태 전체 보기</span><div class="ts">현재 어떤 모델 쓰고 있는지, 어떤 파일 열려 있는지 확인할 수 있어요.</div></td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">파일관리</span><span class="ct">/add · /remove · /review — 파일 컨텍스트 관리</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">컨텍스트(Context)란?</div>
+    <div class="drow"><span class="dlabel">의미</span><span class="dval">클로드가 현재 "보고 있는" 파일들의 목록이에요. 컨텍스트에 없는 파일은 클로드가 알 수 없어요.</span></div>
+    <div class="drow"><span class="dlabel">한계</span><span class="dval">컨텍스트에 너무 많은 파일을 넣으면 용량이 꽉 차서 오류가 날 수 있어요. 꼭 필요한 파일만!</span></div>
+  </div>
+  <div class="lbl">파일 추가</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">add <span class="va">main.py</span></span><button class="cpb" onclick="cp(this,'/add main.py')">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">add <span class="va">src/</span>         ← 폴더 전체 추가</span><button class="cpb" onclick="cp(this,'/add src/')">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">add <span class="va">*.py</span>          ← 확장자로 전체 추가</span><button class="cpb" onclick="cp(this,'/add *.py')">복사</button></div>
+  <div class="lbl">추가된 파일 목록 확인</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">review</span><button class="cpb" onclick="cp(this,'/review')">복사</button></div>
+  <div class="lbl">파일 제거</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">remove <span class="va">main.py</span></span><button class="cpb" onclick="cp(this,'/remove main.py')">복사</button></div>
+  <div class="tip">대용량 파일(이미지, 데이터셋 등)은 추가 안 하는 게 좋아요. 컨텍스트 꽉 차면 /compact 쓰세요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">모델</span><span class="ct">/model — AI 모델 변경</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">각 모델의 특징</div>
+    <div class="drow"><span class="dlabel">Opus</span><span class="dval">가장 똑똑하고 능력이 높음. 복잡한 설계, 어려운 문제에 사용. 속도는 느리고 비용이 높음.</span></div>
+    <div class="drow"><span class="dlabel">Sonnet</span><span class="dval">성능과 속도의 균형. 일반적인 코딩 작업에 최적. 기본 추천 모델.</span></div>
+    <div class="drow"><span class="dlabel">Haiku</span><span class="dval">가장 빠르고 저렴. 간단한 질문, 단순 코드 수정에 사용.</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">model claude-opus-4-6</span><button class="cpb" onclick="cp(this,'/model claude-opus-4-6')">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">model claude-sonnet-4-6</span><button class="cpb" onclick="cp(this,'/model claude-sonnet-4-6')">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">model claude-haiku-4-5</span><button class="cpb" onclick="cp(this,'/model claude-haiku-4-5')">복사</button></div>
+  <div class="tip">잘 모르겠으면 sonnet 쓰세요. 대부분의 코딩에 가장 적합해요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">수정관리</span><span class="ct">/diff · /undo — 수정 내용 확인 &amp; 되돌리기</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">/diff 란?</div>
+    <div class="drow"><span class="dlabel">기능</span><span class="dval">클로드가 파일을 수정했을 때, 수정 전과 수정 후를 비교해서 보여줘요. 빨간색 = 삭제, 초록색 = 추가.</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">diff</span><button class="cpb" onclick="cp(this,'/diff')">복사</button></div>
+  <div class="dv"></div>
+  <div class="detail">
+    <div class="dtitle">/undo 란?</div>
+    <div class="drow"><span class="dlabel">기능</span><span class="dval">클로드가 한 마지막 파일 수정을 취소해요. 클로드가 코드를 바꿨는데 결과가 마음에 안 들 때 사용.</span></div>
+    <div class="drow"><span class="dlabel">주의</span><span class="dval">여러 번 undo를 연속으로 쓸 수는 없어요. 최근 1회만 가능.</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">undo</span><button class="cpb" onclick="cp(this,'/undo')">복사</button></div>
+  <div class="tip">클로드가 코드를 수정하기 전에 git commit 해두면 언제든 돌아올 수 있어요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">프로젝트</span><span class="ct">/init — CLAUDE.md 자동 생성</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">/init 이 하는 일</div>
+    <div class="drow"><span class="dlabel">동작</span><span class="dval">클로드가 현재 프로젝트 폴더를 분석하고, 프로젝트 구조·언어·특이사항 등을 담은 CLAUDE.md 파일을 자동으로 만들어줘요.</span></div>
+    <div class="drow"><span class="dlabel">효과</span><span class="dval">이후 클로드를 열 때마다 CLAUDE.md를 자동으로 읽어서, 매번 설명하지 않아도 프로젝트를 기억해요.</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">init</span><button class="cpb" onclick="cp(this,'/init')">복사</button></div>
+  <div class="ok">새 프로젝트 시작할 때 가장 먼저 /init 을 실행하면 좋아요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">계정/진단</span><span class="ct">/login · /logout · /doctor · /bug</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
+<tr>
+  <td><span class="tn">/login</span></td>
+  <td><span class="td">Anthropic 계정 다시 로그인</span><div class="ts">로그인 만료됐거나 계정을 바꾸고 싶을 때</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/logout</span></td>
+  <td><span class="td">현재 계정 로그아웃</span><div class="ts">다른 계정으로 바꾸거나 보안상 로그아웃할 때</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/doctor</span></td>
+  <td><span class="td">클로드 코드 설치 상태 자가 진단</span><div class="ts">뭔가 이상하게 작동할 때 먼저 실행해보세요. 문제점을 자동으로 찾아줘요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/bug</span></td>
+  <td><span class="td">클로드 코드 버그 신고 (Anthropic에 전송)</span><div class="ts">클로드 코드 자체에 버그가 있을 때 개발팀에 알릴 수 있어요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/mcp</span></td>
+  <td><span class="td">MCP 서버 연결 상태 확인</span><div class="ts">MCP 서버가 제대로 연결됐는지 확인할 때</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/permissions</span></td>
+  <td><span class="td">현재 허용된 도구 &amp; 권한 목록</span><div class="ts">클로드가 어떤 파일을 수정/실행할 수 있는지 확인</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/terminal-setup</span></td>
+  <td><span class="td">터미널 환경 최적화 도우미</span><div class="ts">터미널 설정을 클로드 코드에 맞게 자동 설정해줘요</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/vim</span></td>
+  <td><span class="td">Vim 에디터 방식으로 입력</span><div class="ts">Vim 에디터에 익숙한 개발자용. 초보자는 안 써도 돼요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/pr_comments</span></td>
+  <td><span class="td">GitHub PR 코멘트 불러오기</span><div class="ts">GitHub Pull Request의 리뷰 댓글을 클로드가 읽고 처리할 수 있어요</div></td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">세션관리</span><span class="ct">/resume · /fork · /rename · /export — 세션 관리</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
+<tr>
+  <td><span class="tn">/resume</span></td>
+  <td><span class="td">이전 세션 재개 <span class="bnew">NEW</span></span><div class="ts">저장된 이전 대화 목록에서 선택해서 이어서 작업. claude -c 와 동일한 효과</div><div class="tex">= /continue</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/fork</span></td>
+  <td><span class="td">현재 대화 분기점 생성 <span class="bnew">NEW</span></span><div class="ts">현재 상태에서 새 대화를 분기. 같은 시작점에서 여러 방향 시도할 때</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/rename</span></td>
+  <td><span class="td">세션 이름 변경 <span class="bnew">NEW</span></span><div class="ts">현재 대화 세션에 이름을 붙여 나중에 /resume으로 찾기 쉽게</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/export</span></td>
+  <td><span class="td">대화 내용 내보내기 <span class="bnew">NEW</span></span><div class="ts">현재 대화를 파일로 저장하거나 공유용으로 내보내기</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/rewind</span></td>
+  <td><span class="td">대화/코드를 이전 시점으로 되돌리기 <span class="bnew">NEW</span></span><div class="ts">/undo보다 강력. Esc+Esc 단축키로도 사용 가능. = /checkpoint</div></td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">모드전환</span><span class="ct">/plan · /fast · /context — 모드 &amp; 상태</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
+<tr>
+  <td><span class="tn">/plan</span></td>
+  <td><span class="td">Plan 모드 진입 <span class="bnew">NEW</span></span><div class="ts">코드 실행 없이 계획만 세우는 모드. 큰 작업 전 검토할 때. Shift+Tab으로도 전환 가능</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/fast</span></td>
+  <td><span class="td">Fast 모드 토글 <span class="bnew">NEW</span></span><div class="ts">같은 Opus 모델이지만 더 빠른 출력 속도. 토글 방식으로 켜고 끔</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/context</span></td>
+  <td><span class="td">현재 컨텍스트 사용량 시각화 <span class="bnew">NEW</span></span><div class="ts">남은 컨텍스트 용량 확인. /status 보다 시각적으로 표시</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/copy</span></td>
+  <td><span class="td">마지막 응답 클립보드 복사 <span class="bnew">NEW</span></span><div class="ts">클로드의 마지막 응답 전체를 클립보드에 복사</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/output-style</span></td>
+  <td><span class="td">출력 스타일 변경 <span class="bnew">NEW</span></span><div class="ts">기본 / 설명형 / 학습형 스타일 중 선택</div></td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">설정/관리</span><span class="ct">/config · /memory · /hooks · /ide · /theme</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
+<tr>
+  <td><span class="tn">/config</span></td>
+  <td><span class="td">설정 인터페이스 열기 <span class="bnew">NEW</span></span><div class="ts">claude의 각종 설정을 대화형으로 변경. = /settings</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/memory</span></td>
+  <td><span class="td">CLAUDE.md 메모리 파일 편집 <span class="bnew">NEW</span></span><div class="ts">자동 메모리 기능 설정 및 기억 내용 편집</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/hooks</span></td>
+  <td><span class="td">Hook 설정 관리 <span class="bnew">NEW</span></span><div class="ts">PreToolUse, PostToolUse 등 Hook 이벤트 대화형 설정</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/ide</span></td>
+  <td><span class="td">IDE 통합 관리 <span class="bnew">NEW</span></span><div class="ts">VS Code, JetBrains 연결 상태 확인 및 설정</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/theme</span></td>
+  <td><span class="td">색상 테마 변경 <span class="bnew">NEW</span></span><div class="ts">터미널 색상 테마 선택</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/sandbox</span></td>
+  <td><span class="td">샌드박스 모드 토글 <span class="bnew">NEW</span></span><div class="ts">격리된 환경에서 안전하게 실행</div></td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">스킬/에이전트</span><span class="ct">/skills · /agents · /tasks — 스킬 &amp; 에이전트 관리</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
+<tr>
+  <td><span class="tn">/skills</span></td>
+  <td><span class="td">사용 가능한 스킬 목록 <span class="bnew">NEW</span></span><div class="ts">설치된 스킬 목록과 설명 표시. /스킬명 으로 실행</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/agents</span></td>
+  <td><span class="td">서브에이전트 설정 관리 <span class="bnew">NEW</span></span><div class="ts">커스텀 서브에이전트 등록 및 관리</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/tasks</span></td>
+  <td><span class="td">백그라운드 작업 관리 <span class="bnew">NEW</span></span><div class="ts">실행 중인 백그라운드 태스크 목록 확인 및 종료</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/plugin</span></td>
+  <td><span class="td">플러그인 관리 <span class="bnew">NEW</span></span><div class="ts">설치된 플러그인 목록 확인 및 활성화/비활성화</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/chrome</span></td>
+  <td><span class="td">Chrome 브라우저 통합 <span class="bnew">NEW</span></span><div class="ts">Chrome 브라우저 연결로 웹 페이지 조작 가능</div></td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">정보/통계</span><span class="ct">/usage · /stats · /release-notes · /add-dir</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
+<tr>
+  <td><span class="tn">/usage</span></td>
+  <td><span class="td">사용량 및 요금제 확인 <span class="bnew">NEW</span></span><div class="ts">현재 사용량과 요금제 정보 표시</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/stats</span></td>
+  <td><span class="td">사용 통계 시각화 <span class="bnew">NEW</span></span><div class="ts">토큰 사용량, 대화 횟수 등 통계 표시</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/release-notes</span></td>
+  <td><span class="td">릴리즈 노트 보기 <span class="bnew">NEW</span></span><div class="ts">최신 버전에서 추가된 기능과 변경사항 확인</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/add-dir</span></td>
+  <td><span class="td">작업 디렉토리 추가 <span class="bnew">NEW</span></span><div class="ts">현재 프로젝트에 추가 작업 디렉토리 연결</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/feedback</span></td>
+  <td><span class="td">피드백 전송 <span class="bnew">NEW</span></span><div class="ts">Anthropic에 버그 신고 또는 기능 요청. /bug 대체</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/security-review</span></td>
+  <td><span class="td">보안 취약점 분석 <span class="bnew">NEW</span></span><div class="ts">현재 프로젝트의 보안 취약점 자동 스캔</div></td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">번들스킬</span><span class="ct">/simplify · /batch · /debug — 번들 스킬 명령어</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="info">번들 스킬은 .claude/skills/ 에 정의된 고급 자동화 스킬이에요.</div>
+<table class="tbl">
+<tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
+<tr>
+  <td><span class="tn">/simplify</span></td>
+  <td><span class="td">코드 품질/효율성 리뷰 후 자동 수정 <span class="bnew">NEW</span></span><div class="ts">코드를 분석해서 중복 제거, 가독성 향상, 최적화를 자동으로 적용</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/batch</span></td>
+  <td><span class="td">대규모 병렬 변경 <span class="bnew">NEW</span></span><div class="ts">5~30개의 Git 워크트리를 병렬로 생성해 대규모 리팩토링을 동시에 처리</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/debug</span></td>
+  <td><span class="td">디버그 로그 분석 <span class="bnew">NEW</span></span><div class="ts">에러 로그, 스택 트레이스를 분석해서 근본 원인 파악 및 수정안 제시</div></td>
+</tr>
+</table>
+  <div class="tip">스킬은 ~/.claude/skills/ (개인용) 또는 .claude/skills/ (프로젝트용)에 SKILL.md 파일로 정의해요!</div>
+</div>
+</div>
+
+</div><!-- /s1 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 2 : 단축키
+═══════════════════════════════════════ -->
+<div class="section" id="s2">
+<div class="sh c3"><span class="ic">⌨️</span><div><h2>단축키 완전 정리</h2><p>키보드로 빠르게 조작하는 방법</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">대화창</span><span class="ct">클로드 코드 대화창 핵심 단축키</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>단축키</th><th>기능 &amp; 상세 설명</th></tr>
+<tr>
+  <td><span class="sk">Enter</span></td>
+  <td><span class="td">메시지 전송</span></td>
+</tr>
+<tr>
+  <td><span class="sk">Shift+Enter</span></td>
+  <td><span class="td">줄바꿈 (전송 안 함)</span><div class="ts">긴 프롬프트를 여러 줄로 작성할 때. 조건을 여러 줄로 나눠 쓰고 싶을 때 유용해요.</span></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+C</span></td>
+  <td><span class="td">현재 작업 즉시 중단</span><div class="ts">클로드가 너무 길게 답하거나, 잘못된 방향으로 가고 있을 때 바로 멈출 수 있어요. 가장 자주 쓰는 단축키!</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+C × 2</span></td>
+  <td><span class="td">클로드 코드 완전 종료</span><div class="ts">Ctrl+C를 빠르게 두 번 누르면 프로그램이 닫혀요.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Esc</span></td>
+  <td><span class="td">입력 취소 / 현재 작업 중단 요청</span><div class="ts">클로드가 파일을 수정하려 할 때 Esc로 취소할 수 있어요.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">↑ 화살표</span></td>
+  <td><span class="td">이전에 입력한 메시지 불러오기</span><div class="ts">같은 프롬프트를 반복해서 쓸 때 매우 유용해요!</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Tab</span></td>
+  <td><span class="td">파일명/명령어 자동완성</span><div class="ts">/add ma 입력 후 Tab 누르면 → /add main.py 자동 완성. 오타 방지에 좋아요!</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+L</span></td>
+  <td><span class="td">화면 지우기 (대화 내용은 유지)</span><div class="ts">화면이 지저분할 때 깔끔하게 청소해요. 기억은 그대로!</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+A</span></td>
+  <td><span class="td">입력창에서 줄 맨 앞으로 이동</span></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+E</span></td>
+  <td><span class="td">입력창에서 줄 맨 뒤로 이동</span></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+K</span></td>
+  <td><span class="td">커서부터 줄 끝까지 삭제</span></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+U</span></td>
+  <td><span class="td">입력창 전체 내용 삭제</span><div class="ts">잘못 입력하고 처음부터 다시 쓰고 싶을 때</div></td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">신규단축키</span><span class="ct">v3.0 신규 단축키 모음 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>단축키</th><th>기능 &amp; 상세 설명</th></tr>
+<tr>
+  <td><span class="sk">Shift+Tab</span></td>
+  <td><span class="td">권한 모드 순환 전환</span><div class="ts">일반 → Plan 모드 → 자동승인 순서로 전환. 현재 모드가 프롬프트 옆에 표시돼요.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Esc+Esc</span></td>
+  <td><span class="td">리와인드 (이전 시점으로 되돌리기)</span><div class="ts">마지막 작업을 취소하고 이전 상태로 복원. /rewind 명령어와 동일.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+F</span></td>
+  <td><span class="td">백그라운드 에이전트 전체 종료</span><div class="ts">3초 내 2번 입력. 백그라운드로 실행 중인 모든 에이전트 즉시 종료.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+G</span></td>
+  <td><span class="td">기본 텍스트 에디터로 프롬프트 편집</span><div class="ts">$EDITOR 에서 긴 프롬프트 작성 후 저장하면 자동으로 전송.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+O</span></td>
+  <td><span class="td">상세 출력 토글</span><div class="ts">verbose 출력 모드를 켜고 끔. 내부 동작 확인할 때.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+B</span></td>
+  <td><span class="td">실행 중인 작업 백그라운드로 전환</span><div class="ts">현재 실행 중인 태스크를 백그라운드로 내리고 프롬프트로 복귀.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+T</span></td>
+  <td><span class="td">백그라운드 작업 목록 토글</span><div class="ts">Ctrl+B 로 내린 백그라운드 작업 목록 표시/숨기기.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+V / Cmd+V</span></td>
+  <td><span class="td">이미지 붙여넣기</span><div class="ts">클립보드의 이미지를 대화창에 바로 붙여넣어 분석 요청 가능.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Alt+P</span></td>
+  <td><span class="td">모델 전환 (프롬프트 유지)</span><div class="ts">현재 입력한 프롬프트를 유지하면서 다른 모델로 전환.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Alt+T</span></td>
+  <td><span class="td">확장 사고(Thinking) 모드 토글</span><div class="ts">클로드가 답변 전에 더 깊이 생각하는 모드를 켜고 끔. 복잡한 문제에 효과적.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">\ + Enter</span></td>
+  <td><span class="td">줄바꿈 (모든 터미널 호환)</span><div class="ts">Shift+Enter 가 안 되는 터미널에서 백슬래시 후 Enter로 줄바꿈.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+J</span></td>
+  <td><span class="td">줄바꿈 (제어 문자)</span><div class="ts">제어 문자를 이용한 줄바꿈. 일부 터미널에서 Shift+Enter 대신 사용.</div></td>
+</tr>
+</table>
+  <div class="tip">빠른 입력 접두사: <code>!</code> = 배시 직접 실행, <code>@</code> = 파일 경로 자동완성, <code>/</code> = 명령어/스킬</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">승인키</span><span class="ct">클로드 작업 승인 · 거절 키</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">언제 승인을 요청하나?</div>
+    <div class="drow"><span class="dlabel">상황</span><span class="dval">클로드가 파일을 수정하거나, 터미널 명령을 실행하거나, 패키지를 설치하려 할 때 "이거 해도 될까요?" 라고 확인을 요청해요.</span></div>
+  </div>
+<table class="tbl">
+<tr><th>키</th><th>의미 &amp; 주의사항</th></tr>
+<tr><td><span class="sk">y</span> 또는 <span class="sk">Y</span></td><td><span class="td">Yes — 이 작업 허용</span></td></tr>
+<tr><td><span class="sk">n</span> 또는 <span class="sk">N</span></td><td><span class="td">No — 이 작업 거부. 클로드에게 "안 해도 돼"</span></td></tr>
+<tr>
+  <td><span class="sk">a</span></td>
+  <td><span class="td">All — 앞으로 모든 작업 자동 허용</span><div class="ts">⚠️ 주의! 이후 확인 없이 모든 작업이 실행돼요. 신중하게!</div></td>
+</tr>
+<tr><td><span class="sk">Esc</span></td><td><span class="td">현재 작업 취소 (No와 비슷)</span></td></tr>
+</table>
+  <div class="warn">처음엔 y/n 으로 하나씩 확인하는 게 안전해요. a 키는 익숙해진 후에 사용하세요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">터미널</span><span class="ct">터미널 공통 단축키</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>단축키</th><th>기능</th></tr>
+<tr><td><span class="sk">Ctrl+C</span></td><td><span class="td">실행중인 프로그램 강제 종료</span><div class="ts">파이썬 코드가 무한루프에 빠졌을 때, 서버를 멈출 때</div></td></tr>
+<tr><td><span class="sk">Ctrl+Z</span></td><td><span class="td">프로그램 일시중단 (백그라운드)</span></td></tr>
+<tr><td><span class="sk">Ctrl+D</span></td><td><span class="td">터미널 세션 종료</span></td></tr>
+<tr><td><span class="sk">Ctrl+R</span></td><td><span class="td">이전 명령어 검색</span><div class="ts">자주 쓰는 긴 명령어를 검색해서 재사용할 때</div></td></tr>
+<tr><td><span class="sk">Ctrl+Shift+C</span></td><td><span class="td">터미널에서 텍스트 복사</span></td></tr>
+<tr><td><span class="sk">Ctrl+Shift+V</span></td><td><span class="td">터미널에 붙여넣기</span></td></tr>
+</table>
+  <div class="tip">맥에서는 Ctrl 대신 Command(⌘) 키를 쓰는 경우도 있어요!</div>
+</div>
+</div>
+</div><!-- /s2 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 3 : 플래그 옵션
+═══════════════════════════════════════ -->
+<div class="section" id="s3">
+<div class="sh c4"><span class="ic">🏳️</span><div><h2>플래그(--) 옵션 전체</h2><p>claude 명령어 뒤에 붙이는 옵션들</p></div></div>
+<div class="info">터미널에서 <strong>claude</strong> 명령어 뒤에 붙여서 동작을 바꿔요.</div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">핵심</span><span class="ct">가장 자주 쓰는 플래그들</span></div><span class="ca">▼</span></div>
+<div class="cb">
+
+<div class="fi">
+  <div class="fn">-p "프롬프트" &nbsp;또는&nbsp; --print "프롬프트"</div>
+  <div class="fd">
+    <div class="desc">대화 창 없이 <strong>한 번만 실행하고 종료</strong>하는 모드</div>
+    <div class="why">언제: 자동화 스크립트에서, 파이프라인에서, 테스트할 때</div>
+    <div class="ex">claude -p "main.py 버그 찾아줘"</div>
+    <div class="ex">cat error.log | claude -p "에러 분석해줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">-m "모델명" &nbsp;또는&nbsp; --model "모델명"</div>
+  <div class="fd">
+    <div class="desc">사용할 <strong>AI 모델을 지정</strong>해요</div>
+    <div class="why">언제: 특별히 강력한 Opus나 빠른 Haiku를 쓰고 싶을 때</div>
+    <div class="ex">claude --model claude-opus-4-6</div>
+    <div class="ex">claude -m claude-haiku-4-5</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--cwd "경로"</div>
+  <div class="fd">
+    <div class="desc"><strong>작업 기준 폴더</strong>를 지정해요. 해당 경로를 기준으로 파일을 찾아요.</div>
+    <div class="why">언제: 다른 폴더의 프로젝트를 작업할 때</div>
+    <div class="ex">claude --cwd /Users/나/프로젝트</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--auto-approve</div>
+  <div class="fd">
+    <div class="desc">파일 수정/명령 실행 시 <strong>확인 없이 자동으로 허용</strong></div>
+    <div class="why">언제: 자동화 스크립트, 반복 작업, 신뢰하는 환경에서</div>
+    <div class="ex">claude -p "코드 정리해줘" --auto-approve</div>
+    <div class="warn">⚠️ 실수로 중요 파일이 바뀔 수 있어요! 처음엔 쓰지 마세요.</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--output-format text|json|stream-json</div>
+  <div class="fd">
+    <div class="desc">출력 <strong>형식을 지정</strong>해요</div>
+    <div class="why">text: 일반 텍스트 / json: 구조화된 데이터 / stream-json: 실시간 스트리밍</div>
+    <div class="ex">claude -p "분석" --output-format json main.py</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--max-turns 숫자</div>
+  <div class="fd">
+    <div class="desc">에이전트가 실행할 <strong>최대 작업 횟수를 제한</strong></div>
+    <div class="why">언제: 무한루프 방지, 비용 제한, 작은 작업에 한정할 때</div>
+    <div class="ex">claude --max-turns 5 -p "작업해줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--system-prompt "내용"</div>
+  <div class="fd">
+    <div class="desc">클로드의 <strong>역할이나 행동 방식을 사전에 지정</strong></div>
+    <div class="why">CLAUDE.md 없이 빠르게 역할을 지정하고 싶을 때</div>
+    <div class="ex">claude --system-prompt "너는 한국어로만 답하는 파이썬 전문가야"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--no-markdown</div>
+  <div class="fd">
+    <div class="desc">마크다운 형식 없이 <strong>순수 텍스트로 출력</strong></div>
+    <div class="why">출력을 다른 프로그램으로 넘길 때, 마크다운이 불필요할 때</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">-v &nbsp;또는&nbsp; --verbose</div>
+  <div class="fd">
+    <div class="desc">내부 동작 과정을 <strong>상세하게 출력</strong> (디버그용)</div>
+    <div class="why">뭔가 이상하게 작동할 때 내부에서 무슨 일이 벌어지는지 확인</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--dangerously-skip-permissions</div>
+  <div class="fd">
+    <div class="desc">모든 권한 확인을 <strong>완전히 건너뜀</strong></div>
+    <div class="why">CI/CD 자동화 파이프라인 전용</div>
+    <div class="warn">⚠️ 절대 개인 PC에서 사용하지 마세요! 자동화 서버 전용!</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">신규플래그</span><span class="ct">v3.0 신규 추가 플래그 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+
+<div class="fi">
+  <div class="fn">-c &nbsp;또는&nbsp; --continue</div>
+  <div class="fd">
+    <div class="desc">가장 최근 세션 이어서 계속</div>
+    <div class="why">언제: 이전 대화를 이어서 작업하고 싶을 때</div>
+    <div class="ex">claude -c</div>
+    <div class="ex">claude --continue</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">-r "세션ID" &nbsp;또는&nbsp; --resume "세션ID"</div>
+  <div class="fd">
+    <div class="desc">특정 세션 ID 또는 이름으로 재개</div>
+    <div class="why">언제: 특정 예전 세션으로 돌아가고 싶을 때</div>
+    <div class="ex">claude -r "my-project-session"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--add-dir "경로"</div>
+  <div class="fd">
+    <div class="desc">추가 작업 디렉토리 지정</div>
+    <div class="why">여러 프로젝트 폴더를 동시에 컨텍스트에 포함할 때</div>
+    <div class="ex">claude --add-dir /다른/프로젝트/경로</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">-w &nbsp;또는&nbsp; --worktree</div>
+  <div class="fd">
+    <div class="desc">Git 워크트리에서 격리 실행</div>
+    <div class="why">현재 브랜치에 영향 없이 별도 환경에서 작업할 때</div>
+    <div class="ex">claude -w</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--chrome</div>
+  <div class="fd">
+    <div class="desc">Chrome 브라우저 통합 활성화</div>
+    <div class="why">웹 페이지 자동화, 스크린샷, DOM 조작이 필요할 때</div>
+    <div class="ex">claude --chrome -p "이 웹페이지 스크린샷 찍어줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--max-budget-usd 숫자</div>
+  <div class="fd">
+    <div class="desc">최대 비용 제한 (달러)</div>
+    <div class="why">비용이 지정 금액 초과 시 자동 중단. 예상치 못한 과금 방지</div>
+    <div class="ex">claude --max-budget-usd 1.0 -p "분석해줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--fallback-model "모델명"</div>
+  <div class="fd">
+    <div class="desc">기본 모델 과부하 시 대체 모델 지정</div>
+    <div class="why">Opus가 바쁠 때 Sonnet으로 자동 전환</div>
+    <div class="ex">claude --fallback-model claude-sonnet-4-6</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--permission-mode "모드"</div>
+  <div class="fd">
+    <div class="desc">권한 모드 지정 (plan 등)</div>
+    <div class="why">시작부터 Plan 모드로 실행하고 싶을 때</div>
+    <div class="ex">claude --permission-mode plan</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--mcp-config "파일경로"</div>
+  <div class="fd">
+    <div class="desc">MCP 설정 파일에서 로드</div>
+    <div class="why">프로젝트별 MCP 설정을 파일로 관리할 때</div>
+    <div class="ex">claude --mcp-config ./mcp-servers.json</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--agent "에이전트명"</div>
+  <div class="fd">
+    <div class="desc">사용할 에이전트 지정</div>
+    <div class="why">특정 역할의 커스텀 에이전트를 지정해서 실행</div>
+    <div class="ex">claude --agent code-reviewer</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--append-system-prompt "내용"</div>
+  <div class="fd">
+    <div class="desc">기존 시스템 프롬프트에 추가</div>
+    <div class="why">CLAUDE.md 내용을 유지하면서 추가 지시사항만 덧붙일 때</div>
+    <div class="ex">claude --append-system-prompt "항상 한국어로 답해"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--debug</div>
+  <div class="fd">
+    <div class="desc">디버그 모드 활성화</div>
+    <div class="why">문제 진단, 내부 동작 상세 추적</div>
+    <div class="ex">claude --debug</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--tools "도구목록"</div>
+  <div class="fd">
+    <div class="desc">사용 가능 도구 제한</div>
+    <div class="why">특정 도구만 허용해서 안전하게 실행할 때</div>
+    <div class="ex">claude --tools Read,Write,Bash</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">조합예시</span><span class="ct">플래그 실전 조합 예시</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">파일 분석 후 결과만 출력하고 종료</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">-p</span> <span class="va">"버그 찾아줘"</span> main.py</span><button class="cpb" onclick="cp(this,'claude -p \"버그 찾아줘\" main.py')">복사</button></div>
+  <div class="lbl">Opus 모델로 대화형 시작</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--model</span> <span class="va">claude-opus-4-6</span></span><button class="cpb" onclick="cp(this,'claude --model claude-opus-4-6')">복사</button></div>
+  <div class="lbl">자동승인 + 비대화형 + 최대 3회</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">-p</span> <span class="va">"테스트 작성해줘"</span> <span class="op">--auto-approve --max-turns</span> <span class="va">3</span></span><button class="cpb" onclick="cp(this,'claude -p \"테스트 작성해줘\" --auto-approve --max-turns 3')">복사</button></div>
+  <div class="lbl">역할 지정 + 대화형</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--system-prompt</span> <span class="va">"한국어로만 답해"</span></span><button class="cpb" onclick="cp(this,'claude --system-prompt \"한국어로만 답해\"')">복사</button></div>
+  <div class="lbl">이전 세션 이어서 계속</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">-c</span></span><button class="cpb" onclick="cp(this,'claude -c')">복사</button></div>
+  <div class="lbl">Git 워크트리 격리 실행</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">-w</span> <span class="op">-p</span> <span class="va">"새 기능 추가해줘"</span></span><button class="cpb" onclick="cp(this,'claude -w -p \"새 기능 추가해줘\"')">복사</button></div>
+  <div class="lbl">비용 제한 + 자동승인</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--max-budget-usd</span> <span class="va">0.5</span> <span class="op">--auto-approve</span> <span class="op">-p</span> <span class="va">"리팩토링해줘"</span></span><button class="cpb" onclick="cp(this,'claude --max-budget-usd 0.5 --auto-approve -p \"리팩토링해줘\"')">복사</button></div>
+  <div class="lbl">Plan 모드로 시작</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--permission-mode</span> <span class="va">plan</span></span><button class="cpb" onclick="cp(this,'claude --permission-mode plan')">복사</button></div>
+</div>
+</div>
+</div><!-- /s3 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 4 : CLAUDE.md
+═══════════════════════════════════════ -->
+<div class="section" id="s4">
+<div class="sh c5"><span class="ic">📄</span><div><h2>CLAUDE.md 설정</h2><p>클로드에게 프로젝트 규칙 알려주기</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">핵심개념</span><span class="ct">CLAUDE.md 란 무엇이고 왜 써야 하나?</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">CLAUDE.md 의 역할</div>
+    <div class="drow"><span class="dlabel">정의</span><span class="dval">클로드 코드가 시작할 때 자동으로 읽는 "프로젝트 설명서" 파일이에요. 마치 새 직원에게 주는 업무 매뉴얼 같은 거예요.</span></div>
+    <div class="drow"><span class="dlabel">효과</span><span class="dval">매번 "이 프로젝트는 파이썬이고, 주석은 한국어로 써줘..." 라고 설명하지 않아도 돼요. 한번 적어두면 자동으로 기억해요.</span></div>
+    <div class="drow"><span class="dlabel">팀작업</span><span class="dval">팀원들이 모두 같은 CLAUDE.md를 쓰면 클로드가 일관된 방식으로 작업해줘요.</span></div>
+  </div>
+  <div class="lbl">자동 생성 (클로드가 분석해서 초안 작성)</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">init</span><button class="cpb" onclick="cp(this,'/init')">복사</button></div>
+  <div class="tip">새 프로젝트 만들면 /init 부터! 클로드가 프로젝트를 분석해서 CLAUDE.md 초안을 자동으로 써줘요.</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">위치</span><span class="ct">CLAUDE.md 파일 위치 — 어디에 놓느냐에 따라 범위가 달라요</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>위치</th><th>적용 범위 &amp; 설명</th></tr>
+<tr>
+  <td><span class="tn">~/.claude/CLAUDE.md</span></td>
+  <td><span class="td">🌍 모든 프로젝트에 공통 적용</span><div class="ts">이름, 선호 언어, 항상 적용할 규칙 등 공통 설정을 여기에! 예: "항상 한국어 주석"</div></td>
+</tr>
+<tr>
+  <td><span class="tn">프로젝트폴더/CLAUDE.md</span></td>
+  <td><span class="td">📁 해당 프로젝트에만 적용</span><div class="ts">프로젝트별 특수 규칙, 기술 스택, API 정보 등. 가장 많이 쓰는 방식.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">src/CLAUDE.md</span></td>
+  <td><span class="td">📂 해당 하위 폴더 작업 시 추가 적용</span><div class="ts">특정 모듈만의 규칙이 있을 때.</div></td>
+</tr>
+</table>
+  <div class="info">홈 폴더 CLAUDE.md + 프로젝트 CLAUDE.md 를 함께 쓰면 최강 조합!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">작성예시</span><span class="ct">CLAUDE.md 실전 작성 예시 (바이블코딩 특화)</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<div class="fb">
+  <div class="fb-name">📄 CLAUDE.md — 주식 자동매매 프로젝트 예시</div>
+  <div class="fb-code"><span class="kw"># 주식 자동매매 시스템</span>
+
+<span class="cm">## 프로젝트 목적</span>
+한국투자증권 KIS API를 이용한 국내/해외 주식 자동매매
+
+<span class="cm">## 기술 스택</span>
+- Python 3.11
+- 주요 라이브러리: pandas, requests, schedule, python-dotenv
+- API: 한국투자증권 KIS OpenAPI v1
+
+<span class="cm">## 코딩 규칙</span>
+- 모든 주석은 반드시 한국어로 작성
+- 함수명·변수명은 영어 snake_case 사용
+- 모든 함수에 에러 처리(try-except) 포함
+- API 응답은 반드시 로그에 기록
+- 실제 매매 전 반드시 모의투자 테스트 먼저
+
+<span class="cm">## 중요 보안 규칙</span>
+- API 키, 계좌번호는 절대 코드에 직접 쓰지 말 것
+- 반드시 .env 파일에 저장 후 os.getenv()로 불러올 것
+- .env 파일은 .gitignore에 포함
+
+<span class="cm">## 폴더 구조</span>
+src/       - 메인 소스 코드
+config/    - 설정 파일
+data/      - 시세 데이터 저장
+logs/      - 거래 로그
+
+<span class="cm">## 응답 규칙</span>
+- 항상 한국어로 답변
+- 코드 수정 시 변경 이유 설명
+- 복잡한 로직은 주석으로 상세 설명</div>
+</div>
+  <div class="tip">클로드한테 "우리 프로젝트 CLAUDE.md 작성해줘" 라고 하면 이런 형태로 자동 생성해줘요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">홈설정</span><span class="ct">홈 폴더 CLAUDE.md — 모든 프로젝트 공통 설정</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<div class="fb">
+  <div class="fb-name">📄 ~/.claude/CLAUDE.md — 공통 설정</div>
+  <div class="fb-code"><span class="kw"># 공통 설정</span>
+
+<span class="cm">## 나에 대해</span>
+- 이름: 병길
+- 언어: 항상 한국어로 답변
+- 수준: 파이썬 초보자 (쉽게 설명해줘)
+
+<span class="cm">## 항상 적용할 규칙</span>
+- 주석은 항상 한국어
+- 복잡한 코드는 단계별로 설명
+- 에러 처리 항상 포함
+- API 키는 항상 .env 파일 사용</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">설정파일</span><span class="ct">settings.json — 클로드 코드 설정 파일 체계 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">설정 파일 계층 구조</div>
+    <div class="drow"><span class="dlabel">전역</span><span class="dval">~/.claude/settings.json — 모든 프로젝트에 공통 적용</span></div>
+    <div class="drow"><span class="dlabel">프로젝트</span><span class="dval">.claude/settings.json — 해당 프로젝트에만 적용 (팀 공유 가능)</span></div>
+    <div class="drow"><span class="dlabel">로컬</span><span class="dval">.claude/settings.local.json — 개인 설정 (gitignore 권장)</span></div>
+  </div>
+<div class="fb">
+  <div class="fb-name">📄 .claude/settings.json — 프로젝트 설정 예시</div>
+  <div class="fb-code">{
+  <span class="st">"permissions"</span>: {
+    <span class="st">"allow"</span>: [
+      <span class="st">"Bash(git:*)"</span>,
+      <span class="st">"Bash(npm:*)"</span>,
+      <span class="st">"Read(**)"</span>,
+      <span class="st">"Write(src/**)"</span>
+    ],
+    <span class="st">"deny"</span>: [
+      <span class="st">"Bash(rm -rf *)"</span>
+    ]
+  },
+  <span class="st">"hooks"</span>: {
+    <span class="st">"PostToolUse"</span>: [{
+      <span class="st">"matcher"</span>: <span class="st">"Write"</span>,
+      <span class="st">"hooks"</span>: [{
+        <span class="st">"type"</span>: <span class="st">"command"</span>,
+        <span class="st">"command"</span>: <span class="st">"npx prettier --write $CLAUDE_TOOL_OUTPUT"</span>
+      }]
+    }]
+  }
+}</div>
+</div>
+  <div class="tip">/config 또는 /memory 명령어로 대화형으로 설정을 편집할 수 있어요!</div>
+  <div class="info">자동 메모리: 클로드가 중요한 정보를 자동으로 ~/.claude/projects/ 에 저장해요. /memory 로 확인 및 편집 가능!</div>
+</div>
+</div>
+
+</div><!-- /s4 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 5 : MCP
+═══════════════════════════════════════ -->
+<div class="section" id="s5">
+<div class="sh c6"><span class="ic">🔌</span><div><h2>MCP 서버 연결</h2><p>클로드에 외부 도구 연결하기</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tb">개념</span><span class="ct">MCP 서버란 무엇인가?</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">MCP (Model Context Protocol) 설명</div>
+    <div class="drow"><span class="dlabel">쉬운설명</span><span class="dval">클로드에게 "손과 발"을 달아주는 것이에요. 기본 클로드는 대화만 할 수 있지만, MCP를 연결하면 실제 외부 시스템에 접근할 수 있어요.</span></div>
+    <div class="drow"><span class="dlabel">예시</span><span class="dval">파일시스템 MCP → 내 PC 파일 읽기/쓰기, GitHub MCP → 코드 저장소 관리, DB MCP → 데이터베이스 쿼리 실행</span></div>
+  </div>
+  <ul class="ql">
+    <li><span class="n">📁</span><div><strong>파일시스템</strong> — 지정된 폴더 파일 접근 권한 확장</div></li>
+    <li><span class="n">🐙</span><div><strong>GitHub</strong> — PR 생성, 코드 리뷰, 이슈 관리</div></li>
+    <li><span class="n">🗄️</span><div><strong>SQLite/DB</strong> — 데이터베이스에 직접 쿼리</div></li>
+    <li><span class="n">🔍</span><div><strong>Brave Search</strong> — 인터넷 검색 기능 추가</div></li>
+    <li><span class="n">📝</span><div><strong>Notion/Slack</strong> — 협업 도구 연동</div></li>
+  </ul>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tb">명령어</span><span class="ct">MCP 서버 추가 · 관리 명령어 전체</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">MCP 서버 추가 (기본 형식)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude mcp add <span class="va">서버이름</span> -- <span class="va">실행명령어</span></span><button class="cpb" onclick="cp(this,'claude mcp add 서버이름 -- 실행명령어')">복사</button></div>
+  <div class="detail">
+    <div class="dtitle">명령어 구조 설명</div>
+    <div class="drow"><span class="dlabel">mcp add</span><span class="dval">MCP 서버를 클로드 코드에 등록하는 명령어</span></div>
+    <div class="drow"><span class="dlabel">서버이름</span><span class="dval">내가 정하는 이름. 나중에 이 이름으로 관리해요.</span></div>
+    <div class="drow"><span class="dlabel">--</span><span class="dval">이후에 오는 것이 실행할 명령어라는 구분자</span></div>
+  </div>
+  <div class="lbl">연결된 MCP 목록 보기</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude mcp list</span><button class="cpb" onclick="cp(this,'claude mcp list')">복사</button></div>
+  <div class="lbl">특정 MCP 상세 정보</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude mcp get <span class="va">서버이름</span></span><button class="cpb" onclick="cp(this,'claude mcp get 서버이름')">복사</button></div>
+  <div class="lbl">MCP 서버 삭제</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude mcp remove <span class="va">서버이름</span></span><button class="cpb" onclick="cp(this,'claude mcp remove 서버이름')">복사</button></div>
+  <div class="lbl">대화창 안에서 연결 상태 확인</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">mcp</span><button class="cpb" onclick="cp(this,'/mcp')">복사</button></div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tb">실전</span><span class="ct">자주 쓰는 MCP 서버 연결 예시</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">파일시스템 MCP — 내 폴더 접근 권한</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude mcp add filesystem -- npx <span class="op">-y</span> @modelcontextprotocol/server-filesystem <span class="va">/내폴더경로</span></span><button class="cpb" onclick="cp(this,'claude mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /내폴더경로')">복사</button></div>
+  <div class="lbl">GitHub MCP — 저장소 관리</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude mcp add github -- npx <span class="op">-y</span> @modelcontextprotocol/server-github</span><button class="cpb" onclick="cp(this,'claude mcp add github -- npx -y @modelcontextprotocol/server-github')">복사</button></div>
+  <div class="lbl">SQLite MCP — 데이터베이스 연결</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude mcp add sqlite -- npx <span class="op">-y</span> @modelcontextprotocol/server-sqlite <span class="va">내데이터베이스.db</span></span><button class="cpb" onclick="cp(this,'claude mcp add sqlite -- npx -y @modelcontextprotocol/server-sqlite 내데이터베이스.db')">복사</button></div>
+  <div class="lbl">Brave Search MCP — 인터넷 검색</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude mcp add brave-search -- npx <span class="op">-y</span> @modelcontextprotocol/server-brave-search</span><button class="cpb" onclick="cp(this,'claude mcp add brave-search -- npx -y @modelcontextprotocol/server-brave-search')">복사</button></div>
+  <div class="tip">MCP 서버는 npx로 자동 설치돼요. 인터넷 연결만 있으면 돼요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tb">설정파일</span><span class="ct">MCP를 설정 파일로 영구 등록</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="desc">매번 명령어로 추가하기 귀찮으면, 설정 파일에 저장해두면 자동으로 불러와요.</div>
+<div class="fb">
+  <div class="fb-name">📄 ~/.claude/settings.json</div>
+  <div class="fb-code">{
+  <span class="st">"mcpServers"</span>: {
+    <span class="st">"filesystem"</span>: {
+      <span class="st">"command"</span>: "npx",
+      <span class="st">"args"</span>: ["-y", "@modelcontextprotocol/server-filesystem", "/내폴더"]
+    },
+    <span class="st">"github"</span>: {
+      <span class="st">"command"</span>: "npx",
+      <span class="st">"args"</span>: ["-y", "@modelcontextprotocol/server-github"],
+      <span class="st">"env"</span>: {
+        <span class="st">"GITHUB_TOKEN"</span>: "여기에_토큰_입력"
+      }
+    }
+  }
+}</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tb">전송방식</span><span class="ct">MCP 전송 방식 &amp; 원격 서버 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">MCP 전송 방식 종류</div>
+    <div class="drow"><span class="dlabel">stdio</span><span class="dval">표준 입출력 방식 (기본값). 로컬 프로세스로 실행. 가장 일반적.</span></div>
+    <div class="drow"><span class="dlabel">streamableHttp</span><span class="dval">HTTP 스트리밍 방식. 원격 MCP 서버 연결 시 권장 (신규).</span></div>
+    <div class="drow"><span class="dlabel">sse</span><span class="dval">Server-Sent Events 방식. 레거시. 새 서버는 streamableHttp 사용 권장.</span></div>
+  </div>
+  <div class="lbl">전송 방식 지정해서 추가</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude mcp add <span class="op">--transport</span> <span class="va">streamableHttp</span> myserver <span class="va">https://서버주소/mcp</span></span><button class="cpb" onclick="cp(this,'claude mcp add --transport streamableHttp myserver https://서버주소/mcp')">복사</button></div>
+  <div class="lbl">--mcp-config 플래그로 파일에서 로드</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--mcp-config</span> <span class="va">./my-mcp.json</span></span><button class="cpb" onclick="cp(this,'claude --mcp-config ./my-mcp.json')">복사</button></div>
+<div class="fb">
+  <div class="fb-name">📄 my-mcp.json — streamableHttp 서버 설정 예시</div>
+  <div class="fb-code">{
+  <span class="st">"mcpServers"</span>: {
+    <span class="st">"remote-server"</span>: {
+      <span class="st">"transport"</span>: <span class="st">"streamableHttp"</span>,
+      <span class="st">"url"</span>: <span class="st">"https://my-mcp-server.com/mcp"</span>,
+      <span class="st">"headers"</span>: {
+        <span class="st">"Authorization"</span>: <span class="st">"Bearer 토큰값"</span>
+      }
+    }
+  }
+}</div>
+</div>
+  <div class="tip">OAuth 인증도 지원돼요! claude mcp add --oauth 로 OAuth 흐름으로 인증할 수 있어요.</div>
+</div>
+</div>
+
+</div><!-- /s5 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 6 : 에이전트
+═══════════════════════════════════════ -->
+<div class="section" id="s6">
+<div class="sh c1"><span class="ic">🤖</span><div><h2>멀티에이전트 &amp; 서브에이전트</h2><p>클로드가 스스로 계획하고 실행하는 자율 모드</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">개념</span><span class="ct">에이전트 모드란?</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">에이전트 vs 일반 대화의 차이</div>
+    <div class="drow"><span class="dlabel">일반대화</span><span class="dval">내가 묻고 → 클로드가 답하고 → 내가 다음 질문. 한 번에 하나씩.</span></div>
+    <div class="drow"><span class="dlabel">에이전트</span><span class="dval">내가 목표를 주면 → 클로드가 스스로 계획 → 여러 단계를 자동으로 순서대로 실행. 나는 결과만 확인!</span></div>
+    <div class="drow"><span class="dlabel">비유</span><span class="dval">일반: 직접 요리 → 에이전트: 요리사에게 "오늘 저녁 준비해줘" 하고 맡기는 것</span></div>
+  </div>
+  <ul class="ql">
+    <li><span class="n">🧠</span><div><strong>오케스트레이터</strong> — 전체 작업을 계획하고 서브에이전트들에게 지시</div></li>
+    <li><span class="n">⚙️</span><div><strong>서브에이전트</strong> — 실제로 파일 수정, 명령 실행, 테스트 등을 담당</div></li>
+    <li><span class="n">🔄</span><div>복잡한 작업을 병렬로 처리해서 빠르게 완료 가능</div></li>
+  </ul>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">실행</span><span class="ct">에이전트 모드 실행 방법</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">복잡한 작업을 에이전트에게 통째로 맡기기</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">-p</span> <span class="va">"프로젝트 전체 분석하고 버그 모두 수정해줘"</span> <span class="op">--auto-approve</span></span><button class="cpb" onclick="cp(this,'claude -p \"프로젝트 전체 분석하고 버그 모두 수정해줘\" --auto-approve')">복사</button></div>
+  <div class="lbl">최대 실행 횟수 제한으로 안전하게</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--max-turns</span> <span class="va">10</span> <span class="op">-p</span> <span class="va">"리팩토링해줘"</span></span><button class="cpb" onclick="cp(this,'claude --max-turns 10 -p \"리팩토링해줘\"')">복사</button></div>
+  <div class="desc">max-turns를 설정하면 최대 10번만 작업하고 멈춰요. 무한루프 방지!</div>
+  <div class="lbl">대화형 에이전트 (중간중간 확인 가능)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude</span><button class="cpb" onclick="cp(this,'claude')">복사</button></div>
+  <div class="desc">일반 대화형으로 시작해도 "모든 파이썬 파일 분석해줘" 같은 큰 작업을 주면 에이전트처럼 동작해요.</div>
+  <div class="warn">에이전트가 실행 중일 때도 Ctrl+C 로 언제든 멈출 수 있어요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">서브에이전트</span><span class="ct">서브에이전트 — 병렬 AI 작업 실행 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">서브에이전트란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">오케스트레이터(메인 클로드)가 Task 도구를 통해 생성하는 독립적인 AI 인스턴스. 각 서브에이전트는 별도 컨텍스트로 동작.</span></div>
+    <div class="drow"><span class="dlabel">장점</span><span class="dval">독립적인 작업을 병렬로 처리해서 시간 단축. 각 에이전트를 다른 모델로 지정 가능.</span></div>
+    <div class="drow"><span class="dlabel">예시</span><span class="dval">파일 A 리뷰 + 파일 B 리뷰 + 테스트 실행을 동시에 처리</span></div>
+  </div>
+  <div class="lbl">커스텀 서브에이전트 정의 (.claude/agents/ 폴더)</div>
+<div class="fb">
+  <div class="fb-name">📄 .claude/agents/code-reviewer.md</div>
+  <div class="fb-code"><span class="kw">---</span>
+<span class="st">name:</span> code-reviewer
+<span class="st">description:</span> 코드 품질과 보안 취약점 전문 리뷰어
+<span class="st">model:</span> claude-sonnet-4-6
+<span class="st">tools:</span> [Read, Grep, Glob]
+<span class="kw">---</span>
+
+당신은 시니어 개발자로서 코드를 리뷰합니다.
+다음을 확인하세요:
+- 보안 취약점 (SQL Injection, XSS 등)
+- 성능 문제
+- 코드 가독성</div>
+</div>
+  <div class="lbl">커스텀 에이전트 목록 확인</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude agents</span><button class="cpb" onclick="cp(this,'claude agents')">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">agents</span><button class="cpb" onclick="cp(this,'/agents')">복사</button></div>
+  <div class="tip">--agents 플래그로 JSON으로 에이전트를 동적으로 정의해서 실행할 수도 있어요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">프롬프트</span><span class="ct">에이전트에게 잘 맡기는 프롬프트</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">단계별 작업 지시 (가장 효과적!)</div>
+  <div class="pb">
+    다음 작업을 순서대로 수행해줘:<br>
+    1. <span class="ph">main.py 파일 분석해서 버그 모두 찾기</span><br>
+    2. <span class="ph">버그 수정 후 한국어 주석 추가</span><br>
+    3. <span class="ph">test_main.py 만들어서 테스트 코드 작성</span><br>
+    4. <span class="ph">테스트 실행해서 모두 통과 확인</span><br>
+    각 단계 완료 후 결과를 알려줘.
+  </div>
+  <div class="lbl">완료 조건 지정 (반복 작업)</div>
+  <div class="pb">
+    <span class="hl">아래 조건을 모두 만족할 때까지 수정을 반복해줘:</span><br>
+    - python main.py 실행 시 에러 없을 것<br>
+    - 결과값이 정수로 출력될 것<br>
+    - 처리 시간이 1초 미만일 것
+  </div>
+  <div class="lbl">전체 프로젝트 작업</div>
+  <div class="pb">
+    현재 프로젝트의 모든 .py 파일을 분석하고:<br>
+    1. 코딩 스타일 통일 (PEP8 기준)<br>
+    2. 중복 코드 제거<br>
+    3. 한국어 주석 추가<br>
+    작업 완료 후 변경 사항 요약해줘.
+  </div>
+  <div class="tip">에이전트에게 명확한 완료 조건을 주면 훨씬 잘 작동해요!</div>
+</div>
+</div>
+</div><!-- /s6 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 7 : API 키
+═══════════════════════════════════════ -->
+<div class="section" id="s7">
+<div class="sh c2"><span class="ic">🔑</span><div><h2>API 키 설정</h2><p>클로드 코드에 인증 연결하기</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">로그인</span><span class="ct">방법1: claude.ai 계정으로 로그인 (가장 쉬움!)</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">언제 쓰나?</div>
+    <div class="drow"><span class="dlabel">대상</span><span class="dval">Claude Pro/Max 구독자에게 추천. 구독료만 내면 추가 API 비용 없이 클로드 코드 사용 가능!</span></div>
+  </div>
+  <div class="lbl">처음 claude 실행하면 자동으로 로그인 요청</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude</span><button class="cpb" onclick="cp(this,'claude')">복사</button></div>
+  <div class="desc">처음 실행하면 브라우저가 열리면서 claude.ai 로그인 화면이 나와요. 로그인 완료하면 바로 사용 가능!</div>
+  <div class="lbl">다시 로그인 (세션 만료 시)</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">logout</span><button class="cpb" onclick="cp(this,'/logout')">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">login</span><button class="cpb" onclick="cp(this,'/login')">복사</button></div>
+  <div class="ok">Claude Pro/Max 구독자는 이 방법이 가장 편리하고 경제적이에요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">API키</span><span class="ct">방법2: Anthropic API 키로 직접 연결</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">API 키란?</div>
+    <div class="drow"><span class="dlabel">정의</span><span class="dval">console.anthropic.com 에서 발급받는 비밀 열쇠예요. sk-ant-... 로 시작해요.</span></div>
+    <div class="drow"><span class="dlabel">비용</span><span class="dval">사용한 만큼 지불 (종량제). 대량 자동화 작업에 유리해요.</span></div>
+  </div>
+  <div class="lbl">맥/리눅스: 현재 터미널에만 적용 (임시)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co"><span class="op">export</span> ANTHROPIC_API_KEY=<span class="va">"sk-ant-여기에키입력"</span></span><button class="cpb" onclick="cp(this,'export ANTHROPIC_API_KEY=\"sk-ant-여기에키입력\"')">복사</button></div>
+  <div class="lbl">윈도우 PowerShell: 현재 세션에만 적용 (임시)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">$env:ANTHROPIC_API_KEY = <span class="va">"sk-ant-여기에키입력"</span></span><button class="cpb" onclick="cp(this,'$env:ANTHROPIC_API_KEY = \"sk-ant-여기에키입력\"')">복사</button></div>
+  <div class="lbl">가장 안전한 방법: .env 파일에 저장</div>
+<div class="fb">
+  <div class="fb-name">📄 .env (프로젝트 폴더에 생성)</div>
+  <div class="fb-code">ANTHROPIC_API_KEY=sk-ant-여기에키입력</div>
+</div>
+  <div class="warn">API 키는 절대 GitHub에 올리지 마세요! .gitignore에 .env 추가 필수!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">영구설정</span><span class="ct">API 키 영구 저장 (재시작 후에도 유지)</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">맥: ~/.zshrc 에 추가 (영구 적용)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">echo <span class="va">'export ANTHROPIC_API_KEY="sk-ant-키"'</span> >> ~/.zshrc</span><button class="cpb" onclick="cp(this,'echo \'export ANTHROPIC_API_KEY=\"sk-ant-키\"\' >> ~/.zshrc')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">source ~/.zshrc   ← 즉시 적용</span><button class="cpb" onclick="cp(this,'source ~/.zshrc')">복사</button></div>
+  <div class="lbl">윈도우: 시스템 환경변수에 영구 추가</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">[System.Environment]::SetEnvironmentVariable(<span class="va">"ANTHROPIC_API_KEY"</span>, <span class="va">"sk-ant-키"</span>, <span class="va">"User"</span>)</span><button class="cpb" onclick="cp(this,'[System.Environment]::SetEnvironmentVariable(\"ANTHROPIC_API_KEY\", \"sk-ant-키\", \"User\")')">복사</button></div>
+  <div class="lbl">설정 확인</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">echo $ANTHROPIC_API_KEY   ← 맥</span><button class="cpb" onclick="cp(this,'echo $ANTHROPIC_API_KEY')">복사</button></div>
+  <div class="tip">한국투자증권 API 키도 같은 방식으로 .env 파일에 저장하면 보안상 안전해요!</div>
+</div>
+</div>
+</div><!-- /s7 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 8 : Git
+═══════════════════════════════════════ -->
+<div class="section" id="s8">
+<div class="sh c4"><span class="ic">📦</span><div><h2>Git 완전 정리</h2><p>코드 버전 관리 핵심 명령어</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">핵심흐름</span><span class="ct">매일 쓰는 Git 기본 흐름 (add → commit → push)</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Git 세 단계를 이해하자</div>
+    <div class="drow"><span class="dlabel">add</span><span class="dval">저장할 파일을 "바구니"에 담는 것. 아직 저장 안 됨.</span></div>
+    <div class="drow"><span class="dlabel">commit</span><span class="dval">바구니 안의 파일을 실제로 저장. "세이브 포인트" 만들기.</span></div>
+    <div class="drow"><span class="dlabel">push</span><span class="dval">내 PC의 저장 기록을 깃허브(클라우드)에 업로드.</span></div>
+  </div>
+  <div class="ws"><div class="wn">1</div><div class="wc"><div class="wt">상태 확인</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git status</span><button class="cpb" onclick="cp(this,'git status')">복사</button></div>
+  <div class="wd">어떤 파일이 변경됐는지, 새로 추가됐는지 확인</div></div></div>
+  <div class="ws"><div class="wn">2</div><div class="wc"><div class="wt">파일 추가 (스테이징)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git add .              ← 변경된 파일 전체</span><button class="cpb" onclick="cp(this,'git add .')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git add <span class="va">파일명.py</span>     ← 특정 파일만</span><button class="cpb" onclick="cp(this,'git add 파일명.py')">복사</button></div></div></div>
+  <div class="ws"><div class="wn">3</div><div class="wc"><div class="wt">커밋 (저장)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git commit -m <span class="va">"작업 내용 메모"</span></span><button class="cpb" onclick="cp(this,'git commit -m \"작업 내용 메모\"')">복사</button></div>
+  <div class="wd">메모는 나중에 볼 때 무슨 작업이었는지 알 수 있게 써요. 한국어도 OK!</div></div></div>
+  <div class="ws"><div class="wn">4</div><div class="wc"><div class="wt">푸시 (깃허브에 올리기)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git push</span><button class="cpb" onclick="cp(this,'git push')">복사</button></div></div></div>
+  <div class="tip">작업할 때마다 기능 하나 완성되면 바로 commit 하는 습관을 들이세요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">초기설정</span><span class="ct">Git 초기 설정 &amp; 새 프로젝트 시작</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">최초 1회: 내 이름 &amp; 이메일 설정</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git config <span class="op">--global</span> user.name <span class="va">"내이름"</span></span><button class="cpb" onclick="cp(this,'git config --global user.name \"내이름\"')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git config <span class="op">--global</span> user.email <span class="va">"내이메일"</span></span><button class="cpb" onclick="cp(this,'git config --global user.email \"내이메일\"')">복사</button></div>
+  <div class="lbl">현재 폴더를 Git 프로젝트로 시작</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git init</span><button class="cpb" onclick="cp(this,'git init')">복사</button></div>
+  <div class="lbl">깃허브 저장소와 연결</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git remote add origin <span class="va">깃허브주소.git</span></span><button class="cpb" onclick="cp(this,'git remote add origin 깃허브주소.git')">복사</button></div>
+  <div class="lbl">깃허브에서 프로젝트 복사해오기 (클론)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git clone <span class="va">깃허브주소</span></span><button class="cpb" onclick="cp(this,'git clone 깃허브주소')">복사</button></div>
+  <div class="lbl">최신 내용 받아오기</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git pull</span><button class="cpb" onclick="cp(this,'git pull')">복사</button></div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">히스토리</span><span class="ct">히스토리 확인 &amp; 되돌리기</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">커밋 기록 보기 (간략하게)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git log <span class="op">--oneline</span></span><button class="cpb" onclick="cp(this,'git log --oneline')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git log <span class="op">--oneline --graph</span>    ← 브랜치 그래프 포함</span><button class="cpb" onclick="cp(this,'git log --oneline --graph')">복사</button></div>
+  <div class="lbl">수정 내용 보기 (커밋 전)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git diff</span><button class="cpb" onclick="cp(this,'git diff')">복사</button></div>
+  <div class="lbl">특정 파일 하나 되돌리기 (저장 전)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git checkout -- <span class="va">파일명.py</span></span><button class="cpb" onclick="cp(this,'git checkout -- 파일명.py')">복사</button></div>
+  <div class="lbl">마지막 커밋 메시지 수정</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git commit <span class="op">--amend</span> -m <span class="va">"수정된 메시지"</span></span><button class="cpb" onclick="cp(this,'git commit --amend -m \"수정된 메시지\"')">복사</button></div>
+  <div class="warn">git reset --hard 같은 강력한 명령어는 복구 불가! 먼저 클로드한테 물어보세요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">브랜치</span><span class="ct">브랜치 관리 (안전한 작업 공간)</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">브랜치란?</div>
+    <div class="drow"><span class="dlabel">비유</span><span class="dval">원본 코드를 복사해서 실험하는 별도 공간. 실험이 성공하면 원본에 합치고, 실패하면 그냥 버려요.</span></div>
+    <div class="drow"><span class="dlabel">왜</span><span class="dval">새 기능 추가할 때 원본이 망가지지 않도록 보호해요.</span></div>
+  </div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git branch                    ← 브랜치 목록</span><button class="cpb" onclick="cp(this,'git branch')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git checkout -b <span class="va">새브랜치이름</span>  ← 생성 + 이동</span><button class="cpb" onclick="cp(this,'git checkout -b 새브랜치이름')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git checkout <span class="va">브랜치이름</span>       ← 브랜치 이동</span><button class="cpb" onclick="cp(this,'git checkout 브랜치이름')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git merge <span class="va">합칠브랜치</span>          ← 브랜치 합치기</span><button class="cpb" onclick="cp(this,'git merge 합칠브랜치')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git branch -d <span class="va">브랜치이름</span>      ← 브랜치 삭제</span><button class="cpb" onclick="cp(this,'git branch -d 브랜치이름')">복사</button></div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">워크트리</span><span class="ct">Git 워크트리 — 격리된 작업 공간 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Git 워크트리란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">같은 Git 저장소에서 여러 브랜치를 동시에 다른 폴더에서 작업할 수 있는 기능.</span></div>
+    <div class="drow"><span class="dlabel">활용</span><span class="dval">클로드 코드가 새 기능을 워크트리에서 개발하는 동안, 나는 main 브랜치에서 다른 작업 가능.</span></div>
+  </div>
+  <div class="lbl">워크트리에서 클로드 코드 실행 (-w 플래그)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">-w</span> <span class="op">-p</span> <span class="va">"새 로그인 기능 추가해줘"</span></span><button class="cpb" onclick="cp(this,'claude -w -p \"새 로그인 기능 추가해줘\"')">복사</button></div>
+  <div class="lbl">대화창 안에서 워크트리 생성</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">worktree</span><button class="cpb" onclick="cp(this,'/worktree')">복사</button></div>
+  <div class="lbl">워크트리 직접 생성 및 이동</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git worktree add <span class="va">../새폴더</span> <span class="va">feature/새기능</span></span><button class="cpb" onclick="cp(this,'git worktree add ../새폴더 feature/새기능')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git worktree list            ← 목록 확인</span><button class="cpb" onclick="cp(this,'git worktree list')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">git worktree remove <span class="va">../새폴더</span>  ← 정리</span><button class="cpb" onclick="cp(this,'git worktree remove ../새폴더')">복사</button></div>
+  <div class="tip">/batch 스킬을 사용하면 5~30개 워크트리를 병렬로 생성해서 대규모 리팩토링을 한 번에 처리할 수 있어요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">보안</span><span class="ct">.gitignore — 깃허브에 올리면 안 되는 파일</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<div class="fb">
+  <div class="fb-name">📄 .gitignore</div>
+  <div class="fb-code"><span class="kw"># 보안 파일 (절대 올리면 안 됨!)</span>
+.env
+*.key
+*.pem
+secrets.json
+config_secret.py
+
+<span class="kw"># 파이썬</span>
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+
+<span class="kw"># 데이터/로그 (용량 큰 것)</span>
+*.csv
+*.xlsx
+logs/
+data/
+
+<span class="kw"># OS / 에디터</span>
+.DS_Store
+.vscode/
+.idea/</div>
+</div>
+  <div class="warn">API 키, 계좌번호, 비밀번호가 있는 파일은 반드시 .gitignore에 추가!</div>
+</div>
+</div>
+</div><!-- /s8 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 9 : 프롬프트
+═══════════════════════════════════════ -->
+<div class="section" id="s9">
+<div class="sh c3"><span class="ic">✍️</span><div><h2>프롬프트 패턴</h2><p>클로드에게 효과적으로 말하는 방법</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">코드생성</span><span class="ct">코드 만들어달라고 요청할 때</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">기본 패턴</div>
+  <div class="pb"><span class="ph">[무엇을]</span> 하는 파이썬 코드를 작성해줘.<br>기능: <span class="ph">[구체적인 설명]</span><br>조건: <span class="ph">[제약사항]</span><br>라이브러리: <span class="ph">[사용할 것]</span></div>
+  <div class="lbl">실전 예시 — 주식 데이터</div>
+  <div class="pb">한국투자증권 API로 삼성전자 최근 30일 종가를 가져와서 엑셀로 저장하는 코드 만들어줘.<br>조건: 날짜 내림차순, 에러처리 포함, 주석은 한국어<br>라이브러리: pandas, openpyxl, requests</div>
+  <div class="tip">구체적일수록 원하는 코드가 나와요. 라이브러리, 조건, 출력 형식을 명시하세요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">수정/개선</span><span class="ct">코드 수정 요청 패턴</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="pb">위 코드에서 <span class="ph">[문제점]</span>을 <span class="ph">[원하는 방향]</span>으로 수정해줘.</div>
+  <div class="pb">이 코드에 다음 기능을 추가해줘:<br>- <span class="ph">기능 1</span><br>- <span class="ph">기능 2</span><br>기존 코드 구조는 최대한 유지해줘.</div>
+  <div class="pb">이 코드를 더 <span class="hl">읽기 쉽게</span> 리팩토링해줘.<br>함수를 작은 단위로 분리하고 한국어 주석 달아줘.</div>
+  <div class="pb">이 코드의 <span class="hl">실행 속도를 개선</span>해줘.<br>현재 1만 건 처리에 10초 걸리는데 3초 이하로 줄여줘.</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">디버깅</span><span class="ct">에러 &amp; 디버깅 요청 패턴</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="pb">다음 에러가 발생했어. 원인과 해결방법을 알려줘:<br><br><span class="ph">[에러 메시지 전체 여기에 붙여넣기]</span></div>
+  <div class="pb">코드는 실행되는데 결과가 이상해.<br>기대값: <span class="ph">[원하는 결과]</span><br>실제값: <span class="ph">[나온 결과]</span><br>원인 찾아서 고쳐줘.</div>
+  <div class="pb">이 코드가 왜 이렇게 동작하는지 단계별로 설명해줘.<br>초보자도 이해할 수 있게 쉽게!</div>
+  <div class="tip">에러 메시지는 전체를 복붙! 요약하면 클로드가 놓칠 수 있어요.</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">단계별</span><span class="ct">단계별 작업 요청 (바이블코딩 핵심!)</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="pb"><span class="hl">1단계:</span> 먼저 <span class="ph">[아주 기본 기능]</span>만 만들어줘.<br>작동 확인 후 2단계로 넘어갈게.</div>
+  <div class="pb"><span class="hl">1단계 완료!</span> 이제 2단계:<br><span class="ph">[추가 기능]</span>을 붙여줘. 기존 코드는 유지.</div>
+  <div class="ok">작은 단계로 나눠서 하나씩 확인하면서 진행하는 게 바이블코딩의 핵심이에요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">빠른입력</span><span class="ct">! 배시모드 · @ 파일멘션 · 확장사고 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">특수 접두사 입력</div>
+    <div class="drow"><span class="dlabel">!</span><span class="dval">배시 직접 실행 모드. 클로드 거치지 않고 터미널 명령어 바로 실행. 예: !ls -la</span></div>
+    <div class="drow"><span class="dlabel">@</span><span class="dval">파일 경로 자동완성. @src/ 입력 후 Tab 누르면 파일 목록 표시. 파일을 컨텍스트에 빠르게 추가.</span></div>
+    <div class="drow"><span class="dlabel">/</span><span class="dval">슬래시 명령어 또는 스킬 실행</span></div>
+  </div>
+  <div class="lbl">! 배시 모드 예시</div>
+  <div class="cmd"><span class="pr">></span><span class="co">!ls -la              ← 클로드 없이 직접 실행</span><button class="cpb" onclick="cp(this,'!ls -la')">복사</button></div>
+  <div class="cmd"><span class="pr">></span><span class="co">!git status          ← 깃 상태 직접 확인</span><button class="cpb" onclick="cp(this,'!git status')">복사</button></div>
+  <div class="cmd"><span class="pr">></span><span class="co">!python main.py      ← 파일 직접 실행</span><button class="cpb" onclick="cp(this,'!python main.py')">복사</button></div>
+  <div class="lbl">@ 파일 멘션 예시</div>
+  <div class="cmd"><span class="pr">></span><span class="co">@src/main.py 이 파일의 버그를 찾아줘</span><button class="cpb" onclick="cp(this,'@src/main.py 이 파일의 버그를 찾아줘')">복사</button></div>
+  <div class="lbl">확장 사고(Thinking) 활용</div>
+  <div class="desc">Alt+T 로 확장 사고 모드를 켜거나, 프롬프트에 직접 요청:</div>
+  <div class="pb">이 알고리즘의 시간복잡도를 <span class="hl">단계별로 깊이 생각</span>한 후 최적화 방안을 알려줘.</div>
+  <div class="tip">복잡한 아키텍처 설계나 어려운 버그 추적 시 확장 사고 모드가 효과적이에요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">황금표현</span><span class="ct">자주 쓰는 황금 표현 모음</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<ul class="ql">
+  <li><span class="n">💬</span><div><strong>"주석을 한국어로 달아줘"</strong> — 코드 이해가 쉬워져요</div></li>
+  <li><span class="n">💬</span><div><strong>"에러 처리 코드도 추가해줘"</strong> — try-except 자동 추가</div></li>
+  <li><span class="n">💬</span><div><strong>"실행 결과 예시도 보여줘"</strong> — 실행 전 결과 미리 확인</div></li>
+  <li><span class="n">💬</span><div><strong>"이 코드 전체를 다시 보여줘"</strong> — 수정 후 전체 코드</div></li>
+  <li><span class="n">💬</span><div><strong>"requirements.txt도 만들어줘"</strong> — 패키지 목록 자동 생성</div></li>
+  <li><span class="n">💬</span><div><strong>"더 간단한 방법이 있어?"</strong> — 코드 단순화</div></li>
+  <li><span class="n">💬</span><div><strong>"초보자도 이해할 수 있게 설명해줘"</strong> — 쉬운 설명 요청</div></li>
+  <li><span class="n">💬</span><div><strong>"이 부분을 함수로 분리해줘"</strong> — 코드 구조화</div></li>
+  <li><span class="n">💬</span><div><strong>"테스트 코드도 만들어줘"</strong> — unittest 자동 작성</div></li>
+  <li><span class="n">💬</span><div><strong>".env 파일도 만들어줘"</strong> — 환경변수 파일 생성</div></li>
+  <li><span class="n">💬</span><div><strong>"CLAUDE.md 업데이트해줘"</strong> — 프로젝트 문서 갱신</div></li>
+  <li><span class="n">💬</span><div><strong>"이걸 어떻게 실행해?"</strong> — 실행 방법 설명 요청</div></li>
+  <li><span class="n">💬</span><div><strong>"한 번에 전체 보여줘, 잘라서 보여주지 마"</strong> — 분할 없이 전체 출력</div></li>
+</ul>
+</div>
+</div>
+</div><!-- /s9 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 10 : 에러 대처
+═══════════════════════════════════════ -->
+<div class="section" id="s10">
+<div class="sh c5"><span class="ic">🚨</span><div><h2>에러 대처법</h2><p>에러 만나면 당황하지 말고!</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">원칙</span><span class="ct">에러 해결 기본 원칙 &amp; 순서</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="ok">에러는 잘못된 게 아니에요. 프로 개발자도 매일 에러 봐요!</div>
+  <div class="ws"><div class="wn">1</div><div class="wc"><div class="wt">에러 메시지 전체 복사</div><div class="wd">빨간 글씨 전부 복사. 절대 요약하거나 편집하지 마세요!</div></div></div>
+  <div class="ws"><div class="wn">2</div><div class="wc"><div class="wt">클로드한테 붙여넣기</div><div class="wd">"다음 에러 해결해줘:" 뒤에 에러 전체 붙여넣기</div></div></div>
+  <div class="ws"><div class="wn">3</div><div class="wc"><div class="wt">수정 후 다시 실행</div><div class="wd">클로드가 준 수정 코드를 적용하고 python 파일명.py 재실행</div></div></div>
+  <div class="ws"><div class="wn">4</div><div class="wc"><div class="wt">새 에러 생기면 반복</div><div class="wd">될 때까지! 보통 2~3번이면 해결돼요.</div></div></div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">에러유형</span><span class="ct">자주 나오는 에러 유형별 원인 &amp; 해결법</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="fi">
+    <div class="fn">ModuleNotFoundError: No module named 'pandas'</div>
+    <div class="fd">
+      <div class="desc"><strong>패키지가 설치 안 된 것</strong>. 또는 가상환경이 꺼진 상태.</div>
+      <div class="why">해결: pip install 패키지이름</div>
+      <div class="ex">pip install pandas  /  pip install requests</div>
+    </div>
+  </div>
+  <div class="fi">
+    <div class="fn">SyntaxError: invalid syntax</div>
+    <div class="fd">
+      <div class="desc"><strong>코드 문법 오류</strong>. 괄호 빠짐, 콜론 빠짐, 따옴표 안 닫힘 등.</div>
+      <div class="why">해결: 에러 줄 번호(line N) 확인 후 클로드한테 물어보기</div>
+    </div>
+  </div>
+  <div class="fi">
+    <div class="fn">IndentationError: unexpected indent</div>
+    <div class="fd">
+      <div class="desc"><strong>들여쓰기 오류</strong>. 스페이스 4개와 탭이 섞여 있거나, 들여쓰기가 맞지 않음.</div>
+      <div class="why">해결: "들여쓰기 오류 수정해줘" 라고 클로드에게 요청</div>
+    </div>
+  </div>
+  <div class="fi">
+    <div class="fn">KeyError: 'column_name'</div>
+    <div class="fd">
+      <div class="desc"><strong>딕셔너리나 데이터프레임에 없는 키</strong>에 접근한 것.</div>
+      <div class="why">해결: print(df.columns) 로 실제 컬럼명 확인 후 수정</div>
+    </div>
+  </div>
+  <div class="fi">
+    <div class="fn">AttributeError: 'NoneType' has no attribute</div>
+    <div class="fd">
+      <div class="desc"><strong>None(빈 값)인 변수에서 메서드를 호출</strong>한 것. 데이터가 없을 때 자주 발생.</div>
+      <div class="why">해결: if 변수 is not None: 으로 확인 후 처리</div>
+    </div>
+  </div>
+  <div class="fi">
+    <div class="fn">TypeError: unsupported operand type</div>
+    <div class="fd">
+      <div class="desc"><strong>타입이 맞지 않는 연산</strong>. 예: 문자열 + 숫자, int와 str 비교.</div>
+      <div class="why">해결: str(), int(), float() 로 타입 변환</div>
+    </div>
+  </div>
+  <div class="fi">
+    <div class="fn">FileNotFoundError: No such file or directory</div>
+    <div class="fd">
+      <div class="desc"><strong>파일 경로가 잘못됐거나 파일이 없는 것</strong>.</div>
+      <div class="why">해결: os.path.exists(경로) 로 실제 존재 확인 후 경로 수정</div>
+    </div>
+  </div>
+  <div class="fi">
+    <div class="fn">ConnectionError / TimeoutError / requests.exceptions</div>
+    <div class="fd">
+      <div class="desc"><strong>인터넷 연결 문제 또는 API 서버 응답 없음</strong>.</div>
+      <div class="why">해결: 인터넷 확인, API 키 확인, 잠시 후 재시도</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">환경진단</span><span class="ct">환경 문제 진단 명령어</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="cmd"><span class="pr">$</span><span class="co">python --version</span><button class="cpb" onclick="cp(this,'python --version')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">pip --version</span><button class="cpb" onclick="cp(this,'pip --version')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">pip list</span><button class="cpb" onclick="cp(this,'pip list')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">node --version</span><button class="cpb" onclick="cp(this,'node --version')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude --version</span><button class="cpb" onclick="cp(this,'claude --version')">복사</button></div>
+  <div class="lbl">클로드 코드 자가진단</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">doctor</span><button class="cpb" onclick="cp(this,'/doctor')">복사</button></div>
+  <div class="tip">뭔가 이상하면 /doctor 부터! 클로드가 자동으로 문제를 진단해줘요.</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">클로드문제</span><span class="ct">클로드 코드 자체 문제 해결</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">클로드가 멈췄을 때</div>
+  <div class="cmd"><span class="pr">키</span><span class="co">Ctrl + C  ← 현재 작업 중단</span><button class="cpb" onclick="cp(this,'Ctrl+C')">복사</button></div>
+  <div class="lbl">대화가 너무 길어졌을 때 (느려지거나 오류)</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">compact  ← 압축 (내용 유지)</span><button class="cpb" onclick="cp(this,'/compact')">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">clear    ← 완전 초기화 (새로 시작)</span><button class="cpb" onclick="cp(this,'/clear')">복사</button></div>
+  <div class="lbl">업데이트로 재설치</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">npm install -g @anthropic-ai/claude-code</span><button class="cpb" onclick="cp(this,'npm install -g @anthropic-ai/claude-code')">복사</button></div>
+</div>
+</div>
+</div><!-- /s10 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 11 : 워크플로우
+═══════════════════════════════════════ -->
+<div class="section" id="s11">
+<div class="sh c2"><span class="ic">💼</span><div><h2>실전 워크플로우</h2><p>바이블코딩 실제 작업 흐름</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">신규프로젝트</span><span class="ct">새 프로젝트 시작하는 완전한 순서</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="ws"><div class="wn">1</div><div class="wc"><div class="wt">프로젝트 폴더 만들기</div><div class="cmd"><span class="pr">$</span><span class="co">mkdir 내프로젝트 && cd 내프로젝트</span><button class="cpb" onclick="cp(this,'mkdir 내프로젝트 && cd 내프로젝트')">복사</button></div></div></div>
+  <div class="ws"><div class="wn">2</div><div class="wc"><div class="wt">Git 초기화</div><div class="cmd"><span class="pr">$</span><span class="co">git init</span><button class="cpb" onclick="cp(this,'git init')">복사</button></div></div></div>
+  <div class="ws"><div class="wn">3</div><div class="wc"><div class="wt">가상환경 만들기 &amp; 켜기</div><div class="cmd"><span class="pr">$</span><span class="co">python -m venv venv</span><button class="cpb" onclick="cp(this,'python -m venv venv')">복사</button></div><div class="cmd"><span class="pr">$</span><span class="co">source venv/bin/activate  (맥)</span><button class="cpb" onclick="cp(this,'source venv/bin/activate')">복사</button></div><div class="cmd"><span class="pr">$</span><span class="co">venv\Scripts\activate  (윈도우)</span><button class="cpb" onclick="cp(this,'venv\\Scripts\\activate')">복사</button></div></div></div>
+  <div class="ws"><div class="wn">4</div><div class="wc"><div class="wt">.gitignore 만들기</div><div class="wd">클로드한테 "이 프로젝트용 .gitignore 만들어줘" 라고 요청</div></div></div>
+  <div class="ws"><div class="wn">5</div><div class="wc"><div class="wt">클로드 코드 시작 &amp; CLAUDE.md 생성</div><div class="cmd"><span class="pr">$</span><span class="co">claude</span><button class="cpb" onclick="cp(this,'claude')">복사</button></div><div class="cmd"><span class="pr">/</span><span class="co">init</span><button class="cpb" onclick="cp(this,'/init')">복사</button></div></div></div>
+  <div class="ws"><div class="wn">6</div><div class="wc"><div class="wt">1단계 기본 기능 만들기</div><div class="wd">"1단계: 먼저 기본 기능만 만들어줘" 로 시작!</div></div></div>
+  <div class="ws"><div class="wn">7</div><div class="wc"><div class="wt">작동 확인 후 Git 저장</div><div class="cmd"><span class="pr">$</span><span class="co">git add . && git commit -m "1단계: 기본 기능 완성"</span><button class="cpb" onclick="cp(this,'git add . && git commit -m \"1단계: 기본 기능 완성\"')">복사</button></div></div></div>
+  <div class="ws"><div class="wn">8</div><div class="wc"><div class="wt">반복! 기능 추가 → 확인 → Git 저장</div><div class="wd">이 과정을 반복하면서 프로젝트 완성!</div></div></div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">일상루틴</span><span class="ct">매일 작업 시작하는 루틴</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="ws"><div class="wn">1</div><div class="wc"><div class="wt">프로젝트 폴더로 이동</div><div class="cmd"><span class="pr">$</span><span class="co">cd 내프로젝트</span><button class="cpb" onclick="cp(this,'cd 내프로젝트')">복사</button></div></div></div>
+  <div class="ws"><div class="wn">2</div><div class="wc"><div class="wt">가상환경 켜기</div><div class="cmd"><span class="pr">$</span><span class="co">source venv/bin/activate</span><button class="cpb" onclick="cp(this,'source venv/bin/activate')">복사</button></div></div></div>
+  <div class="ws"><div class="wn">3</div><div class="wc"><div class="wt">최신 코드 받기 (팀작업 시)</div><div class="cmd"><span class="pr">$</span><span class="co">git pull</span><button class="cpb" onclick="cp(this,'git pull')">복사</button></div></div></div>
+  <div class="ws"><div class="wn">4</div><div class="wc"><div class="wt">클로드 코드 시작</div><div class="cmd"><span class="pr">$</span><span class="co">claude</span><button class="cpb" onclick="cp(this,'claude')">복사</button></div></div></div>
+  <div class="ws"><div class="wn">5</div><div class="wc"><div class="wt">작업 후 저장</div><div class="cmd"><span class="pr">$</span><span class="co">git add . && git commit -m "오늘 작업 내용"</span><button class="cpb" onclick="cp(this,'git add . && git commit -m \"오늘 작업 내용\"')">복사</button></div></div></div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">바이블꿀팁</span><span class="ct">바이블코딩 꿀팁 &amp; 마인드셋</span></div><span class="ca">▼</span></div>
+<div class="cb">
+<ul class="ql">
+  <li><span class="n">🔥</span><div><strong>작게 시작하기</strong> — 한 번에 다 만들려 하지 말 것. 최소 기능부터!</div></li>
+  <li><span class="n">🔥</span><div><strong>자주 저장 (commit)</strong> — 기능 하나 완성될 때마다 git commit</div></li>
+  <li><span class="n">🔥</span><div><strong>에러는 정상</strong> — 프로도 매일 에러 봐요. 당황 금지!</div></li>
+  <li><span class="n">🔥</span><div><strong>모르면 바로 질문</strong> — "이게 뭐야?" "왜 이렇게 해?" 다 물어봐요</div></li>
+  <li><span class="n">🔥</span><div><strong>컨텍스트 관리</strong> — 대화 길어지면 /compact, 새 작업이면 /clear</div></li>
+  <li><span class="n">🔥</span><div><strong>CLAUDE.md 적극 활용</strong> — 프로젝트 규칙 적어두면 매번 설명 불필요</div></li>
+  <li><span class="n">🔥</span><div><strong>API 키 보안</strong> — 절대 코드에 직접 쓰지 않기. .env 파일 사용!</div></li>
+  <li><span class="n">🔥</span><div><strong>결과 반드시 확인</strong> — 클로드가 수정하면 꼭 실행해서 확인!</div></li>
+  <li><span class="n">🔥</span><div><strong>단계별 진행</strong> — "1단계 완료!" → "이제 2단계:" 순서대로</div></li>
+  <li><span class="n">🔥</span><div><strong>Ctrl+C 친구</strong> — 클로드가 잘못된 방향이면 언제든 Ctrl+C 로 멈추기</div></li>
+</ul>
+</div>
+</div>
+</div><!-- /s11 -->
+
+<!-- ═══════════════════════════════════════
+     SEC 12 : 스킬 & Hooks & 플러그인
+═══════════════════════════════════════ -->
+<div class="section" id="s12">
+<div class="sh c3"><span class="ic">🎯</span><div><h2>스킬 &amp; Hooks &amp; 플러그인</h2><p>클로드 코드를 나만의 도구로 확장하기</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">스킬개념</span><span class="ct">Skills — 커스텀 명령어 만들기</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Skills 란?</div>
+    <div class="drow"><span class="dlabel">정의</span><span class="dval">SKILL.md 파일로 정의하는 커스텀 슬래시 명령어. 복잡한 작업 흐름을 /명령어 하나로 실행.</span></div>
+    <div class="drow"><span class="dlabel">위치</span><span class="dval">~/.claude/skills/ (개인 전용) 또는 .claude/skills/ (프로젝트 공유)</span></div>
+    <div class="drow"><span class="dlabel">레거시</span><span class="dval">.claude/commands/ 폴더도 지원되지만 skills/ 로 통합 권장</span></div>
+  </div>
+  <div class="lbl">스킬 목록 확인</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">skills</span><button class="cpb" onclick="cp(this,'/skills')">복사</button></div>
+  <div class="lbl">스킬 실행 방법</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">스킬이름              ← 기본 실행</span><button class="cpb" onclick="cp(this,'/스킬이름')">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">스킬이름 인자값       ← $ARGUMENTS 변수로 전달</span><button class="cpb" onclick="cp(this,'/스킬이름 인자값')">복사</button></div>
+  <div class="lbl">SKILL.md 파일 작성 예시</div>
+<div class="fb">
+  <div class="fb-name">📄 .claude/skills/code-review.md</div>
+  <div class="fb-code"><span class="kw">---</span>
+<span class="st">name:</span> code-review
+<span class="st">description:</span> 코드 품질 리뷰 후 개선 사항 보고
+<span class="st">trigger:</span> /code-review
+<span class="kw">---</span>
+
+<span class="cm"># 코드 리뷰 스킬</span>
+
+다음 파일을 리뷰해주세요: <span class="st">$ARGUMENTS</span>
+
+리뷰 항목:
+1. 버그 및 잠재적 오류
+2. 성능 문제
+3. 보안 취약점
+4. 코드 스타일 (PEP8 등)
+5. 개선 제안
+
+결과를 심각도별로 정리해서 보고해주세요.</div>
+</div>
+  <div class="tip">스킬 파일 frontmatter에 model을 지정하면 해당 스킬만 다른 모델로 실행돼요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">번들스킬</span><span class="ct">내장 번들 스킬 상세 설명</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="fi">
+    <div class="fn">/simplify</div>
+    <div class="fd">
+      <div class="desc">변경된 코드를 자동으로 <strong>품질/효율성 리뷰 후 수정</strong>해요</div>
+      <div class="why">언제: 기능 구현 후 코드 품질을 높이고 싶을 때</div>
+      <div class="ex">/simplify src/main.py</div>
+    </div>
+  </div>
+  <div class="fi">
+    <div class="fn">/batch "작업설명"</div>
+    <div class="fd">
+      <div class="desc">5~30개 <strong>Git 워크트리를 병렬 생성</strong>해서 대규모 변경을 동시에 처리</div>
+      <div class="why">언제: 수십 개 파일을 동시에 리팩토링하거나 마이그레이션할 때</div>
+      <div class="ex">/batch "모든 Python 2 코드를 Python 3으로 변환"</div>
+    </div>
+  </div>
+  <div class="fi">
+    <div class="fn">/debug</div>
+    <div class="fd">
+      <div class="desc">에러 로그와 스택 트레이스를 <strong>분석해서 근본 원인</strong> 파악</div>
+      <div class="why">언제: 복잡한 에러가 발생했는데 원인을 모를 때</div>
+      <div class="ex">/debug  (에러 메시지 붙여넣기)</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">Hooks</span><span class="ct">Hooks — 자동화 트리거 설정</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Hook 이벤트 종류</div>
+    <div class="drow"><span class="dlabel">PreToolUse</span><span class="dval">도구 실행 전 — 허용/거부 결정, 파라미터 수정</span></div>
+    <div class="drow"><span class="dlabel">PostToolUse</span><span class="dval">도구 실행 후 — 결과 처리, 포맷터 실행</span></div>
+    <div class="drow"><span class="dlabel">Notification</span><span class="dval">클로드가 알림을 보낼 때 — 슬랙/이메일 등 연동</span></div>
+    <div class="drow"><span class="dlabel">Stop</span><span class="dval">클로드가 작업을 멈출 때 — 로그 기록, 정리 작업</span></div>
+    <div class="drow"><span class="dlabel">SubagentStop</span><span class="dval">서브에이전트 종료 시</span></div>
+  </div>
+  <div class="lbl">대화형 Hook 설정</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">hooks</span><button class="cpb" onclick="cp(this,'/hooks')">복사</button></div>
+  <div class="lbl">settings.json에서 직접 설정</div>
+<div class="fb">
+  <div class="fb-name">📄 .claude/settings.json — Hook 설정 예시</div>
+  <div class="fb-code">{
+  <span class="st">"hooks"</span>: {
+    <span class="kw">// 파일 저장 후 자동 포맷터 실행</span>
+    <span class="st">"PostToolUse"</span>: [{
+      <span class="st">"matcher"</span>: <span class="st">"Write|Edit"</span>,
+      <span class="st">"hooks"</span>: [{
+        <span class="st">"type"</span>: <span class="st">"command"</span>,
+        <span class="st">"command"</span>: <span class="st">"black $CLAUDE_TOOL_OUTPUT_PATH"</span>
+      }]
+    }],
+    <span class="kw">// 커밋 전 테스트 실행</span>
+    <span class="st">"PreToolUse"</span>: [{
+      <span class="st">"matcher"</span>: <span class="st">"Bash(git commit*)"</span>,
+      <span class="st">"hooks"</span>: [{
+        <span class="st">"type"</span>: <span class="st">"command"</span>,
+        <span class="st">"command"</span>: <span class="st">"python -m pytest tests/"</span>
+      }]
+    }]
+  }
+}</div>
+</div>
+  <div class="tip">Hook 명령어는 종료 코드로 성공/실패를 판단해요. 0이면 성공, 그 외는 실패!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">플러그인</span><span class="ct">플러그인 시스템</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">플러그인이란?</div>
+    <div class="drow"><span class="dlabel">정의</span><span class="dval">여러 스킬, Hook, 서브에이전트를 하나의 패키지로 묶어 배포하는 구조.</span></div>
+    <div class="drow"><span class="dlabel">설치</span><span class="dval">.claude/plugins/ 폴더에 위치하며 /plugin 명령어로 관리</span></div>
+  </div>
+  <div class="lbl">플러그인 목록 확인</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">plugin</span><button class="cpb" onclick="cp(this,'/plugin')">복사</button></div>
+  <div class="lbl">플러그인 폴더 구조</div>
+<div class="fb">
+  <div class="fb-name">📁 .claude/plugins/my-plugin/</div>
+  <div class="fb-code">plugin.json      ← 플러그인 메타데이터
+skills/          ← 스킬 파일들
+  review.md
+  deploy.md
+agents/          ← 에이전트 정의
+  reviewer.md
+hooks/           ← Hook 설정
+  pre-commit.sh</div>
+</div>
+</div>
+</div>
+</div><!-- /s12 -->
+
+
+<!-- ═══════════════════════════════════════
+     SEC 13 : 고급 기능
+═══════════════════════════════════════ -->
+<div class="section" id="s13">
+<div class="sh c4"><span class="ic">⚡</span><div><h2>고급 기능</h2><p>Plan 모드 · Fast 모드 · IDE · 세션관리 · Chrome</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">Plan모드</span><span class="ct">Plan 모드 — 실행 없이 계획만 세우기</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Plan 모드란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">클로드가 어떤 파일도 수정하지 않고 계획만 세우는 안전 모드. 큰 작업 전 검토용.</span></div>
+    <div class="drow"><span class="dlabel">활용</span><span class="dval">복잡한 리팩토링 전에 클로드의 계획을 먼저 확인하고 승인한 후 실행.</span></div>
+  </div>
+  <div class="lbl">Plan 모드 진입 방법</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">plan</span><button class="cpb" onclick="cp(this,'/plan')">복사</button></div>
+  <div class="cmd"><span class="pr">키</span><span class="co">Shift+Tab  ← 모드 순환 (일반→Plan→자동승인)</span><button class="cpb" onclick="cp(this,'Shift+Tab')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--permission-mode</span> <span class="va">plan</span>  ← 시작부터 Plan 모드</span><button class="cpb" onclick="cp(this,'claude --permission-mode plan')">복사</button></div>
+  <div class="lbl">Plan 모드 활용 흐름</div>
+  <ul class="ql">
+    <li><span class="n">1</span><div>Plan 모드에서 "전체 앱을 TypeScript로 마이그레이션해줘" 입력</div></li>
+    <li><span class="n">2</span><div>클로드가 계획을 파일로 작성하고 상세 설명</div></li>
+    <li><span class="n">3</span><div>계획 검토 후 Shift+Tab으로 실행 모드 전환</div></li>
+    <li><span class="n">4</span><div>"계획 승인, 실행해줘" 입력</div></li>
+  </ul>
+  <div class="tip">Plan 모드에서 ExitPlanMode 도구가 실행되면 실제 구현 시작 신호예요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">Fast모드</span><span class="ct">Fast 모드 &amp; 확장 사고(Thinking)</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Fast 모드란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">같은 Opus 4.6 모델이지만 응답 출력 속도가 빨라지는 모드. 모델의 사고 품질은 동일!</span></div>
+    <div class="drow"><span class="dlabel">사용</span><span class="dval">빠른 반복 작업이나 간단한 수정에 유용. 토글 방식.</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">fast</span><button class="cpb" onclick="cp(this,'/fast')">복사</button></div>
+  <div class="dv"></div>
+  <div class="detail">
+    <div class="dtitle">확장 사고(Thinking) 모드</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">클로드가 답변 전에 더 깊이 추론하는 시간을 갖는 모드. 복잡한 알고리즘, 설계 결정 시 효과적.</span></div>
+  </div>
+  <div class="cmd"><span class="pr">키</span><span class="co">Alt+T  ← 확장 사고 모드 토글</span><button class="cpb" onclick="cp(this,'Alt+T')">복사</button></div>
+  <div class="tip">복잡한 버그나 아키텍처 설계 시 확장 사고 모드 + Opus 조합이 최강이에요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">IDE통합</span><span class="ct">IDE 통합 — VS Code &amp; JetBrains</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">IDE 통합의 장점</div>
+    <div class="drow"><span class="dlabel">인라인편집</span><span class="dval">에디터 안에서 바로 클로드와 대화하며 코드 수정 가능</span></div>
+    <div class="drow"><span class="dlabel">컨텍스트</span><span class="dval">현재 열린 파일, 선택한 코드가 자동으로 컨텍스트에 포함</span></div>
+    <div class="drow"><span class="dlabel">실시간</span><span class="dval">파일 저장과 동시에 클로드가 변경사항을 인식</span></div>
+  </div>
+  <div class="lbl">VS Code 확장 설치</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">code --install-extension anthropic.claude-code</span><button class="cpb" onclick="cp(this,'code --install-extension anthropic.claude-code')">복사</button></div>
+  <div class="lbl">IDE 통합 명령어</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">ide</span><button class="cpb" onclick="cp(this,'/ide')">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--ide</span>  ← IDE 자동 연결해서 시작</span><button class="cpb" onclick="cp(this,'claude --ide')">복사</button></div>
+  <div class="tip">JetBrains(IntelliJ, PyCharm 등)도 플러그인 마켓플레이스에서 "Claude Code" 설치!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">세션관리</span><span class="ct">세션 재개 &amp; 분기 — 대화 이어가기</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="lbl">가장 최근 세션 이어서 계속</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">-c</span></span><button class="cpb" onclick="cp(this,'claude -c')">복사</button></div>
+  <div class="lbl">대화창에서 세션 선택해서 재개</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">resume</span><button class="cpb" onclick="cp(this,'/resume')">복사</button></div>
+  <div class="lbl">특정 세션 ID로 재개</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">-r</span> <span class="va">"세션이름"</span></span><button class="cpb" onclick="cp(this,'claude -r \"세션이름\"')">복사</button></div>
+  <div class="lbl">현재 대화 분기 (새 방향 시도)</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">fork</span><button class="cpb" onclick="cp(this,'/fork')">복사</button></div>
+  <div class="lbl">세션 이름 붙이기 (나중에 찾기 쉽게)</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">rename <span class="va">내-프로젝트-세션</span></span><button class="cpb" onclick="cp(this,'/rename 내-프로젝트-세션')">복사</button></div>
+  <div class="lbl">대화 내보내기</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">export</span><button class="cpb" onclick="cp(this,'/export')">복사</button></div>
+  <div class="lbl">이전 시점으로 되돌리기</div>
+  <div class="cmd"><span class="pr">/</span><span class="co">rewind</span><button class="cpb" onclick="cp(this,'/rewind')">복사</button></div>
+  <div class="cmd"><span class="pr">키</span><span class="co">Esc+Esc  ← 단축키로도 리와인드</span><button class="cpb" onclick="cp(this,'Esc+Esc')">복사</button></div>
+  <div class="tip">세션 기록은 ~/.claude/projects/ 폴더에 저장돼요. 자동 메모리 기능도 여기서 관리!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">Chrome</span><span class="ct">Chrome 통합 — 브라우저 자동화</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Chrome 통합이란?</div>
+    <div class="drow"><span class="dlabel">기능</span><span class="dval">클로드가 Chrome 브라우저를 직접 제어할 수 있어요. 웹 스크래핑, 테스트 자동화, UI 검토 등.</span></div>
+    <div class="drow"><span class="dlabel">활용</span><span class="dval">웹 페이지 스크린샷 촬영, 폼 자동 입력, 웹 앱 E2E 테스트 등</span></div>
+  </div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--chrome</span></span><button class="cpb" onclick="cp(this,'claude --chrome')">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">chrome</span><button class="cpb" onclick="cp(this,'/chrome')">복사</button></div>
+  <div class="lbl">Chrome 활용 프롬프트 예시</div>
+  <div class="pb">
+    localhost:3000 에서 내 앱을 열고:<br>
+    1. 로그인 폼에 테스트 계정으로 입력<br>
+    2. 스크린샷 찍기<br>
+    3. UI 문제점 있으면 알려줘
+  </div>
+  <div class="tip">Chrome DevTools 프로토콜을 사용하므로 Chrome 또는 Chromium이 설치돼 있어야 해요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">자동메모리</span><span class="ct">자동 메모리 — 클로드가 기억하는 것들</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">자동 메모리 기능</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">클로드가 세션 간에 중요한 정보(선호도, 프로젝트 구조, 결정사항)를 자동으로 기억해요.</span></div>
+    <div class="drow"><span class="dlabel">저장위치</span><span class="dval">~/.claude/projects/[프로젝트경로]/ 폴더에 자동 저장</span></div>
+    <div class="drow"><span class="dlabel">편집</span><span class="dval">/memory 명령어로 저장된 기억 확인 및 편집 가능</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">memory</span><button class="cpb" onclick="cp(this,'/memory')">복사</button></div>
+  <div class="lbl">명시적으로 기억시키기</div>
+  <div class="pb">
+    앞으로 <span class="hl">항상 기억해줘</span>: 우리 프로젝트는 Python 3.11, 패키지 관리는 Poetry 사용
+  </div>
+  <div class="lbl">기억 삭제</div>
+  <div class="pb">
+    이전에 기억한 [내용]은 <span class="hl">잊어도 돼</span>
+  </div>
+  <div class="tip">자동 메모리는 CLAUDE.md와 다르게 클로드가 자동으로 관리해요. CLAUDE.md는 명시적 규칙, 자동 메모리는 학습된 선호도!</div>
+</div>
+</div>
+</div><!-- /s13 -->
+
+
+<div class="footer">
+  📚 클로드 코드 완전 바이블 v3.0<br>
+  모르는 게 있으면 언제든 클로드한테 물어보세요!<br>
+  <br>
+  <span style="color:#2a2a4a">핸드폰 브라우저에서 열기 → 홈화면에 추가 → 앱처럼 사용 📱</span>
+</div>
+
+<script>
+function showTab(i){
+  document.querySelectorAll('.section').forEach((s,j)=>s.classList.toggle('active',i===j));
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',i===j));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function tc(h){h.parentElement.classList.toggle('open');}
+function cp(btn,txt){
+  navigator.clipboard.writeText(txt).then(()=>{
+    const o=btn.textContent;btn.textContent='✓';btn.style.cssText='background:#00d4aa;color:#000';
+    setTimeout(()=>{btn.textContent=o;btn.style.cssText='';},1300);
+  }).catch(()=>{
+    const t=document.createElement('textarea');t.value=txt;
+    document.body.appendChild(t);t.select();document.execCommand('copy');
+    document.body.removeChild(t);btn.textContent='✓';
+    setTimeout(()=>{btn.textContent='복사';},1000);
+  });
+}
+
+let searchTimer;
+function doSearch(q){
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>{
+    q=q.trim().toLowerCase();
+    const cnt=document.getElementById('srch-count');
+    if(!q){
+      document.querySelectorAll('.card').forEach(c=>{c.classList.remove('hidden');});
+      cnt.textContent='';
+      return;
+    }
+    let found=0;
+    document.querySelectorAll('.card').forEach(card=>{
+      const t=card.textContent.toLowerCase();
+      const show=t.includes(q);
+      card.classList.toggle('hidden',!show);
+      if(show){card.classList.add('open');found++;}
+    });
+    // show all sections that have visible cards
+    document.querySelectorAll('.section').forEach(sec=>{
+      if(sec.querySelectorAll('.card:not(.hidden)').length>0) sec.classList.add('active');
+    });
+    cnt.textContent=found+'개';
+  },200);
+}
+</script>
+</body>
+</html>
