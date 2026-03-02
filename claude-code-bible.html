@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>클로드 코드 바이블</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#07070f;--card:#0f0f1e;--card2:#161628;
@@ -12,7 +11,7 @@
   --text:#e8e8f2;--muted:#6e6e90;--border:#1e1e38;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;padding-bottom:60px;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic','맑은 고딕',sans-serif;padding-bottom:60px;}
 
 /* HEADER */
 .hdr{background:linear-gradient(160deg,#0c0c22,#07070f);border-bottom:1px solid var(--border);padding:26px 16px 18px;text-align:center;position:relative;overflow:hidden;}
@@ -28,7 +27,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 /* SEARCH */
 .srch{padding:12px 14px 0;}
 .srch-box{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 14px;}
-.srch-box input{background:none;border:none;outline:none;color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:.86rem;flex:1;}
+.srch-box input{background:none;border:none;outline:none;color:var(--text);font-family:inherit;font-size:.86rem;flex:1;}
 .srch-box input::placeholder{color:var(--muted);}
 #srch-count{font-size:.7rem;color:var(--muted);white-space:nowrap;}
 
@@ -74,33 +73,34 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 
 /* CMD */
 .cmd{background:#06060e;border:1px solid #1a1a30;border-radius:9px;padding:8px 36px 8px 11px;margin:7px 0 3px;position:relative;display:flex;align-items:flex-start;gap:6px;}
-.cmd .pr{color:var(--a2);font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;padding-top:1px;flex-shrink:0;}
-.cmd .co{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:#c8f7e4;line-height:1.65;word-break:break-all;flex:1;}
+.cmd .pr{color:var(--a2);font-family:'Menlo','Monaco','Courier New',monospace;font-size:.7rem;font-weight:600;padding-top:1px;flex-shrink:0;}
+.cmd .co{font-family:'Menlo','Monaco','Courier New',monospace;font-size:.74rem;color:#c8f7e4;line-height:1.65;word-break:break-all;flex:1;}
 .cmd .co .op{color:var(--a4);}
 .cmd .co .va{color:#ff9e9e;}
 .cpb{position:absolute;top:5px;right:5px;background:var(--border);border:none;border-radius:4px;color:var(--muted);font-size:.63rem;padding:2px 6px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .15s;}
 .cpb:active{background:var(--a2);color:#000;}
+.cpb{font-family:inherit;}
 
 /* TABLE */
 .tbl{width:100%;border-collapse:collapse;margin-top:9px;}
 .tbl th{text-align:left;font-size:.67rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:5px 7px;border-bottom:1px solid var(--border);}
 .tbl td{padding:8px 7px;border-bottom:1px solid #121224;vertical-align:top;}
 .tbl tr:last-child td{border-bottom:none;}
-.tn{font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--a2);font-weight:600;white-space:nowrap;}
+.tn{font-family:'Menlo','Monaco','Courier New',monospace;font-size:.76rem;color:var(--a2);font-weight:600;white-space:nowrap;}
 .td{font-size:.77rem;color:var(--text);line-height:1.45;}
 .ts{font-size:.68rem;color:var(--muted);margin-top:3px;line-height:1.4;}
-.tex{font-size:.68rem;color:var(--a4);font-family:'JetBrains Mono',monospace;margin-top:3px;}
+.tex{font-size:.68rem;color:var(--a4);font-family:'Menlo','Monaco','Courier New',monospace;margin-top:3px;}
 
 /* SHORTCUT TABLE */
-.sk{font-family:'JetBrains Mono',monospace;font-size:.7rem;background:#131326;border:1px solid #232342;border-radius:4px;padding:2px 6px;color:var(--a4);white-space:nowrap;display:inline-block;}
+.sk{font-family:'Menlo','Monaco','Courier New',monospace;font-size:.7rem;background:#131326;border:1px solid #232342;border-radius:4px;padding:2px 6px;color:var(--a4);white-space:nowrap;display:inline-block;}
 
 /* FLAG ITEM */
 .fi{border:1px solid var(--border);border-radius:9px;margin-bottom:7px;overflow:hidden;}
-.fn{background:var(--card2);padding:7px 11px;font-family:'JetBrains Mono',monospace;font-size:.77rem;color:var(--a4);font-weight:600;}
+.fn{background:var(--card2);padding:7px 11px;font-family:'Menlo','Monaco','Courier New',monospace;font-size:.77rem;color:var(--a4);font-weight:600;}
 .fd{padding:8px 11px;}
 .fd .desc{font-size:.78rem;line-height:1.55;}
 .fd .why{font-size:.73rem;color:var(--a2);margin-top:5px;font-weight:600;}
-.fd .ex{font-size:.7rem;color:var(--muted);margin-top:3px;font-family:'JetBrains Mono',monospace;}
+.fd .ex{font-size:.7rem;color:var(--muted);margin-top:3px;font-family:'Menlo','Monaco','Courier New',monospace;}
 .fd .warn{font-size:.71rem;color:var(--a1);margin-top:4px;}
 
 /* LABELS & HELPERS */
@@ -134,8 +134,8 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 
 /* FILE BLOCK */
 .fb{background:#06060e;border:1px solid #1a1a30;border-radius:9px;margin:7px 0;}
-.fb-name{padding:5px 11px;background:#101020;border-bottom:1px solid #1a1a30;font-family:'JetBrains Mono',monospace;font-size:.69rem;color:var(--muted);border-radius:9px 9px 0 0;}
-.fb-code{padding:9px 11px;font-family:'JetBrains Mono',monospace;font-size:.72rem;line-height:1.7;color:#c8e6c9;white-space:pre;overflow-x:auto;}
+.fb-name{padding:5px 11px;background:#101020;border-bottom:1px solid #1a1a30;font-family:'Menlo','Monaco','Courier New',monospace;font-size:.69rem;color:var(--muted);border-radius:9px 9px 0 0;}
+.fb-code{padding:9px 11px;font-family:'Menlo','Monaco','Courier New',monospace;font-size:.72rem;line-height:1.7;color:#c8e6c9;white-space:pre;overflow-x:auto;}
 .fb-code .kw{color:var(--a3);}
 .fb-code .cm{color:var(--muted);}
 .fb-code .st{color:var(--a4);}
