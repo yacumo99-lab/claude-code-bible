@@ -2229,15 +2229,20 @@ function showTab(i){
 function tc(h){h.parentElement.classList.toggle('open');}
 function cp(btn){
   const txt=btn.dataset.cmd;
-  navigator.clipboard.writeText(txt).then(()=>{
-    const o=btn.textContent;btn.textContent='✓';btn.style.cssText='background:rgba(0,200,120,.45);border-color:rgba(0,200,120,.65);box-shadow:0 0 14px rgba(0,200,120,.45);color:#7effc4';
+  const ok=()=>{
+    const o=btn.textContent;btn.textContent='✓';
+    btn.style.cssText='background:rgba(0,200,120,.45);border-color:rgba(0,200,120,.65);box-shadow:0 0 14px rgba(0,200,120,.45);color:#7effc4';
     setTimeout(()=>{btn.textContent=o;btn.style.cssText='';},1300);
-  }).catch(()=>{
-    const t=document.createElement('textarea');t.value=txt;
-    document.body.appendChild(t);t.select();document.execCommand('copy');
-    document.body.removeChild(t);btn.textContent='✓';
-    setTimeout(()=>{btn.textContent='복사';},1000);
-  });
+  };
+  const fallback=()=>{
+    const t=document.createElement('textarea');t.value=txt;t.style.cssText='position:fixed;opacity:0';
+    document.body.appendChild(t);t.focus();t.select();
+    try{document.execCommand('copy');}catch(e){}
+    document.body.removeChild(t);ok();
+  };
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(txt).then(ok).catch(fallback);
+  }else{fallback();}
 }
 
 let searchTimer;
