@@ -2549,8 +2549,12 @@ function doSearch(q){
     q=q.trim().toLowerCase();
     const cnt=document.getElementById('srch-count');
     if(!q){
-      document.querySelectorAll('.card').forEach(c=>{c.classList.remove('hidden');});
+      document.querySelectorAll('.card').forEach(c=>{
+        c.classList.remove('hidden');
+        c.classList.remove('open');
+      });
       cnt.textContent='';
+      showTab(0);
       return;
     }
     let found=0;
