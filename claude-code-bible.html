@@ -2534,8 +2534,10 @@ function cp(btn){
   const fallback=()=>{
     const t=document.createElement('textarea');t.value=txt;t.style.cssText='position:fixed;opacity:0';
     document.body.appendChild(t);t.focus();t.select();
-    try{document.execCommand('copy');}catch(e){}
-    document.body.removeChild(t);ok();
+    let success=false;
+    try{success=document.execCommand('copy');}catch(e){}
+    document.body.removeChild(t);
+    if(success)ok();
   };
   if(navigator.clipboard&&window.isSecureContext){
     navigator.clipboard.writeText(txt).then(ok).catch(fallback);
