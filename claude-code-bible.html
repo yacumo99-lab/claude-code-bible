@@ -90,6 +90,24 @@ body{background:linear-gradient(135deg,#080814 0%,#12052a 40%,#051228 70%,#08081
 .cpb:hover{background:rgba(108,92,231,.5);box-shadow:0 0 12px rgba(108,92,231,.45);color:#fff;}
 .cpb:active{background:rgba(0,200,120,.35);border-color:rgba(0,200,120,.55);box-shadow:0 0 14px rgba(0,200,120,.4);color:#7effc4;}
 
+/* FAVORITES */
+.fav-wrap{padding:0 12px;margin-bottom:4px;}
+.fav-panel{background:rgba(255,190,11,.06);border:1px solid rgba(255,190,11,.2);border-radius:12px;overflow:hidden;}
+.fav-hdr{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;cursor:pointer;user-select:none;-webkit-user-select:none;}
+.fav-hdr .fav-title{font-size:.78rem;font-weight:700;color:#ffbe0b;}
+.fav-toggle-icon{font-size:.7rem;color:var(--muted);}
+.fav-body{padding:4px 10px 8px;}
+.fav-item{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.fav-item:last-child{border-bottom:none;}
+.fav-cmd{font-family:'Menlo','Monaco','Courier New',monospace;font-size:.72rem;color:#c8f7e4;flex:1;word-break:break-all;}
+.fav-cpb{background:rgba(108,92,231,.25);border:1px solid rgba(108,92,231,.4);border-radius:6px;color:#c5b0ff;font-size:.63rem;padding:2px 8px;cursor:pointer;font-family:inherit;flex-shrink:0;transition:all .2s;}
+.fav-cpb:hover{background:rgba(108,92,231,.5);color:#fff;}
+.fav-rm{background:rgba(255,77,141,.12);border:1px solid rgba(255,77,141,.28);border-radius:6px;color:#ff8ab5;font-size:.63rem;padding:2px 7px;cursor:pointer;font-family:inherit;flex-shrink:0;transition:all .2s;}
+.fav-rm:hover{background:rgba(255,77,141,.35);color:#fff;}
+.favb{background:transparent;border:none;font-size:.85rem;cursor:pointer;padding:0 2px;line-height:1;opacity:.4;transition:opacity .2s,transform .15s;flex-shrink:0;}
+.favb:hover{opacity:1;}
+.favb.on{opacity:1;transform:scale(1.15);}
+
 /* TABLE */
 .tbl{width:100%;border-collapse:collapse;margin-top:9px;}
 .tbl th{text-align:left;font-size:.67rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:5px 7px;border-bottom:1px solid var(--border);}
@@ -219,6 +237,17 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
     <div class="tab" onclick="showTab(11)">💼 워크플로우</div>
     <div class="tab" onclick="showTab(12)">🎯 스킬&Hooks</div>
     <div class="tab" onclick="showTab(13)">⚡ 고급기능</div>
+  </div>
+</div>
+
+<!-- FAVORITES PANEL -->
+<div class="fav-wrap" id="fav-wrap" style="display:none">
+  <div class="fav-panel">
+    <div class="fav-hdr" onclick="toggleFavPanel()">
+      <span class="fav-title">⭐ 즐겨찾기</span>
+      <span class="fav-toggle-icon" id="fav-toggle-icon">▲</span>
+    </div>
+    <div class="fav-body" id="fav-body"></div>
   </div>
 </div>
 
