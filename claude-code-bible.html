@@ -2520,6 +2520,13 @@ hooks/           ← Hook 설정
     });
   })();
 
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/claude-code-bible/sw.js')
+      .catch(()=>{});
+  });
+}
+
 function showTab(i){
   document.querySelectorAll('.section').forEach((s,j)=>s.classList.toggle('active',i===j));
   document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',i===j));

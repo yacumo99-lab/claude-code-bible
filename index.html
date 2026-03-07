@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>클로드 코드 바이블</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7c3aed">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="클코 바이블">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23080814'/><text y='.9em' font-size='72' x='50%' text-anchor='middle'>📚</text></svg>">
+<link rel="apple-touch-icon" href="icon.png">
 <style>
 :root{
   --bg:#080814;--card:rgba(255,255,255,.06);--card2:rgba(255,255,255,.04);
@@ -180,7 +182,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 
 <!-- HEADER -->
 <div class="hdr">
-  <div class="badge">📚 CLAUDE CODE BIBLE v3.0</div>
+  <div class="badge">📚 CLAUDE CODE BIBLE v3.1</div>
   <h1>클로드 코드<br>완전 바이블</h1>
   <p style="font-size:.85rem;font-weight:700;color:#c5b0ff;margin-bottom:2px;">김병길 전용</p>
   <p>모든 명령어 + Skills · Hooks · 고급기능 총정리</p>
@@ -718,7 +720,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">정보/통계</span><span class="ct">/usage · /stats · /release-notes · /add-dir</span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">정보/통계</span><span class="ct">/usage · /stats · /release-notes</span></div><span class="ca">▼</span></div>
 <div class="cb">
 <table class="tbl">
 <tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
@@ -733,18 +735,6 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <tr>
   <td><span class="tn">/release-notes</span></td>
   <td><span class="td">릴리즈 노트 보기 <span class="bnew">NEW</span></span><div class="ts">최신 버전에서 추가된 기능과 변경사항 확인</div></td>
-</tr>
-<tr>
-  <td><span class="tn">/add-dir</span></td>
-  <td><span class="td">작업 디렉토리 추가 <span class="bnew">NEW</span></span><div class="ts">현재 프로젝트에 추가 작업 디렉토리 연결</div></td>
-</tr>
-<tr>
-  <td><span class="tn">/feedback</span></td>
-  <td><span class="td">피드백 전송 <span class="bnew">NEW</span></span><div class="ts">Anthropic에 버그 신고 또는 기능 요청. /bug 대체</div></td>
-</tr>
-<tr>
-  <td><span class="tn">/security-review</span></td>
-  <td><span class="td">보안 취약점 분석 <span class="bnew">NEW</span></span><div class="ts">현재 프로젝트의 보안 취약점 자동 스캔</div></td>
 </tr>
 </table>
 </div>
@@ -2508,7 +2498,7 @@ hooks/           ← Hook 설정
 
 
 <div class="footer">
-  📚 클로드 코드 완전 바이블 v3.0<br>
+  📚 클로드 코드 완전 바이블 v3.1<br>
   모르는 게 있으면 언제든 클로드한테 물어보세요!<br>
   <br>
   <span style="color:#2a2a4a">핸드폰 브라우저에서 열기 → 홈화면에 추가 → 앱처럼 사용 📱</span>
@@ -2530,6 +2520,13 @@ hooks/           ← Hook 설정
     });
   })();
 
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/claude-code-bible/sw.js')
+      .catch(()=>{});
+  });
+}
+
 function showTab(i){
   document.querySelectorAll('.section').forEach((s,j)=>s.classList.toggle('active',i===j));
   document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',i===j));
@@ -2546,8 +2543,10 @@ function cp(btn){
   const fallback=()=>{
     const t=document.createElement('textarea');t.value=txt;t.style.cssText='position:fixed;opacity:0';
     document.body.appendChild(t);t.focus();t.select();
-    try{document.execCommand('copy');}catch(e){}
-    document.body.removeChild(t);ok();
+    let success=false;
+    try{success=document.execCommand('copy');}catch(e){}
+    document.body.removeChild(t);
+    if(success)ok();
   };
   if(navigator.clipboard&&window.isSecureContext){
     navigator.clipboard.writeText(txt).then(ok).catch(fallback);
@@ -2561,8 +2560,12 @@ function doSearch(q){
     q=q.trim().toLowerCase();
     const cnt=document.getElementById('srch-count');
     if(!q){
-      document.querySelectorAll('.card').forEach(c=>{c.classList.remove('hidden');});
+      document.querySelectorAll('.card').forEach(c=>{
+        c.classList.remove('hidden');
+        c.classList.remove('open');
+      });
       cnt.textContent='';
+      showTab(0);
       return;
     }
     let found=0;
