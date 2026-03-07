@@ -2556,6 +2556,110 @@ if('serviceWorker' in navigator){
   });
 }
 
+// ── FAVORITES ──────────────────────────────
+const FAV_KEY='bible-favs';
+let _favOpen=true;
+
+function _getFavs(){try{return JSON.parse(localStorage.getItem(FAV_KEY)||'[]');}catch(e){return[];}}
+function _saveFavs(a){localStorage.setItem(FAV_KEY,JSON.stringify(a));}
+
+function loadFavs(){
+  document.querySelectorAll('.cmd').forEach(div=>{
+    const cpb=div.querySelector('[data-cmd]');
+    if(!cpb||div.querySelector('.favb'))return;
+    const cmd=cpb.dataset.cmd;
+    const b=document.createElement('button');
+    b.className='favb';
+    b.dataset.cmd=cmd;
+    b.textContent='⭐';
+    b.setAttribute('aria-label','즐겨찾기');
+    b.addEventListener('click',()=>toggleFav(b));
+    div.appendChild(b);
+  });
+  renderFavPanel();
+}
+
+function toggleFav(btn){
+  const cmd=btn.dataset.cmd;
+  const favs=_getFavs();
+  const idx=favs.indexOf(cmd);
+  if(idx===-1){favs.push(cmd);}else{favs.splice(idx,1);}
+  _saveFavs(favs);
+  renderFavPanel();
+  _syncFavBtns();
+}
+
+function removeFav(cmd){
+  _saveFavs(_getFavs().filter(c=>c!==cmd));
+  renderFavPanel();
+  _syncFavBtns();
+}
+
+function _syncFavBtns(){
+  const favs=_getFavs();
+  document.querySelectorAll('.favb').forEach(b=>{
+    const on=favs.includes(b.dataset.cmd);
+    b.textContent=on?'★':'⭐';
+    b.classList.toggle('on',on);
+  });
+}
+
+function renderFavPanel(){
+  const favs=_getFavs();
+  const wrap=document.getElementById('fav-wrap');
+  const body=document.getElementById('fav-body');
+  if(!wrap||!body)return;
+  wrap.style.display=favs.length?'':'none';
+  body.textContent='';
+  favs.forEach(cmd=>{
+    const row=document.createElement('div');
+    row.className='fav-item';
+
+    const label=document.createElement('span');
+    label.className='fav-cmd';
+    label.textContent=cmd;
+
+    const cpBtn=document.createElement('button');
+    cpBtn.className='fav-cpb';
+    cpBtn.textContent='복사';
+    cpBtn.addEventListener('click',()=>cpFav(cmd));
+
+    const rmBtn=document.createElement('button');
+    rmBtn.className='fav-rm';
+    rmBtn.textContent='✕';
+    rmBtn.addEventListener('click',()=>removeFav(cmd));
+
+    row.appendChild(label);
+    row.appendChild(cpBtn);
+    row.appendChild(rmBtn);
+    body.appendChild(row);
+  });
+  _syncFavBtns();
+}
+
+function cpFav(txt){
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(txt).catch(()=>_cpFavFallback(txt));
+  }else{_cpFavFallback(txt);}
+}
+function _cpFavFallback(txt){
+  const t=document.createElement('textarea');
+  t.value=txt;t.style.cssText='position:fixed;opacity:0';
+  document.body.appendChild(t);t.focus();t.select();
+  let ok=false;try{ok=document.execCommand('copy');}catch(e){}
+  document.body.removeChild(t);
+  return ok;
+}
+
+function toggleFavPanel(){
+  _favOpen=!_favOpen;
+  const body=document.getElementById('fav-body');
+  const icon=document.getElementById('fav-toggle-icon');
+  if(body)body.style.display=_favOpen?'':'none';
+  if(icon)icon.textContent=_favOpen?'▲':'▼';
+}
+// ───────────────────────────────────────────
+
 function showTab(i){
   document.querySelectorAll('.section').forEach((s,j)=>s.classList.toggle('active',i===j));
   document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',i===j));
@@ -2611,6 +2715,8 @@ function doSearch(q){
     cnt.textContent=found+'개';
   },200);
 }
+
+window.addEventListener('load', loadFavs);
 </script>
 </body>
 </html>
