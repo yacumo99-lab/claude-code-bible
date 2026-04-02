@@ -200,13 +200,13 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 
 <!-- HEADER -->
 <div class="hdr">
-  <div class="badge">📚 CLAUDE CODE BIBLE v3.1</div>
+  <div class="badge">📚 CLAUDE CODE BIBLE v4.0</div>
   <h1>클로드 코드<br>완전 바이블</h1>
   <p style="font-size:.85rem;font-weight:700;color:#c5b0ff;margin-bottom:2px;">김병길 전용</p>
   <p>모든 명령어 + Skills · Hooks · 고급기능 총정리</p>
   <div class="stats">
     <div class="stat"><div class="n">14</div><div class="l">카테고리</div></div>
-    <div class="stat"><div class="n">120+</div><div class="l">명령어</div></div>
+    <div class="stat"><div class="n">150+</div><div class="l">명령어</div></div>
     <div class="stat"><div class="n">상세</div><div class="l">설명</div></div>
   </div>
 </div>
@@ -436,10 +436,11 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">PR리뷰</span><span class="ct">/review — PR 코드 품질 리뷰</span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">PR리뷰</span><span class="ct">/review — PR 코드 품질 리뷰 <span style="color:var(--a1);font-size:.65rem;">DEPRECATED</span></span></div><span class="ca">▼</span></div>
 <div class="cb">
+  <div class="warn">/review는 deprecated 되었습니다. <strong>code-review 플러그인</strong>으로 대체되었어요. <code>claude plugin install code-review</code>로 설치 후 사용하세요.</div>
   <div class="detail">
-    <div class="dtitle">/review 기능</div>
+    <div class="dtitle">/review 기능 (레거시)</div>
     <div class="drow"><span class="dlabel">기능</span><span class="dval">GitHub PR의 코드 품질·정확성·보안·테스트 커버리지를 분석해 리뷰. PR 번호를 넘기거나 생략 시 열린 PR 목록을 표시.</span></div>
     <div class="drow"><span class="dlabel">필요 조건</span><span class="dval">gh CLI 설치 및 인증 필요 (<code>gh auth login</code>)</span></div>
   </div>
@@ -459,6 +460,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
   <div class="detail">
     <div class="dtitle">모델 별칭(Alias) — 6가지 선택지</div>
     <div class="drow"><span class="dlabel">default</span><span class="dval">구독 등급에 따라 자동 선택. Max / Team Premium → Opus, Pro / Team Standard → Sonnet</span></div>
+    <div class="drow"><span class="dlabel">best <span class="bnew">v4.0</span></span><span class="dval">가장 유능한 모델 선택 (현재 = Opus 4.6). 항상 최상위 모델을 사용하고 싶을 때.</span></div>
     <div class="drow"><span class="dlabel">sonnet</span><span class="dval">claude-sonnet-4-6. 성능·속도 균형, 일반 코딩에 최적. <strong>기본 추천</strong></span></div>
     <div class="drow"><span class="dlabel">opus</span><span class="dval">claude-opus-4-6. 가장 강력, 복잡한 설계·추론 문제에 사용. 느리고 비용 높음</span></div>
     <div class="drow"><span class="dlabel">haiku</span><span class="dval">claude-haiku-4-5. 가장 빠르고 저렴. 단순 질문·간단한 코드 수정에 사용</span></div>
@@ -482,6 +484,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
     <div class="drow"><span class="dlabel">low</span><span class="dval">빠른 답변. 단순 작업·단순 질문에 사용</span></div>
     <div class="drow"><span class="dlabel">medium</span><span class="dval">기본값. 일반적인 코딩 작업에 적합</span></div>
     <div class="drow"><span class="dlabel">high</span><span class="dval">깊은 사고. 복잡한 수학·알고리즘·아키텍처 설계 문제에 사용</span></div>
+    <div class="drow"><span class="dlabel">max <span class="bnew">v4.0</span></span><span class="dval">최대 사고. Opus 4.6 전용. 세션 간 유지되지 않음. 프롬프트에 "ultrathink" 포함 시 자동 활성화.</span></div>
   </div>
   <div class="tip">모르겠으면 <strong>sonnet</strong>. Plan 모드 품질↑ 비용↓이 필요하면 <strong>opusplan</strong>이 최적!</div>
 </div>
@@ -616,14 +619,34 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/extra-usage</span></td>
-  <td><span class="td">추가 사용량 설정 <span class="bnew">NEW</span></span><div class="ts">요금 한도 도달 시 계속 작업하기 위한 추가 사용량 구성.</div></td>
+  <td><span class="td">추가 사용량 설정</span><div class="ts">요금 한도 도달 시 계속 작업하기 위한 추가 사용량 구성.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/powerup</span></td>
+  <td><span class="td">Claude Code 기능 인터랙티브 학습 <span class="bnew">v4.0</span></span><div class="ts">Claude Code의 주요 기능을 대화형 레슨으로 배울 수 있어요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/color [색상]</span></td>
+  <td><span class="td">프롬프트 바 색상 변경 <span class="bnew">v4.0</span></span><div class="ts">프롬프트 바 색상을 원하는 색으로 변경. <code>/color default</code>로 초기화.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/btw &lt;질문&gt;</span></td>
+  <td><span class="td">사이드 질문 (대화에 추가 안 됨) <span class="bnew">v4.0</span></span><div class="ts">대화 히스토리에 기록되지 않는 빠른 질문. 맥락을 오염시키지 않아요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/stickers</span></td>
+  <td><span class="td">스티커 주문 페이지 <span class="bnew">v4.0</span></span><div class="ts">Claude Code 스티커 주문 페이지로 이동.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/passes</span></td>
+  <td><span class="td">무료 체험 공유 <span class="bnew">v4.0</span></span><div class="ts">다른 사람에게 Claude Code 체험을 공유할 수 있어요.</div></td>
 </tr>
 </table>
 </div>
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">세션관리</span><span class="ct">/resume · /fork · /rename · /export — 세션 관리</span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">세션관리</span><span class="ct">/resume · /branch · /rename · /export — 세션 관리</span></div><span class="ca">▼</span></div>
 <div class="cb">
 <table class="tbl">
 <tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
@@ -632,8 +655,8 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
   <td><span class="td">이전 세션 재개 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/continue</code>. 인수 없이 실행하면 세션 피커 열림. ID/이름으로 바로 재개 가능.</div><div class="tex">/resume my-feature-session</div></td>
 </tr>
 <tr>
-  <td><span class="tn">/fork [이름]</span></td>
-  <td><span class="td">현재 대화 분기점 생성 <span class="bnew">NEW</span></span><div class="ts">이름을 붙여 분기 가능. 같은 시작점에서 여러 방향을 독립적으로 시도할 때.</div><div class="tex">/fork 리팩토링-시도</div></td>
+  <td><span class="tn">/branch [이름]</span></td>
+  <td><span class="td">현재 대화 분기점 생성 <span class="bnew">UPD</span></span><div class="ts">기존 <code>/fork</code>의 새 이름 (<code>/fork</code>는 alias로 유지). 이름을 붙여 분기 가능.</div><div class="tex">/branch 리팩토링-시도</div></td>
 </tr>
 <tr>
   <td><span class="tn">/rename</span></td>
@@ -662,7 +685,11 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/fast [on|off]</span></td>
-  <td><span class="td">Fast 모드 토글 <span class="bnew">NEW</span></span><div class="ts">같은 모델이지만 더 빠른 출력. <code>/fast on</code> / <code>/fast off</code> 또는 인수 없이 토글</div></td>
+  <td><span class="td">Fast 모드 토글</span><div class="ts">같은 모델이지만 더 빠른 출력. <code>/fast on</code> / <code>/fast off</code> 또는 인수 없이 토글. <strong>Alt+O</strong>로도 전환 가능.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/effort [level]</span></td>
+  <td><span class="td">Effort Level 직접 조정 <span class="bnew">v4.0</span></span><div class="ts">low / medium / high / max / auto 중 선택. max는 Opus 4.6 전용. auto는 기본값 복원.</div><div class="tex">/effort high</div></td>
 </tr>
 <tr>
   <td><span class="tn">/context</span></td>
@@ -674,7 +701,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/output-style [style]</span></td>
-  <td><span class="td">출력 스타일 변경 <span class="bnew">NEW</span></span>
+  <td><span class="td">출력 스타일 변경 <span style="color:var(--a1);font-size:.65rem;">DEPRECATED</span></span>
     <div class="ts"><strong>Default</strong>: 일반 모드 | <strong>Explanatory</strong>: 구현 결정 이유·패턴 교육적 설명 추가 | <strong>Learning</strong>: 중간중간 직접 코드 작성 과제 출제 (학습용)</div>
     <div class="tex">/output-style explanatory</div></td>
 </tr>
@@ -713,7 +740,11 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/sandbox</span></td>
-  <td><span class="td">샌드박스 모드 토글 <span class="bnew">NEW</span></span><div class="ts">격리된 환경에서 안전하게 실행</div></td>
+  <td><span class="td">샌드박스 모드 토글</span><div class="ts">격리된 환경에서 안전하게 실행</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/reload-plugins</span></td>
+  <td><span class="td">플러그인 핫 리로드 <span class="bnew">v4.0</span></span><div class="ts">수정된 플러그인을 재시작 없이 즉시 반영. 플러그인 개발 시 유용.</div></td>
 </tr>
 </table>
 </div>
@@ -785,7 +816,11 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/debug</span></td>
-  <td><span class="td">디버그 로그 분석 <span class="bnew">NEW</span></span><div class="ts">에러 로그, 스택 트레이스를 분석해서 근본 원인 파악 및 수정안 제시</div></td>
+  <td><span class="td">디버그 로그 분석</span><div class="ts">에러 로그, 스택 트레이스를 분석해서 근본 원인 파악 및 수정안 제시</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/claude-api</span></td>
+  <td><span class="td">Anthropic SDK 레퍼런스 로드 <span class="bnew">v4.0</span></span><div class="ts">Anthropic SDK / Agent SDK 문서를 컨텍스트에 로드. Claude API 사용 코드 작성 시 활용.</div></td>
 </tr>
 </table>
   <div class="tip">스킬은 ~/.claude/skills/ (개인용) 또는 .claude/skills/ (프로젝트용)에 SKILL.md 파일로 정의해요!</div>
@@ -918,6 +953,26 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <tr>
   <td><span class="sk">Alt+T</span></td>
   <td><span class="td">확장 사고(Thinking) 모드 토글</span><div class="ts">클로드가 답변 전에 더 깊이 생각하는 모드를 켜고 끔. 복잡한 문제에 효과적.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Alt+O</span></td>
+  <td><span class="td">Fast 모드 토글 <span class="bnew">v4.0</span></span><div class="ts">같은 모델로 더 빠른 출력 모드 전환. /fast 명령어와 동일.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+X Ctrl+E</span></td>
+  <td><span class="td">외부 에디터 열기 <span class="bnew">v4.0</span></span><div class="ts">$EDITOR에서 프롬프트 편집. Ctrl+G와 동일 동작.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+X Ctrl+K</span></td>
+  <td><span class="td">모든 백그라운드 에이전트 종료 <span class="bnew">v4.0</span></span><div class="ts">실행 중인 모든 백그라운드 에이전트를 한 번에 종료.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Ctrl+R</span></td>
+  <td><span class="td">명령 히스토리 역방향 검색 <span class="bnew">v4.0</span></span><div class="ts">이전에 입력한 프롬프트를 검색해서 재사용.</div></td>
+</tr>
+<tr>
+  <td><span class="sk">Space 길게 누르기</span></td>
+  <td><span class="td">음성 Push-to-Talk <span class="bnew">v4.0</span></span><div class="ts">스페이스바를 누르고 있는 동안 음성으로 입력. 놓으면 전송.</div></td>
 </tr>
 <tr>
   <td><span class="sk">Option+Enter</span></td>
@@ -1173,6 +1228,87 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
     <div class="desc">기존 시스템 프롬프트에 추가</div>
     <div class="why">CLAUDE.md 내용을 유지하면서 추가 지시사항만 덧붙일 때</div>
     <div class="ex">claude --append-system-prompt "항상 한국어로 답해"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--bare <span class="bnew">v4.0</span></div>
+  <div class="fd">
+    <div class="desc">최소 모드 — hooks, skills, plugins, MCP, CLAUDE.md 모두 스킵</div>
+    <div class="why">빠른 테스트, 깨끗한 환경에서 실행할 때</div>
+    <div class="ex">claude --bare -p "간단한 질문"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--channels "채널" <span class="bnew">v4.0</span></div>
+  <div class="fd">
+    <div class="desc">MCP 채널 알림 수신 (Telegram, Discord, iMessage 등)</div>
+    <div class="why">외부 메신저에서 Claude에게 메시지를 보내고 응답 받을 때</div>
+    <div class="ex">claude --channels plugin:telegram@claude-plugins-official</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--effort low|medium|high|max <span class="bnew">v4.0</span></div>
+  <div class="fd">
+    <div class="desc">시작부터 effort level 지정</div>
+    <div class="why">복잡한 작업에 max, 단순 작업에 low 등 미리 설정</div>
+    <div class="ex">claude --effort max -p "아키텍처 설계해줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--enable-auto-mode <span class="bnew">v4.0</span></div>
+  <div class="fd">
+    <div class="desc">Auto 모드 활성화 (지능적 자동 승인)</div>
+    <div class="why">안전한 작업은 자동 승인, 위험한 작업만 확인 요청</div>
+    <div class="ex">claude --enable-auto-mode</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">-n "이름" &nbsp;또는&nbsp; --name "이름" <span class="bnew">v4.0</span></div>
+  <div class="fd">
+    <div class="desc">세션에 표시 이름 설정 (시작 시)</div>
+    <div class="why">여러 세션 운영 시 식별을 위해 이름 지정</div>
+    <div class="ex">claude -n "로그인-버그-수정"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--tmux <span class="bnew">v4.0</span></div>
+  <div class="fd">
+    <div class="desc">워크트리용 tmux 세션 생성</div>
+    <div class="why">워크트리에서 작업할 때 별도 tmux 세션으로 관리</div>
+    <div class="ex">claude -w --tmux</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--rc &nbsp;또는&nbsp; --remote-control <span class="bnew">v4.0</span></div>
+  <div class="fd">
+    <div class="desc">Remote Control 활성화 (모바일/웹에서 제어 가능)</div>
+    <div class="why">claude.ai 또는 모바일 앱에서 로컬 세션을 원격 제어</div>
+    <div class="ex">claude --rc</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--input-format text|stream-json <span class="bnew">v4.0</span></div>
+  <div class="fd">
+    <div class="desc">입력 포맷 지정</div>
+    <div class="why">파이프라인에서 JSON 스트림으로 입력할 때</div>
+    <div class="ex">claude -p --input-format stream-json</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--json-schema "스키마" <span class="bnew">v4.0</span></div>
+  <div class="fd">
+    <div class="desc">JSON Schema 기반 구조화 출력</div>
+    <div class="why">정형화된 JSON 응답이 필요한 자동화 파이프라인에서</div>
+    <div class="ex">claude -p --json-schema '{"type":"object","properties":{"bugs":{"type":"array"}}}'</div>
   </div>
 </div>
 
@@ -2335,7 +2471,14 @@ data/
     <div class="drow"><span class="dlabel">Notification</span><span class="dval">클로드가 알림을 보낼 때 — 슬랙/이메일 등 연동</span></div>
     <div class="drow"><span class="dlabel">Stop</span><span class="dval">클로드가 작업을 멈출 때 — 로그 기록, 정리 작업</span></div>
     <div class="drow"><span class="dlabel">SubagentStop</span><span class="dval">서브에이전트 종료 시</span></div>
+    <div class="drow"><span class="dlabel">CwdChanged <span class="bnew">v4.0</span></span><span class="dval">작업 디렉토리 변경 시</span></div>
+    <div class="drow"><span class="dlabel">FileChanged <span class="bnew">v4.0</span></span><span class="dval">파일 변경 시 트리거</span></div>
+    <div class="drow"><span class="dlabel">StopFailure <span class="bnew">v4.0</span></span><span class="dval">API 에러 발생 시</span></div>
+    <div class="drow"><span class="dlabel">PostCompact <span class="bnew">v4.0</span></span><span class="dval">컨텍스트 압축(compaction) 후</span></div>
+    <div class="drow"><span class="dlabel">PermissionDenied <span class="bnew">v4.0</span></span><span class="dval">auto mode에서 권한 거부 시</span></div>
+    <div class="drow"><span class="dlabel">SessionEnd <span class="bnew">UPD</span></span><span class="dval">세션 종료 시 (개선됨)</span></div>
   </div>
+  <div class="tip">v4.0부터 훅에 조건부 <code>if</code> 필드를 추가해 권한 규칙 구문으로 훅을 필터링할 수 있어요!</div>
   <div class="lbl">대화형 Hook 설정</div>
   <div class="cmd"><span class="pr">/</span><span class="co">hooks</span><button class="cpb" data-cmd="/hooks" onclick="cp(this)">복사</button></div>
   <div class="lbl">settings.json에서 직접 설정</div>
@@ -2397,7 +2540,7 @@ hooks/           ← Hook 설정
      SEC 13 : 고급 기능
 ═══════════════════════════════════════ -->
 <div class="section" id="s13">
-<div class="sh c4"><span class="ic">⚡</span><div><h2>고급 기능</h2><p>Plan 모드 · Fast 모드 · IDE · 세션관리 · Chrome</p></div></div>
+<div class="sh c4"><span class="ic">⚡</span><div><h2>고급 기능</h2><p>Plan · Fast · Channels · Remote Control · IDE · Chrome</p></div></div>
 
 <div class="card open">
 <div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">Plan모드</span><span class="ct">Plan 모드 — 실행 없이 계획만 세우기</span></div><span class="ca">▼</span></div>
@@ -2503,6 +2646,36 @@ hooks/           ← Hook 설정
 </div>
 
 <div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">Channels</span><span class="ct">Channels — 메신저 연동 <span class="bnew">v4.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Channels (리서치 프리뷰)</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">MCP 서버를 통해 외부 메신저(Telegram, Discord, iMessage)에서 실행 중인 Claude 세션에 메시지를 보내고 응답 받기.</span></div>
+    <div class="drow"><span class="dlabel">양방향</span><span class="dval">Claude가 채널을 통해 사용자에게 응답을 보낼 수도 있어요.</span></div>
+    <div class="drow"><span class="dlabel">권한</span><span class="dval">원격에서 도구 승인 요청을 릴레이할 수 있음.</span></div>
+  </div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--channels</span> <span class="va">plugin:telegram@claude-plugins-official</span></span><button class="cpb" data-cmd="claude --channels plugin:telegram@claude-plugins-official" onclick="cp(this)">복사</button></div>
+  <div class="tip">Telegram, Discord, iMessage 중 사용하는 메신저의 플러그인을 지정하세요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">RemoteCtrl</span><span class="ct">Remote Control — 원격 제어 <span class="bnew">v4.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Remote Control이란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">로컬 Claude Code 세션을 claude.ai 웹 또는 모바일 앱에서 원격으로 제어. 로컬 MCP, 파일시스템은 그대로 유지.</span></div>
+    <div class="drow"><span class="dlabel">서버</span><span class="dval"><code>claude remote-control</code>로 서버 모드 시작. 여러 세션 동시 관리 가능.</span></div>
+    <div class="drow"><span class="dlabel">클라이언트</span><span class="dval"><code>claude --rc</code>로 인터랙티브 세션에서 원격 제어 활성화.</span></div>
+  </div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">remote-control</span>  ← 서버 모드 (백그라운드)</span><button class="cpb" data-cmd="claude remote-control" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--rc</span>  ← 인터랙티브 + 원격 제어</span><button class="cpb" data-cmd="claude --rc" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">remote-control  ← 대화 중 활성화</span><button class="cpb" data-cmd="/remote-control" onclick="cp(this)">복사</button></div>
+  <div class="tip">자동 재연결 지원! 연결이 끊겨도 자동으로 다시 연결돼요.</div>
+</div>
+</div>
+
+<div class="card">
 <div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">자동메모리</span><span class="ct">자동 메모리 — 클로드가 기억하는 것들</span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
@@ -2527,7 +2700,7 @@ hooks/           ← Hook 설정
 
 
 <div class="footer">
-  📚 클로드 코드 완전 바이블 v3.1<br>
+  📚 클로드 코드 완전 바이블 v4.0<br>
   모르는 게 있으면 언제든 클로드한테 물어보세요!<br>
   <br>
   <span style="color:#2a2a4a">핸드폰 브라우저에서 열기 → 홈화면에 추가 → 앱처럼 사용 📱</span>
