@@ -192,6 +192,15 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 .orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;mix-blend-mode:screen;}
 @media(prefers-reduced-motion:reduce){.orb{animation:none!important;}}
 
+/* MOBILE — 좁은 화면에서 표가 잘리지 않게 (2026-09-02)
+   .tn의 white-space:nowrap 때문에 긴 명령어(/usage-credits · /extra-usage 등)가
+   첫 열을 밀어내 표 전체가 카드(overflow:hidden) 밖으로 잘려나갔다. */
+@media(max-width:560px){
+  .tbl .tn{white-space:normal;word-break:break-word;}
+  .tbl th,.tbl td{padding:7px 5px;}
+  .tbl th:first-child,.tbl td:first-child{min-width:96px;max-width:38%;}
+}
+
 /* Z-INDEX LAYER */
 .hdr,.srch,.tabs-wrap,.section,.footer,.card{position:relative;z-index:1;}
 </style>
