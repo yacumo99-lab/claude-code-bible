@@ -3703,8 +3703,21 @@ hooks/           ← Hook 설정
   })();
 
 if('serviceWorker' in navigator){
+  // 이미 SW가 붙어 있던 상태에서 새 SW가 활성화되면 = 새 버전이 배포된 것.
+  // 자동으로 한 번만 새로고침해 최신 페이지를 띄운다 (첫 설치 때는 리로드하지 않음).
+  const hadController = !!navigator.serviceWorker.controller;
+  let _reloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if(!hadController || _reloading) return;
+    _reloading = true;
+    location.reload();
+  });
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/claude-code-bible/sw.js')
+      .then(reg => {
+        reg.update().catch(()=>{});                       // 열 때마다 새 버전 확인
+        setInterval(() => reg.update().catch(()=>{}), 3600000); // 1시간마다 재확인
+      })
       .catch(()=>{});
   });
 }
