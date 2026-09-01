@@ -200,13 +200,14 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 
 <!-- HEADER -->
 <div class="hdr">
-  <div class="badge">📚 CLAUDE CODE BIBLE v4.0</div>
+  <div class="badge">📚 CLAUDE CODE BIBLE v5.0</div>
   <h1>클로드 코드<br>완전 바이블</h1>
   <p style="font-size:.85rem;font-weight:700;color:#c5b0ff;margin-bottom:2px;">김병길 전용</p>
-  <p>모든 명령어 + Skills · Hooks · 고급기능 총정리</p>
+  <p>모든 명령어 + Skills · Hooks · 자동화 · 클라우드 총정리</p>
+  <p style="font-size:.72rem;color:#9a8fc9;margin-top:4px;">기준: Claude Code v2.1.252 · 2026년 9월</p>
   <div class="stats">
-    <div class="stat"><div class="n">14</div><div class="l">카테고리</div></div>
-    <div class="stat"><div class="n">150+</div><div class="l">명령어</div></div>
+    <div class="stat"><div class="n">17</div><div class="l">카테고리</div></div>
+    <div class="stat"><div class="n">200+</div><div class="l">명령어</div></div>
     <div class="stat"><div class="n">상세</div><div class="l">설명</div></div>
   </div>
 </div>
@@ -237,6 +238,9 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
     <div class="tab" onclick="showTab(11)">💼 워크플로우</div>
     <div class="tab" onclick="showTab(12)">🎯 스킬&Hooks</div>
     <div class="tab" onclick="showTab(13)">⚡ 고급기능</div>
+    <div class="tab" onclick="showTab(14)">⚙️ 자동화</div>
+    <div class="tab" onclick="showTab(15)">☁️ 클라우드</div>
+    <div class="tab" onclick="showTab(16)">🖥️ 데스크톱</div>
   </div>
 </div>
 
@@ -257,6 +261,27 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 ═══════════════════════════════════════ -->
 <div class="section active" id="s0">
 <div class="sh c1"><span class="ic">🚀</span><div><h2>시작 &amp; 설치</h2><p>클로드 코드 처음 세팅부터 실행까지</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">v5.0</span><span class="ct">이번 개정에서 달라진 것 — 2026년 4월 → 9월 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">가장 크게 바뀐 5가지</div>
+    <div class="drow"><span class="dlabel">① 모델 세대교체</span><span class="dval">Opus 4.6 → <strong>Opus 5 · Sonnet 5</strong>가 기본이 됐고, 그 위에 <strong>Fable 5</strong>가 생겼어요. effort에 <strong>xhigh</strong>가 추가되고 기본값이 high로 올라갔어요</span></div>
+    <div class="drow"><span class="dlabel">② 권한 질문이 사라짐</span><span class="dval"><strong>Auto 모드</strong>가 Pro·Max·Team의 <strong>기본 시작 모드</strong>가 됐어요(8월 14일부터). 분류기가 대신 판단해서 안전한 건 그냥 지나가요</span></div>
+    <div class="drow"><span class="dlabel">③ 규모의 자동화</span><span class="dval"><strong>Workflows</strong>(수백 에이전트) · <strong>Routines</strong>(클라우드 예약) · <strong>/goal</strong>(조건까지 계속) — 새 <strong>⚙️ 자동화 탭</strong> 참고</span></div>
+    <div class="drow"><span class="dlabel">④ 결과물 공유</span><span class="dval"><strong>Artifacts</strong>로 결과를 살아있는 웹페이지로 발행하고, <strong>Agent View</strong>로 여러 세션을 한 화면에서 관리 — 새 <strong>☁️ 클라우드 탭</strong></span></div>
+    <div class="drow"><span class="dlabel">⑤ 터미널 밖으로</span><span class="dval">데스크톱 앱(내장 브라우저·iOS 시뮬레이터·리눅스)과 폰에서 조종하기 — 새 <strong>🖥️ 데스크톱 탭</strong></span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">배지 읽는 법</div>
+    <div class="drow"><span class="dlabel"><span class="bnew">v5.0</span></span><span class="dval">이번 개정(2026년 9월)에서 새로 추가되거나 크게 바뀐 내용</span></div>
+    <div class="drow"><span class="dlabel"><span class="bnew">v4.0</span></span><span class="dval">2026년 4월 개정 때 추가된 내용 (여전히 유효)</span></div>
+    <div class="drow"><span class="dlabel"><span class="bnew">UPD</span></span><span class="dval">기존 내용이 수정된 항목 — 예전에 알던 것과 달라졌으니 다시 보세요</span></div>
+  </div>
+  <div class="tip">기준 버전: <strong>Claude Code v2.1.252</strong> · 최신 버전은 <code>claude update</code>로 올릴 수 있어요!</div>
+</div>
+</div>
 
 <div class="card open">
 <div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">사전준비</span><span class="ct">Node.js 설치 확인 (필수!)</span></div><span class="ca">▼</span></div>
@@ -458,35 +483,56 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">모델</span><span class="ct">/model — AI 모델 변경</span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
-    <div class="dtitle">모델 별칭(Alias) — 6가지 선택지</div>
-    <div class="drow"><span class="dlabel">default</span><span class="dval">구독 등급에 따라 자동 선택. Max / Team Premium → Opus, Pro / Team Standard → Sonnet</span></div>
-    <div class="drow"><span class="dlabel">best <span class="bnew">v4.0</span></span><span class="dval">가장 유능한 모델 선택 (현재 = Opus 4.6). 항상 최상위 모델을 사용하고 싶을 때.</span></div>
-    <div class="drow"><span class="dlabel">sonnet</span><span class="dval">claude-sonnet-4-6. 성능·속도 균형, 일반 코딩에 최적. <strong>기본 추천</strong></span></div>
-    <div class="drow"><span class="dlabel">opus</span><span class="dval">claude-opus-4-6. 가장 강력, 복잡한 설계·추론 문제에 사용. 느리고 비용 높음</span></div>
+    <div class="dtitle">모델 별칭(Alias) — 2026년 9월 기준</div>
+    <div class="drow"><span class="dlabel">default</span><span class="dval">구독 등급에 따라 자동 선택. Max / Team Premium / Enterprise → <strong>Opus 5</strong>, Pro / Team Standard → <strong>Sonnet 5</strong></span></div>
+    <div class="drow"><span class="dlabel">fable <span class="bnew">v5.0</span></span><span class="dval">claude-fable-5. <strong>Claude Code 최상위 모델.</strong> 기본값 아님 — 직접 선택해야 해요. 한 자리에서 끝나지 않는 큰 작업, 장시간 자율 실행, 원인 규명·아키텍처 판단에 강해요. v2.1.170+ 필요</span></div>
+    <div class="drow"><span class="dlabel">opus</span><span class="dval">claude-opus-5. 강력한 코딩·추론 모델. 1M 토큰 컨텍스트. v2.1.219+ 필요</span></div>
+    <div class="drow"><span class="dlabel">sonnet</span><span class="dval">claude-sonnet-5. 성능·속도 균형, 일반 코딩에 최적. 1M 토큰 네이티브 지원 + 적응형 사고 기본 ON. v2.1.197+ 필요</span></div>
     <div class="drow"><span class="dlabel">haiku</span><span class="dval">claude-haiku-4-5. 가장 빠르고 저렴. 단순 질문·간단한 코드 수정에 사용</span></div>
-    <div class="drow"><span class="dlabel">sonnet[1m] <span class="bnew">NEW</span></span><span class="dval">1M 토큰 컨텍스트 윈도우 (베타). 초대형 코드베이스·방대한 문서 분석에 활용</span></div>
-    <div class="drow"><span class="dlabel">opusplan <span class="bnew">NEW</span></span><span class="dval"><strong>오퍼스플랜 모드</strong>: Plan 모드에서 Opus로 계획 수립 → 실행 단계에서 Sonnet으로 자동 전환. 품질↑ 비용↓</span></div>
+    <div class="drow"><span class="dlabel">opusplan</span><span class="dval"><strong>오퍼스플랜 모드</strong>: Plan 모드에서 Opus로 계획 수립 → 실행 단계에서 Sonnet으로 자동 전환. 품질↑ 비용↓</span></div>
   </div>
-  <div class="cmd"><span class="pr">/</span><span class="co">model sonnet</span><button class="cpb" data-cmd="/model sonnet" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">model fable  ← 최상위 모델 (별도 선택 필요)</span><button class="cpb" data-cmd="/model fable" onclick="cp(this)">복사</button></div>
   <div class="cmd"><span class="pr">/</span><span class="co">model opus</span><button class="cpb" data-cmd="/model opus" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">model sonnet</span><button class="cpb" data-cmd="/model sonnet" onclick="cp(this)">복사</button></div>
   <div class="cmd"><span class="pr">/</span><span class="co">model haiku</span><button class="cpb" data-cmd="/model haiku" onclick="cp(this)">복사</button></div>
   <div class="cmd"><span class="pr">/</span><span class="co">model opusplan</span><button class="cpb" data-cmd="/model opusplan" onclick="cp(this)">복사</button></div>
-  <div class="cmd"><span class="pr">/</span><span class="co">model sonnet[1m]</span><button class="cpb" data-cmd="/model sonnet[1m]" onclick="cp(this)">복사</button></div>
   <div class="detail">
-    <div class="dtitle">전체 모델 ID로도 지정 가능</div>
-    <div class="drow"><span class="dlabel">Opus 4.6</span><span class="dval">claude-opus-4-6</span></div>
-    <div class="drow"><span class="dlabel">Sonnet 4.6</span><span class="dval">claude-sonnet-4-6 · claude-sonnet-4-6[1m]</span></div>
+    <div class="dtitle">전체 모델 ID로도 지정 가능 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">Fable 5</span><span class="dval">claude-fable-5</span></div>
+    <div class="drow"><span class="dlabel">Opus 5</span><span class="dval">claude-opus-5 · claude-opus-5[1m]</span></div>
+    <div class="drow"><span class="dlabel">Sonnet 5</span><span class="dval">claude-sonnet-5</span></div>
     <div class="drow"><span class="dlabel">Haiku 4.5</span><span class="dval">claude-haiku-4-5-20251001</span></div>
+    <div class="drow"><span class="dlabel">구세대</span><span class="dval">claude-opus-4-8 · claude-opus-4-7 · claude-opus-4-6 · claude-sonnet-4-6 · claude-sonnet-4-5 (명시 지정 시에만)</span></div>
   </div>
   <div class="detail">
-    <div class="dtitle">Effort Level 조절 (← → 방향키)</div>
-    <div class="drow"><span class="dlabel">방법</span><span class="dval">/model 실행 후 모델 선택 화면에서 <strong>← → 방향키</strong>로 thinking 노력 수준을 low / medium / high로 조절</span></div>
-    <div class="drow"><span class="dlabel">low</span><span class="dval">빠른 답변. 단순 작업·단순 질문에 사용</span></div>
-    <div class="drow"><span class="dlabel">medium</span><span class="dval">기본값. 일반적인 코딩 작업에 적합</span></div>
-    <div class="drow"><span class="dlabel">high</span><span class="dval">깊은 사고. 복잡한 수학·알고리즘·아키텍처 설계 문제에 사용</span></div>
-    <div class="drow"><span class="dlabel">max <span class="bnew">v4.0</span></span><span class="dval">최대 사고. Opus 4.6 전용. 세션 간 유지되지 않음. 프롬프트에 "ultrathink" 포함 시 자동 활성화.</span></div>
+    <div class="dtitle">Fable 5를 쓸 때 알아둘 점 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">쓰는 법</span><span class="dval">단계가 아니라 <strong>원하는 결과</strong>를 설명하세요. 경로는 알아서 계획해요. 애매한 문제(원인 규명·장애 디버깅·설계 판단)에 강점</span></div>
+    <div class="drow"><span class="dlabel">검증 잔소리 불필요</span><span class="dval">스스로 결과를 확인하는 편이라 "테스트해봐" 같은 리마인더가 대체로 불필요해요</span></div>
+    <div class="drow"><span class="dlabel">과금 주의</span><span class="dval">플랜·좌석 등급에 따라 <strong>사용 크레딧</strong>으로 청구될 수 있어요. /model 목록에 "Requires usage credits"로 표시되고, 대화형 세션에서는 동의 창이 떠요</span></div>
+    <div class="drow"><span class="dlabel">자동 폴백</span><span class="dval">안전 분류기가 걸리는 요청(주로 보안·생물학 주제)은 자동으로 하위 모델로 전환돼요</span></div>
   </div>
-  <div class="tip">모르겠으면 <strong>sonnet</strong>. Plan 모드 품질↑ 비용↓이 필요하면 <strong>opusplan</strong>이 최적!</div>
+  <div class="detail">
+    <div class="dtitle">모델 설정 우선순위 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">1. 세션 중</span><span class="dval">/model &lt;이름&gt; 즉시 전환 · 인수 없이 /model 하면 선택창</span></div>
+    <div class="drow"><span class="dlabel">2. 시작 시</span><span class="dval">claude --model &lt;이름&gt;</span></div>
+    <div class="drow"><span class="dlabel">3. 환경변수</span><span class="dval">ANTHROPIC_MODEL=&lt;이름&gt;</span></div>
+    <div class="drow"><span class="dlabel">4. 설정 파일</span><span class="dval">settings.json의 model 필드</span></div>
+    <div class="drow"><span class="dlabel">5. 새 세션 기본</span><span class="dval">ANTHROPIC_DEFAULT_MODEL=&lt;이름&gt; — 새로 시작하는 세션의 기본 모델</span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">Effort Level — 얼마나 꼼꼼히 생각할지 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">지원 모델</span><span class="dval">Fable 5 · Opus 5 · Sonnet 5 · Opus 4.8 · Opus 4.7 → low / medium / high / <strong>xhigh</strong> / max</span></div>
+    <div class="drow"><span class="dlabel">기본값</span><span class="dval"><strong>high</strong> (effort 지원 모델 전부). 단 Opus 4.7만 xhigh가 기본</span></div>
+    <div class="drow"><span class="dlabel">low</span><span class="dval">빠른 답변. 단순 작업·기계적 수정에 사용</span></div>
+    <div class="drow"><span class="dlabel">medium</span><span class="dval">가벼운 일반 작업</span></div>
+    <div class="drow"><span class="dlabel">high</span><span class="dval">기본값. 대부분의 코딩 작업에 적합</span></div>
+    <div class="drow"><span class="dlabel">xhigh <span class="bnew">v5.0</span></span><span class="dval">깊은 사고. 복잡한 알고리즘·아키텍처 설계에 권장</span></div>
+    <div class="drow"><span class="dlabel">max</span><span class="dval">최대 사고. 항상 xhigh보다 좋진 않으니 주의</span></div>
+    <div class="drow"><span class="dlabel">미지원 시</span><span class="dval">지원 안 하는 모델에 xhigh를 걸면 <strong>high로 자동 하향</strong>돼요 (에러 아님)</span></div>
+    <div class="drow"><span class="dlabel">저장 방식</span><span class="dval">모델별로 따로 기억해요. settings.json의 modelSettings 키에 저장</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">effort xhigh</span><button class="cpb" data-cmd="/effort xhigh" onclick="cp(this)">복사</button></div>
+  <div class="tip">모르겠으면 <strong>기본값 그대로</strong>. 며칠짜리 큰 작업·원인 모를 버그면 <strong>fable</strong>, 빠른 반복이면 <strong>haiku</strong>가 좋아요!</div>
 </div>
 </div>
 
@@ -559,7 +605,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/keybindings</span></td>
-  <td><span class="td">커스텀 키바인딩 파일 열기 <span class="bnew">NEW</span></span><div class="ts">~/.claude/keybindings.json 파일을 열어 키 설정 직접 편집.</div></td>
+  <td><span class="td">커스텀 키바인딩 파일 열기</span><div class="ts">~/.claude/keybindings.json 파일을 열어 키 설정 직접 편집.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/vim</span></td>
@@ -571,51 +617,51 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/insights</span></td>
-  <td><span class="td">세션 분석 리포트 생성 <span class="bnew">NEW</span></span><div class="ts">내 클로드 코드 사용 패턴, 자주 다루는 프로젝트 영역, 마찰 지점 등을 분석한 보고서 생성.</div></td>
+  <td><span class="td">세션 분석 리포트 생성</span><div class="ts">내 클로드 코드 사용 패턴, 자주 다루는 프로젝트 영역, 마찰 지점 등을 분석한 보고서 생성.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/security-review</span></td>
-  <td><span class="td">현재 브랜치 보안 취약점 분석 <span class="bnew">NEW</span></span><div class="ts">git diff를 분석해 인젝션·인증 문제·데이터 노출 등 보안 리스크 식별.</div></td>
+  <td><span class="td">현재 브랜치 보안 취약점 분석</span><div class="ts">git diff를 분석해 인젝션·인증 문제·데이터 노출 등 보안 리스크 식별.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/sandbox</span></td>
-  <td><span class="td">샌드박스 모드 토글 <span class="bnew">NEW</span></span><div class="ts">지원 플랫폼에서만 사용 가능. 격리된 환경에서 코드 실행.</div></td>
+  <td><span class="td">샌드박스 모드 토글</span><div class="ts">지원 플랫폼에서만 사용 가능. 격리된 환경에서 코드 실행.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/statusline</span></td>
-  <td><span class="td">상태표시줄 설정 <span class="bnew">NEW</span></span><div class="ts">셸 프롬프트에 클로드 상태 정보 표시. 인수 없이 실행 시 자동 설정.</div></td>
+  <td><span class="td">상태표시줄 설정</span><div class="ts">셸 프롬프트에 클로드 상태 정보 표시. 인수 없이 실행 시 자동 설정.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/desktop</span></td>
-  <td><span class="td">데스크탑 앱에서 계속하기 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/app</code>. 현재 세션을 Claude Code Desktop 앱으로 전환. macOS/Windows 전용.</div></td>
+  <td><span class="td">데스크탑 앱에서 계속하기</span><div class="ts">별칭: <code>/app</code>. 현재 세션을 Claude Code Desktop 앱으로 전환. macOS/Windows 전용.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/mobile</span></td>
-  <td><span class="td">모바일 앱 QR 코드 표시 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/ios</code>, <code>/android</code>. Claude 모바일 앱 다운로드 QR 코드 표시.</div></td>
+  <td><span class="td">모바일 앱 QR 코드 표시</span><div class="ts">별칭: <code>/ios</code>, <code>/android</code>. Claude 모바일 앱 다운로드 QR 코드 표시.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/remote-control</span></td>
-  <td><span class="td">원격 제어 세션 활성화 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/rc</code>. 이 세션을 claude.ai에서 원격 제어 가능하게 공개.</div></td>
+  <td><span class="td">원격 제어 세션 활성화</span><div class="ts">별칭: <code>/rc</code>. 이 세션을 claude.ai에서 원격 제어 가능하게 공개.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/remote-env</span></td>
-  <td><span class="td">Teleport 세션 기본 원격 환경 설정 <span class="bnew">NEW</span></span><div class="ts">웹 세션을 로컬 터미널로 가져올 때(teleport) 사용할 기본 원격 환경 구성.</div></td>
+  <td><span class="td">Teleport 세션 기본 원격 환경 설정</span><div class="ts">웹 세션을 로컬 터미널로 가져올 때(teleport) 사용할 기본 원격 환경 구성.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/install-github-app</span></td>
-  <td><span class="td">GitHub Actions 앱 설치 <span class="bnew">NEW</span></span><div class="ts">저장소에 Claude GitHub Actions 설정. 저장소 선택 및 통합 설정 안내.</div></td>
+  <td><span class="td">GitHub Actions 앱 설치</span><div class="ts">저장소에 Claude GitHub Actions 설정. 저장소 선택 및 통합 설정 안내.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/install-slack-app</span></td>
-  <td><span class="td">Slack 앱 설치 <span class="bnew">NEW</span></span><div class="ts">Claude Slack 앱 OAuth 인증 흐름 시작. 브라우저가 열림.</div></td>
+  <td><span class="td">Slack 앱 설치</span><div class="ts">Claude Slack 앱 OAuth 인증 흐름 시작. 브라우저가 열림.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/upgrade</span></td>
-  <td><span class="td">요금제 업그레이드 페이지 열기 <span class="bnew">NEW</span></span><div class="ts">Pro/Max 플랜 전환 페이지. 해당 플랜 구독자에게만 표시.</div></td>
+  <td><span class="td">요금제 업그레이드 페이지 열기</span><div class="ts">Pro/Max 플랜 전환 페이지. 해당 플랜 구독자에게만 표시.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/privacy-settings</span></td>
-  <td><span class="td">개인정보 설정 <span class="bnew">NEW</span></span><div class="ts">Pro/Max 플랜 전용. 내 데이터 처리 관련 설정 확인 및 변경.</div></td>
+  <td><span class="td">개인정보 설정</span><div class="ts">Pro/Max 플랜 전용. 내 데이터 처리 관련 설정 확인 및 변경.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/extra-usage</span></td>
@@ -652,23 +698,23 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
 <tr>
   <td><span class="tn">/resume [세션ID]</span></td>
-  <td><span class="td">이전 세션 재개 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/continue</code>. 인수 없이 실행하면 세션 피커 열림. ID/이름으로 바로 재개 가능.</div><div class="tex">/resume my-feature-session</div></td>
+  <td><span class="td">이전 세션 재개</span><div class="ts">별칭: <code>/continue</code>. 인수 없이 실행하면 세션 피커 열림. ID/이름으로 바로 재개 가능.</div><div class="tex">/resume my-feature-session</div></td>
 </tr>
 <tr>
   <td><span class="tn">/branch [이름]</span></td>
-  <td><span class="td">현재 대화 분기점 생성 <span class="bnew">UPD</span></span><div class="ts">기존 <code>/fork</code>의 새 이름 (<code>/fork</code>는 alias로 유지). 이름을 붙여 분기 가능.</div><div class="tex">/branch 리팩토링-시도</div></td>
+  <td><span class="td">현재 대화 분기점 생성 <span class="bnew">UPD</span></span><div class="ts">대화를 갈라서 다른 접근을 시도할 때. 이름을 붙여 분기 가능.<br><strong>⚠️ /fork와 헷갈리지 마세요</strong> — <code>/fork</code>는 이제 별칭이 아니라 <strong>대화를 새 백그라운드 세션으로 복사</strong>하는 별개 명령이에요. 복사해두고 <strong>나는 계속 원래 세션에서 일할 수</strong> 있어요.</div><div class="tex">/branch 리팩토링-시도</div></td>
 </tr>
 <tr>
   <td><span class="tn">/rename</span></td>
-  <td><span class="td">세션 이름 변경 <span class="bnew">NEW</span></span><div class="ts">현재 대화 세션에 이름을 붙여 나중에 /resume으로 찾기 쉽게</div></td>
+  <td><span class="td">세션 이름 변경</span><div class="ts">현재 대화 세션에 이름을 붙여 나중에 /resume으로 찾기 쉽게</div></td>
 </tr>
 <tr>
   <td><span class="tn">/export</span></td>
-  <td><span class="td">대화 내용 내보내기 <span class="bnew">NEW</span></span><div class="ts">현재 대화를 파일로 저장하거나 공유용으로 내보내기</div></td>
+  <td><span class="td">대화 내용 내보내기</span><div class="ts">현재 대화를 파일로 저장하거나 공유용으로 내보내기</div></td>
 </tr>
 <tr>
   <td><span class="tn">/rewind</span></td>
-  <td><span class="td">대화/코드를 이전 시점으로 되돌리기 <span class="bnew">NEW</span></span><div class="ts">별칭: <code>/checkpoint</code>. Esc+Esc 단축키와 동일. 대화만 롤백 or 코드만 롤백 or 둘 다 선택 가능.</div></td>
+  <td><span class="td">대화/코드를 이전 시점으로 되돌리기</span><div class="ts">별칭: <code>/checkpoint</code>. Esc+Esc 단축키와 동일. 대화만 롤백 or 코드만 롤백 or 둘 다 선택 가능.</div></td>
 </tr>
 </table>
 </div>
@@ -681,7 +727,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
 <tr>
   <td><span class="tn">/plan</span></td>
-  <td><span class="td">Plan 모드 진입 <span class="bnew">NEW</span></span><div class="ts">코드 실행 없이 계획만 세우는 모드. 구현 전에 전략을 검토하고 싶을 때. <strong>Shift+Tab</strong>으로도 전환 가능. Plan 모드에서는 파일 수정·실행이 차단됨.</div></td>
+  <td><span class="td">Plan 모드 진입</span><div class="ts">코드 실행 없이 계획만 세우는 모드. 구현 전에 전략을 검토하고 싶을 때. <strong>Shift+Tab</strong>으로도 전환 가능. Plan 모드에서는 파일 수정·실행이 차단됨.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/fast [on|off]</span></td>
@@ -693,11 +739,11 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/context</span></td>
-  <td><span class="td">컨텍스트 사용량 시각화 <span class="bnew">NEW</span></span><div class="ts">색상 그리드로 현재 컨텍스트 점유율 표시. 스킬이 너무 많으면 제외된 스킬 경고도 표시됨.</div></td>
+  <td><span class="td">컨텍스트 사용량 시각화</span><div class="ts">색상 그리드로 현재 컨텍스트 점유율 표시. 스킬이 너무 많으면 제외된 스킬 경고도 표시됨.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/copy</span></td>
-  <td><span class="td">마지막 응답 클립보드 복사 <span class="bnew">NEW</span></span><div class="ts">코드 블록이 있으면 인터랙티브 피커로 특정 블록만 선택 복사 가능. 전체 응답도 선택 가능.</div></td>
+  <td><span class="td">마지막 응답 클립보드 복사</span><div class="ts">코드 블록이 있으면 인터랙티브 피커로 특정 블록만 선택 복사 가능. 전체 응답도 선택 가능.</div></td>
 </tr>
 <tr>
   <td><span class="tn">/output-style [style]</span></td>
@@ -720,23 +766,23 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
 <tr>
   <td><span class="tn">/config</span></td>
-  <td><span class="td">설정 인터페이스 열기 <span class="bnew">NEW</span></span><div class="ts">claude의 각종 설정을 대화형으로 변경. = /settings</div></td>
+  <td><span class="td">설정 인터페이스 열기</span><div class="ts">claude의 각종 설정을 대화형으로 변경. = /settings</div></td>
 </tr>
 <tr>
   <td><span class="tn">/memory</span></td>
-  <td><span class="td">CLAUDE.md 메모리 파일 편집 <span class="bnew">NEW</span></span><div class="ts">자동 메모리 기능 설정 및 기억 내용 편집</div></td>
+  <td><span class="td">CLAUDE.md 메모리 파일 편집</span><div class="ts">자동 메모리 기능 설정 및 기억 내용 편집</div></td>
 </tr>
 <tr>
   <td><span class="tn">/hooks</span></td>
-  <td><span class="td">Hook 설정 관리 <span class="bnew">NEW</span></span><div class="ts">PreToolUse, PostToolUse 등 Hook 이벤트 대화형 설정</div></td>
+  <td><span class="td">Hook 설정 관리</span><div class="ts">PreToolUse, PostToolUse 등 Hook 이벤트 대화형 설정</div></td>
 </tr>
 <tr>
   <td><span class="tn">/ide</span></td>
-  <td><span class="td">IDE 통합 관리 <span class="bnew">NEW</span></span><div class="ts">VS Code, JetBrains 연결 상태 확인 및 설정</div></td>
+  <td><span class="td">IDE 통합 관리</span><div class="ts">VS Code, JetBrains 연결 상태 확인 및 설정</div></td>
 </tr>
 <tr>
   <td><span class="tn">/theme</span></td>
-  <td><span class="td">색상 테마 변경 <span class="bnew">NEW</span></span><div class="ts">터미널 색상 테마 선택</div></td>
+  <td><span class="td">색상 테마 변경</span><div class="ts">터미널 색상 테마 선택</div></td>
 </tr>
 <tr>
   <td><span class="tn">/sandbox</span></td>
@@ -757,23 +803,23 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
 <tr>
   <td><span class="tn">/skills</span></td>
-  <td><span class="td">사용 가능한 스킬 목록 <span class="bnew">NEW</span></span><div class="ts">설치된 스킬 목록과 설명 표시. /스킬명 으로 실행</div></td>
+  <td><span class="td">사용 가능한 스킬 목록</span><div class="ts">설치된 스킬 목록과 설명 표시. /스킬명 으로 실행</div></td>
 </tr>
 <tr>
   <td><span class="tn">/agents</span></td>
-  <td><span class="td">서브에이전트 설정 관리 <span class="bnew">NEW</span></span><div class="ts">커스텀 서브에이전트 등록 및 관리</div></td>
+  <td><span class="td">서브에이전트 설정 관리</span><div class="ts">커스텀 서브에이전트 등록 및 관리</div></td>
 </tr>
 <tr>
   <td><span class="tn">/tasks</span></td>
-  <td><span class="td">백그라운드 작업 관리 <span class="bnew">NEW</span></span><div class="ts">실행 중인 백그라운드 태스크 목록 확인 및 종료</div></td>
+  <td><span class="td">백그라운드 작업 관리</span><div class="ts">실행 중인 백그라운드 태스크 목록 확인 및 종료</div></td>
 </tr>
 <tr>
   <td><span class="tn">/plugin</span></td>
-  <td><span class="td">플러그인 관리 <span class="bnew">NEW</span></span><div class="ts">설치된 플러그인 목록 확인 및 활성화/비활성화</div></td>
+  <td><span class="td">플러그인 관리</span><div class="ts">설치된 플러그인 목록 확인 및 활성화/비활성화</div></td>
 </tr>
 <tr>
   <td><span class="tn">/chrome</span></td>
-  <td><span class="td">Chrome 브라우저 통합 <span class="bnew">NEW</span></span><div class="ts">Chrome 브라우저 연결로 웹 페이지 조작 가능</div></td>
+  <td><span class="td">Chrome 브라우저 통합</span><div class="ts">Chrome 브라우저 연결로 웹 페이지 조작 가능</div></td>
 </tr>
 </table>
 </div>
@@ -786,15 +832,15 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
 <tr>
   <td><span class="tn">/usage</span></td>
-  <td><span class="td">사용량 및 요금제 확인 <span class="bnew">NEW</span></span><div class="ts">현재 사용량과 요금제 정보 표시</div></td>
+  <td><span class="td">사용량 및 요금제 확인</span><div class="ts">현재 사용량과 요금제 정보 표시</div></td>
 </tr>
 <tr>
   <td><span class="tn">/stats</span></td>
-  <td><span class="td">사용 통계 시각화 <span class="bnew">NEW</span></span><div class="ts">토큰 사용량, 대화 횟수 등 통계 표시</div></td>
+  <td><span class="td">사용 통계 시각화</span><div class="ts">토큰 사용량, 대화 횟수 등 통계 표시</div></td>
 </tr>
 <tr>
   <td><span class="tn">/release-notes</span></td>
-  <td><span class="td">릴리즈 노트 보기 <span class="bnew">NEW</span></span><div class="ts">최신 버전에서 추가된 기능과 변경사항 확인</div></td>
+  <td><span class="td">릴리즈 노트 보기</span><div class="ts">최신 버전에서 추가된 기능과 변경사항 확인</div></td>
 </tr>
 </table>
 </div>
@@ -808,11 +854,11 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
 <tr>
   <td><span class="tn">/simplify</span></td>
-  <td><span class="td">코드 품질/효율성 리뷰 후 자동 수정 <span class="bnew">NEW</span></span><div class="ts">코드를 분석해서 중복 제거, 가독성 향상, 최적화를 자동으로 적용</div></td>
+  <td><span class="td">코드 품질/효율성 리뷰 후 자동 수정</span><div class="ts">코드를 분석해서 중복 제거, 가독성 향상, 최적화를 자동으로 적용</div></td>
 </tr>
 <tr>
   <td><span class="tn">/batch</span></td>
-  <td><span class="td">대규모 병렬 변경 <span class="bnew">NEW</span></span><div class="ts">5~30개의 Git 워크트리를 병렬로 생성해 대규모 리팩토링을 동시에 처리</div></td>
+  <td><span class="td">대규모 병렬 변경</span><div class="ts">5~30개의 Git 워크트리를 병렬로 생성해 대규모 리팩토링을 동시에 처리</div></td>
 </tr>
 <tr>
   <td><span class="tn">/debug</span></td>
@@ -824,6 +870,145 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 </table>
   <div class="tip">스킬은 ~/.claude/skills/ (개인용) 또는 .claude/skills/ (프로젝트용)에 SKILL.md 파일로 정의해요!</div>
+</div>
+</div>
+
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">v5.0신규</span><span class="ct">2026년 신규 명령어 — 자동화 &amp; 세션 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>명령어</th><th>설명 &amp; 언제 쓰나</th></tr>
+<tr>
+  <td><span class="tn">/goal</span></td>
+  <td><span class="td">완료 조건까지 계속 일하게 하기 <span class="bnew">v5.0</span></span><div class="ts">조건을 걸어두면 매 턴 끝에 작은 모델이 충족 여부를 판정하고, 안 됐으면 스스로 다음 턴을 시작해요. 조건 충족·불가능 판정·사람이 고칠 에러 발생 시 자동 해제.</div><div class="tex">/goal 모든 테스트가 통과할 때까지</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/loop [간격]</span></td>
+  <td><span class="td">주기적 반복 실행 <span class="bnew">v5.0</span></span><div class="ts">프롬프트나 슬래시 명령을 정해진 간격으로 반복. <strong>간격을 생략하면 클로드가 스스로 페이스를 정해요.</strong></div><div class="tex">/loop 5m 배포 상태 확인</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/cd &lt;경로&gt;</span></td>
+  <td><span class="td">세션 중 작업 디렉토리 이동 <span class="bnew">v5.0</span></span><div class="ts">대화를 새로 시작하지 않고 작업 폴더만 옮겨요. <strong>프롬프트 캐시를 다시 만들지 않아서</strong> 비용·시간 손해가 없어요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/recap</span></td>
+  <td><span class="td">자리 비운 동안 뭐가 있었는지 <span class="bnew">v5.0</span></span><div class="ts">터미널을 안 보고 있는 사이 진행된 내용을 요약해줘요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/tasks</span></td>
+  <td><span class="td">실행 중인 작업 목록 <span class="bnew">v5.0</span></span><div class="ts">백그라운드 작업·서브에이전트가 뭘 하고 있는지 확인.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/usage</span></td>
+  <td><span class="td">내 플랜 한도를 뭐가 잡아먹는지 <span class="bnew">v5.0</span></span><div class="ts">스킬·서브에이전트·플러그인·MCP 서버별로 사용량을 쪼개서 보여줘요. 한도가 빨리 닳을 때 범인 찾기용.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/insights</span></td>
+  <td><span class="td">사용 패턴 분석 <span class="bnew">v5.0</span></span><div class="ts">내가 Claude Code를 어떻게 쓰고 있는지 통계로 확인.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/code-review</span></td>
+  <td><span class="td">변경분 코드 리뷰 <span class="bnew">v5.0</span></span><div class="ts">현재 diff·PR·브랜치에서 정확성 버그를 찾아요. 레벨(low~max) 지정 가능, <code>--fix</code>로 바로 적용, <code>--comment</code>로 PR에 인라인 코멘트. <strong>백그라운드로 돌아서</strong> 리뷰 중에도 계속 일할 수 있어요.</div><div class="tex">/code-review high --fix</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/code-review ultra</span></td>
+  <td><span class="td">클라우드 정밀 리뷰 (Ultrareview) <span class="bnew">v5.0</span></span><div class="ts">원격 샌드박스에 리뷰어 에이전트 함대를 띄워서 <strong>모든 발견을 독립 재현·검증</strong>해요. <code>/ultrareview</code>는 별칭. 리서치 프리뷰 · 별도 과금.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/security-review</span></td>
+  <td><span class="td">보안 취약점 리뷰 <span class="bnew">v5.0</span></span><div class="ts">현재 브랜치의 변경사항을 보안 관점에서 점검.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/simplify</span></td>
+  <td><span class="td">변경분 간소화 <span class="bnew">v5.0</span></span><div class="ts">재사용·단순화·효율 관점으로만 정리해요. 버그 사냥은 /code-review 담당.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/workflows</span></td>
+  <td><span class="td">동적 워크플로 <span class="bnew">v5.0</span></span><div class="ts">수십~수백 서브에이전트를 스크립트로 지휘. 프롬프트에 <code>ultracode</code> 키워드로도 발동.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/routines</span></td>
+  <td><span class="td">예약·자동 실행 루틴 <span class="bnew">v5.0</span></span><div class="ts">스케줄·API·GitHub 이벤트로 클라우드에서 자동 실행. 내 컴퓨터가 꺼져 있어도 돌아가요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/schedule</span></td>
+  <td><span class="td">클라우드 에이전트 예약 <span class="bnew">v5.0</span></span><div class="ts">cron 일정으로 도는 클라우드 에이전트를 만들고 관리. 1회성 예약도 가능.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/design</span></td>
+  <td><span class="td">아트보드 디자인 <span class="bnew">v5.0</span></span><div class="ts">Claude Design의 아트보드 작업을 CLI·데스크톱에서. 클로드가 편집 가능한 UI 시안을 여러 개 그리면 고른 걸 구현해요. 리서치 프리뷰.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/voice</span></td>
+  <td><span class="td">음성 입력 <span class="bnew">v5.0</span></span><div class="ts">말로 프롬프트 입력. <strong>Space 누르고 있는 동안</strong> 녹음(push-to-talk).</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/doctor · /checkup</span></td>
+  <td><span class="td">설정 종합 진단 <span class="bnew">v5.0</span></span><div class="ts">단순 확인을 넘어 <strong>문제를 진단하고 고쳐주기까지</strong> 하는 전체 점검으로 확장됐어요. <code>/checkup</code>은 별칭.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/skills · /skill-doctor</span></td>
+  <td><span class="td">스킬 관리 &amp; 진단 <span class="bnew">v5.0</span></span><div class="ts">설치된 스킬 확인, 스킬이 제대로 트리거되는지 진단.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/reload-skills</span></td>
+  <td><span class="td">스킬·워크플로 다시 읽기 <span class="bnew">v5.0</span></span><div class="ts">파일을 고친 뒤 세션 재시작 없이 반영.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/keybindings</span></td>
+  <td><span class="td">단축키 커스터마이즈 <span class="bnew">v5.0</span></span><div class="ts"><code>~/.claude/keybindings.json</code>으로 키를 원하는 대로 바꿔요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/teleport</span></td>
+  <td><span class="td">세션 이동 <span class="bnew">v5.0</span></span><div class="ts">세션을 다른 환경으로 옮겨요. <code>--teleport</code> 플래그도 있어요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/tui</span></td>
+  <td><span class="td">터미널 UI 설정 <span class="bnew">v5.0</span></span><div class="ts">터미널 인터페이스 관련 설정.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/brief</span></td>
+  <td><span class="td">간결 브리핑 <span class="bnew">v5.0</span></span><div class="ts">현재 상황을 짧게 요약.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/focus</span></td>
+  <td><span class="td">집중 모드 <span class="bnew">v5.0</span></span><div class="ts">특정 작업에 범위를 좁혀서 진행.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/subtask</span></td>
+  <td><span class="td">하위 작업 분리 <span class="bnew">v5.0</span></span><div class="ts">현재 작업에서 곁가지를 따로 떼어내 처리.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/advisor</span></td>
+  <td><span class="td">조언자 호출 <span class="bnew">v5.0</span></span><div class="ts">판단이 필요한 지점에서 상위 모델의 의견을 받아요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/autofix-pr</span></td>
+  <td><span class="td">PR 자동수정 켜기 <span class="bnew">v5.0</span></span><div class="ts">터미널에서 PR auto-fix를 활성화.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/babysit-prs</span></td>
+  <td><span class="td">PR 지켜보기 <span class="bnew">v5.0</span></span><div class="ts">PR 상태를 계속 모니터링하며 대응.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/team-onboarding</span></td>
+  <td><span class="td">팀 온보딩 가이드 생성 <span class="bnew">v5.0</span></span><div class="ts">내 설정을 <strong>재현 가능한 가이드</strong>로 묶어서 팀원에게 전달.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/usage-credits · /extra-usage</span></td>
+  <td><span class="td">사용 크레딧 관리 <span class="bnew">v5.0</span></span><div class="ts">플랜 한도를 넘어서 쓸 때 필요한 크레딧 확인·충전. Fable 5는 크레딧으로 청구될 수 있어요.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/pause-memory · /memories</span></td>
+  <td><span class="td">메모리 제어 <span class="bnew">v5.0</span></span><div class="ts">자동 메모리 기록을 잠시 멈추거나 저장된 메모리를 확인.</div></td>
+</tr>
+<tr>
+  <td><span class="tn">/radio</span></td>
+  <td><span class="td">Claude FM 라디오 <span class="bnew">v5.0</span></span><div class="ts">작업하면서 듣는 lo-fi 라디오. 재미 기능이에요.</div></td>
+</tr>
+</table>
+<div class="tip">/goal · /loop · /workflows · /routines 넷이 v5.0 자동화의 핵심이에요. <strong>⚙️ 자동화 탭</strong>에 자세히 정리했어요!</div>
 </div>
 </div>
 
@@ -910,7 +1095,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">신규단축키</span><span class="ct">v3.0 신규 단축키 모음 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">신규단축키</span><span class="ct">v3.0 신규 단축키 모음</span></div><span class="ca">▼</span></div>
 <div class="cb">
 <table class="tbl">
 <tr><th>단축키</th><th>기능 &amp; 상세 설명</th></tr>
@@ -1027,6 +1212,32 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
   <div class="tip">맥에서는 Ctrl 대신 Command(⌘) 키를 쓰는 경우도 있어요!</div>
 </div>
 </div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">v5.0단축키</span><span class="ct">새로 생긴 단축키 &amp; 커스터마이즈 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+<table class="tbl">
+<tr><th>단축키</th><th>기능</th></tr>
+<tr><td><span class="tn">Ctrl+S</span></td><td><span class="td">응답 중단 없이 저장 <span class="bnew">v5.0</span></span><div class="ts">작업 흐름을 끊지 않고 현재 상태를 저장해요.</div></td></tr>
+<tr><td><span class="tn">Ctrl+N / Ctrl+P</span></td><td><span class="td">히스토리 다음 / 이전 <span class="bnew">v5.0</span></span><div class="ts">이전에 입력한 프롬프트 사이를 오가요.</div></td></tr>
+<tr><td><span class="tn">Ctrl+Backspace</span></td><td><span class="td">단어 단위 삭제 <span class="bnew">v5.0</span></span><div class="ts">맥에서는 <strong>Cmd+Backspace</strong>가 줄 전체 삭제.</div></td></tr>
+<tr><td><span class="tn">Alt+D</span></td><td><span class="td">커서 뒤 단어 삭제 <span class="bnew">v5.0</span></span><div class="ts">긴 프롬프트를 다듬을 때 유용해요.</div></td></tr>
+<tr><td><span class="tn">Alt+V</span></td><td><span class="td">붙여넣기 보조 <span class="bnew">v5.0</span></span><div class="ts">터미널에 따라 Cmd+V가 안 먹을 때 대안.</div></td></tr>
+<tr><td><span class="tn">Cmd+F</span></td><td><span class="td">대화 내용 검색 <span class="bnew">v5.0</span></span><div class="ts">프롬프트에 <strong>/</strong> 를 입력해도 트랜스크립트 검색이 열려요.</div></td></tr>
+<tr><td><span class="tn">Cmd+click / Ctrl+click</span></td><td><span class="td">파일 경로 열기 <span class="bnew">v5.0</span></span><div class="ts">출력에 나온 <code>파일:줄번호</code>를 클릭하면 에디터에서 열려요.</div></td></tr>
+<tr><td><span class="tn">Option+W / Alt+W</span></td><td><span class="td">ultracode 키워드 해제 <span class="bnew">v5.0</span></span><div class="ts">워크플로가 실수로 발동됐을 때 이번 프롬프트만 취소.</div></td></tr>
+<tr><td><span class="tn">Space (길게)</span></td><td><span class="td">음성 입력 (push-to-talk) <span class="bnew">v5.0</span></span><div class="ts">누르고 있는 동안 녹음돼요.</div></td></tr>
+<tr><td><span class="tn">Shift+Tab</span></td><td><span class="td">권한 모드 순환 <span class="bnew">UPD</span></span><div class="ts">일반 → auto → acceptEdits → Plan 순으로 돌아요. <strong>Pro·Max·Team은 auto가 기본 시작 모드</strong>예요.</div></td></tr>
+</table>
+<div class="detail">
+  <div class="dtitle">단축키를 직접 바꾸기 <span class="bnew">v5.0</span></div>
+  <div class="drow"><span class="dlabel">파일</span><span class="dval"><code>~/.claude/keybindings.json</code>에서 원하는 키로 재배치할 수 있어요. 코드(chord) 조합도 가능</span></div>
+  <div class="drow"><span class="dlabel">명령어</span><span class="dval"><code>/keybindings</code>로 설정 열기</span></div>
+</div>
+<div class="tip">단축키는 터미널 종류에 따라 안 먹는 게 있어요. <code>/terminal-setup</code>으로 터미널 설정을 먼저 맞추세요!</div>
+</div>
+</div>
+
 </div><!-- /s2 -->
 
 
@@ -1128,7 +1339,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">신규플래그</span><span class="ct">v3.0 신규 추가 플래그 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">신규플래그</span><span class="ct">v3.0 신규 추가 플래그</span></div><span class="ca">▼</span></div>
 <div class="cb">
 
 <div class="fi">
@@ -1334,24 +1545,25 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">고급플래그</span><span class="ct">고급 & 전문 플래그 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">고급플래그</span><span class="ct">고급 & 전문 플래그</span></div><span class="ca">▼</span></div>
 <div class="cb">
 
 <div class="fi">
-  <div class="fn">--allowedTools "패턴"</div>
+  <div class="fn">--allowed-tools "패턴" <span class="bnew">UPD</span></div>
   <div class="fd">
     <div class="desc">허가 요청 없이 자동 실행 허용할 도구 지정</div>
     <div class="why">특정 git 명령 등 자주 쓰는 안전한 도구를 매번 승인 없이 실행할 때</div>
-    <div class="ex">claude --allowedTools "Bash(git log *)" "Bash(git diff *)" "Read"</div>
+    <div class="ex">claude --allowed-tools "Bash(git log *)" "Bash(git diff *)" "Read"</div>
+    <div class="why">표기 주의: 공식 표기는 하이픈 형태 <code>--allowed-tools</code>예요 (구 <code>--allowedTools</code>에서 변경)</div>
   </div>
 </div>
 
 <div class="fi">
-  <div class="fn">--disallowedTools "패턴"</div>
+  <div class="fn">--disallowed-tools "패턴" <span class="bnew">UPD</span></div>
   <div class="fd">
     <div class="desc">특정 도구를 컨텍스트에서 완전히 제거 (사용 불가)</div>
     <div class="why">파일 수정을 막고 읽기 전용으로 실행할 때</div>
-    <div class="ex">claude --disallowedTools "Edit" "Write"</div>
+    <div class="ex">claude --disallowed-tools "Edit" "Write"</div>
   </div>
 </div>
 
@@ -1514,6 +1726,204 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
   <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--permission-mode</span> <span class="va">plan</span></span><button class="cpb" data-cmd="claude --permission-mode plan" onclick="cp(this)">복사</button></div>
 </div>
 </div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">v5.0플래그</span><span class="ct">2026년 신규 플래그 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+
+<div class="fi">
+  <div class="fn">--worktree &nbsp;또는&nbsp; -w</div>
+  <div class="fd">
+    <div class="desc">Git 워크트리를 새로 만들어 <strong>격리된 복사본</strong>에서 작업</div>
+    <div class="why">언제: 지금 작업 중인 파일을 건드리지 않고 딴 일을 시킬 때. GitLab·GitHub의 PR/MR URL도 받아요</div>
+    <div class="ex">claude -w -p "이 이슈 고쳐줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--safe-mode</div>
+  <div class="fd">
+    <div class="desc">모든 커스터마이즈(훅·스킬·플러그인·MCP)를 끈 채로 시작</div>
+    <div class="why">언제: 뭔가 이상하게 동작할 때 <strong>내 설정 때문인지 확인</strong>하는 용도. 문제 해결의 첫 단계</div>
+    <div class="ex">claude --safe-mode</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--fallback-model "모델1,모델2,모델3"</div>
+  <div class="fd">
+    <div class="desc">주 모델이 막혔을 때 <strong>순서대로 시도할 대체 모델</strong>을 최대 3개까지</div>
+    <div class="why">언제: 한도나 가용성 문제로 작업이 멈추면 곤란한 자동화에서</div>
+    <div class="ex">claude --fallback-model "claude-sonnet-5,claude-haiku-4-5"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--from-pr &lt;PR번호 또는 URL&gt;</div>
+  <div class="fd">
+    <div class="desc">그 PR을 만든 <strong>세션을 찾아서</strong> 이어받기</div>
+    <div class="why">언제: 리뷰 코멘트가 달렸는데 당시 대화 맥락이 필요할 때</div>
+    <div class="ex">claude --from-pr 1234</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--plugin-url &lt;URL&gt;</div>
+  <div class="fd">
+    <div class="desc">플러그인 아카이브를 URL에서 받아 <strong>이번 세션에만</strong> 적용</div>
+    <div class="why">언제: 설치하지 않고 한 번만 써볼 때. <code>--plugin-dir</code>은 이제 <code>.zip</code> 파일도 받아요</div>
+    <div class="ex">claude --plugin-url https://example.com/plugin.zip</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--remote-control</div>
+  <div class="fd">
+    <div class="desc">이 컴퓨터를 <strong>폰에서 조종 가능</strong>하게 열어두기</div>
+    <div class="why">언제: 외출 중에 폰으로 진행 상황을 보고 지시하고 싶을 때. 폰의 Code 탭에 기기 카드로 떠요</div>
+    <div class="ex">claude remote-control</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--background</div>
+  <div class="fd">
+    <div class="desc">터미널을 붙잡지 않고 <strong>백그라운드 세션</strong>으로 실행</div>
+    <div class="why">언제: 오래 걸리는 작업을 던져두고 다른 일을 할 때. <code>claude agents</code>로 상태 확인</div>
+    <div class="ex">claude --background -p "전체 테스트 고쳐줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--max-budget-usd &lt;금액&gt;</div>
+  <div class="fd">
+    <div class="desc">이 실행에 쓸 <strong>비용 상한</strong>을 달러로 지정</div>
+    <div class="why">언제: 자동화·CI에서 폭주를 막는 안전장치</div>
+    <div class="ex">claude --max-budget-usd 0.5 -p "리팩토링해줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--restricted</div>
+  <div class="fd">
+    <div class="desc">권한을 조인 제한 모드로 실행</div>
+    <div class="why">언제: 신뢰도가 낮은 코드베이스나 입력을 다룰 때</div>
+    <div class="ex">claude --restricted</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--setting-sources &lt;소스&gt;</div>
+  <div class="fd">
+    <div class="desc">어떤 설정 파일을 읽을지 <strong>골라서</strong> 실행</div>
+    <div class="why">언제: 프로젝트 설정만 쓰거나 사용자 설정만 쓰고 싶을 때</div>
+    <div class="ex">claude --setting-sources project</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--agents &nbsp;/&nbsp; --agent &lt;이름&gt;</div>
+  <div class="fd">
+    <div class="desc">에이전트 뷰를 열거나, 특정 에이전트로 실행</div>
+    <div class="why">언제: 여러 세션을 관제탑에서 관리할 때</div>
+    <div class="ex">claude agents</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--cloud &nbsp;/&nbsp; --environment &lt;이름&gt;</div>
+  <div class="fd">
+    <div class="desc">클라우드에서 실행하거나 실행 환경을 지정</div>
+    <div class="why">언제: 내 컴퓨터가 아니라 원격 인프라에서 돌릴 때</div>
+    <div class="ex">claude --cloud -p "의존성 업데이트"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--teleport</div>
+  <div class="fd">
+    <div class="desc">세션을 다른 환경으로 옮겨서 이어가기</div>
+    <div class="why">언제: 로컬에서 시작한 작업을 클라우드로 넘길 때</div>
+    <div class="ex">claude --teleport</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--fork-session</div>
+  <div class="fd">
+    <div class="desc">현재 대화를 복사해 <strong>새 세션으로 분기</strong></div>
+    <div class="why">언제: 같은 맥락에서 다른 접근을 시험해보고 싶을 때</div>
+    <div class="ex">claude --fork-session</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--dry-run</div>
+  <div class="fd">
+    <div class="desc">실제로 실행하지 않고 <strong>무엇을 할지만</strong> 보여주기</div>
+    <div class="why">언제: 자동화 스크립트를 처음 돌려볼 때</div>
+    <div class="ex">claude --dry-run -p "정리해줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--yes</div>
+  <div class="fd">
+    <div class="desc">확인 질문에 <strong>모두 예</strong>로 답하기</div>
+    <div class="why">언제: 비대화형 스크립트에서 멈춤을 막을 때</div>
+    <div class="ex">claude --yes -p "빌드해줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--include-hook-events</div>
+  <div class="fd">
+    <div class="desc">출력에 <strong>훅 이벤트</strong>도 포함</div>
+    <div class="why">언제: 훅이 왜 안 도는지 디버깅할 때</div>
+    <div class="ex">claude --include-hook-events --output-format stream-json -p "..."</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--ax-screen-reader</div>
+  <div class="fd">
+    <div class="desc">화면 낭독기 모드 — 시각적 터미널 UI 대신 <strong>선형 텍스트</strong>로 출력</div>
+    <div class="why">언제: VoiceOver·NVDA 같은 스크린 리더를 쓸 때</div>
+    <div class="ex">claude --ax-screen-reader</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--chrome &nbsp;/&nbsp; --no-chrome</div>
+  <div class="fd">
+    <div class="desc">Claude in Chrome 연결을 켜거나 끄기</div>
+    <div class="why">언제: 브라우저 조작이 필요하거나, 반대로 방해될 때</div>
+    <div class="ex">claude --no-chrome</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--post &nbsp;/&nbsp; --no-post</div>
+  <div class="fd">
+    <div class="desc">리뷰 결과를 PR에 <strong>코멘트로 게시할지</strong> 여부</div>
+    <div class="why">언제: ultrareview 결과를 팀과 공유하거나, 반대로 나만 볼 때</div>
+    <div class="ex">claude ultrareview --post</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--teammate-mode</div>
+  <div class="fd">
+    <div class="desc">에이전트 팀의 <strong>팀메이트</strong>로 실행</div>
+    <div class="why">언제: 실험적 에이전트 팀 기능을 쓸 때 (기본 비활성)</div>
+    <div class="ex">claude --teammate-mode</div>
+  </div>
+</div>
+
+<div class="tip">플래그가 많지만 실제로 자주 쓰는 건 <strong>-w(워크트리) · --safe-mode(문제 진단) · --background(던져두기)</strong> 셋이에요!</div>
+</div>
+</div>
+
 </div><!-- /s3 -->
 
 
@@ -1624,7 +2034,7 @@ logs/      - 거래 로그
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">설정파일</span><span class="ct">settings.json — 클로드 코드 설정 파일 체계 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">설정파일</span><span class="ct">settings.json — 클로드 코드 설정 파일 체계</span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
     <div class="dtitle">설정 파일 계층 구조</div>
@@ -1752,7 +2162,7 @@ logs/      - 거래 로그
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tb">전송방식</span><span class="ct">MCP 전송 방식 &amp; 원격 서버 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tb">전송방식</span><span class="ct">MCP 전송 방식 &amp; 원격 서버</span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
     <div class="dtitle">MCP 전송 방식 종류</div>
@@ -1824,8 +2234,18 @@ logs/      - 거래 로그
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">서브에이전트</span><span class="ct">서브에이전트 — 병렬 AI 작업 실행 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">서브에이전트</span><span class="ct">서브에이전트 — 병렬 AI 작업 실행</span></div><span class="ca">▼</span></div>
 <div class="cb">
+  <div class="detail">
+    <div class="dtitle">2026년에 달라진 점 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">백그라운드가 기본</span><span class="dval">서브에이전트는 이제 <strong>기본적으로 백그라운드에서</strong> 돌아요. 그래서 클로드가 결과를 기다리지 않고 <strong>계속 다른 일을 해요</strong></span></div>
+    <div class="drow"><span class="dlabel">권한 질문 전달</span><span class="dval">백그라운드 서브에이전트가 권한이 필요하면 <strong>메인 세션에 질문이 떠요.</strong> 예전엔 조용히 거부됐는데 이제 물어봐요</span></div>
+    <div class="drow"><span class="dlabel">중첩 가능</span><span class="dval">서브에이전트가 <strong>자기 서브에이전트를 또 만들 수</strong> 있어요. 백그라운드 체인은 <strong>최대 5단계</strong>까지</span></div>
+    <div class="drow"><span class="dlabel">fork 모드 기본 <span class="bnew">v5.0</span></span><span class="dval">대화형 세션에서 <strong>fork 모드가 기본 ON</strong>이에요. 곁가지 작업을 <strong>전체 대화를 물려받은</strong> 서브에이전트에게 넘길 수 있어요 (단 fork는 모델 지정이 무시되고 부모 모델을 따라가요)</span></div>
+    <div class="drow"><span class="dlabel">모델 지정</span><span class="dval">에이전트를 부를 때마다 <code>model</code>을 지정할 수 있어요. 안 하면 <strong>조용히 부모 모델을 상속</strong>하니 주의</span></div>
+    <div class="drow"><span class="dlabel">워크트리 격리</span><span class="dval"><code>isolation: "worktree"</code>를 주면 서브에이전트가 <strong>자기만의 git 워크트리</strong>에서 작업해요 (변경 없으면 자동 정리)</span></div>
+  </div>
+
   <div class="detail">
     <div class="dtitle">서브에이전트란?</div>
     <div class="drow"><span class="dlabel">개념</span><span class="dval">오케스트레이터(메인 클로드)가 Task 도구를 통해 생성하는 독립적인 AI 인스턴스. 각 서브에이전트는 별도 컨텍스트로 동작.</span></div>
@@ -1887,7 +2307,7 @@ logs/      - 거래 로그
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">에이전트팀</span><span class="ct">에이전트 팀 — 여러 Claude가 협력 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">에이전트팀</span><span class="ct">에이전트 팀 — 여러 Claude가 협력</span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
     <div class="dtitle">에이전트 팀이란? (실험적 기능)</div>
@@ -2080,7 +2500,7 @@ logs/      - 거래 로그
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">워크트리</span><span class="ct">Git 워크트리 — 격리된 작업 공간 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">워크트리</span><span class="ct">Git 워크트리 — 격리된 작업 공간</span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
     <div class="dtitle">Git 워크트리란?</div>
@@ -2182,7 +2602,7 @@ data/
 </div>
 
 <div class="card">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">빠른입력</span><span class="ct">! 배시모드 · @ 파일멘션 · 확장사고 <span class="bnew">NEW</span></span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">빠른입력</span><span class="ct">! 배시모드 · @ 파일멘션 · 확장사고</span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
     <div class="dtitle">특수 접두사 입력</div>
@@ -2466,17 +2886,52 @@ data/
 <div class="cb">
   <div class="detail">
     <div class="dtitle">Hook 이벤트 종류</div>
-    <div class="drow"><span class="dlabel">PreToolUse</span><span class="dval">도구 실행 전 — 허용/거부 결정, 파라미터 수정</span></div>
-    <div class="drow"><span class="dlabel">PostToolUse</span><span class="dval">도구 실행 후 — 결과 처리, 포맷터 실행</span></div>
-    <div class="drow"><span class="dlabel">Notification</span><span class="dval">클로드가 알림을 보낼 때 — 슬랙/이메일 등 연동</span></div>
-    <div class="drow"><span class="dlabel">Stop</span><span class="dval">클로드가 작업을 멈출 때 — 로그 기록, 정리 작업</span></div>
-    <div class="drow"><span class="dlabel">SubagentStop</span><span class="dval">서브에이전트 종료 시</span></div>
-    <div class="drow"><span class="dlabel">CwdChanged <span class="bnew">v4.0</span></span><span class="dval">작업 디렉토리 변경 시</span></div>
-    <div class="drow"><span class="dlabel">FileChanged <span class="bnew">v4.0</span></span><span class="dval">파일 변경 시 트리거</span></div>
-    <div class="drow"><span class="dlabel">StopFailure <span class="bnew">v4.0</span></span><span class="dval">API 에러 발생 시</span></div>
-    <div class="drow"><span class="dlabel">PostCompact <span class="bnew">v4.0</span></span><span class="dval">컨텍스트 압축(compaction) 후</span></div>
-    <div class="drow"><span class="dlabel">PermissionDenied <span class="bnew">v4.0</span></span><span class="dval">auto mode에서 권한 거부 시</span></div>
-    <div class="drow"><span class="dlabel">SessionEnd <span class="bnew">UPD</span></span><span class="dval">세션 종료 시 (개선됨)</span></div>
+    <div class="dtitle" style="margin-top:0">① 세션 &amp; 프롬프트</div>
+    <div class="drow"><span class="dlabel">SessionStart <span class="bnew">v5.0</span></span><span class="dval">세션을 새로 시작하거나 이어받을 때. 이슈 목록·최근 변경 같은 <strong>작업 맥락을 자동으로 불러올</strong> 때 써요. 스크립트가 필요 없는 고정 내용이면 CLAUDE.md가 나아요</span></div>
+    <div class="drow"><span class="dlabel">UserPromptSubmit <span class="bnew">v5.0</span></span><span class="dval">내가 프롬프트를 보낸 직후, 클로드가 처리하기 <strong>전에</strong>. 현재 시각 주입·금지어 검사 등에 활용</span></div>
+    <div class="drow"><span class="dlabel">UserPromptExpansion <span class="bnew">v5.0</span></span><span class="dval">내가 친 명령어가 프롬프트로 펼쳐질 때. <strong>펼침 자체를 막을</strong> 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">SessionEnd</span><span class="dval">세션이 끝날 때 — 정리 작업·기록 저장</span></div>
+    <div class="drow"><span class="dlabel">Setup <span class="bnew">v5.0</span></span><span class="dval"><code>--init-only</code>로 시작하거나 <code>-p</code> 모드에서 <code>--init</code>·<code>--maintenance</code>를 줄 때. CI·스크립트의 <strong>1회성 준비</strong>용</span></div>
+
+    <div class="dtitle">② 도구 실행</div>
+    <div class="drow"><span class="dlabel">PreToolUse</span><span class="dval">도구 실행 전 — <strong>차단 가능</strong>. 허용/거부 결정, 파라미터 수정</span></div>
+    <div class="drow"><span class="dlabel">PostToolUse</span><span class="dval">도구 실행 <strong>성공</strong> 후 — 결과 처리, 포맷터 실행</span></div>
+    <div class="drow"><span class="dlabel">PostToolUseFailure <span class="bnew">v5.0</span></span><span class="dval">도구 실행이 <strong>실패</strong>했을 때</span></div>
+    <div class="drow"><span class="dlabel">PostToolBatch <span class="bnew">v5.0</span></span><span class="dval">병렬 도구 호출 <strong>한 묶음이 전부 끝난</strong> 뒤, 다음 모델 호출 전에</span></div>
+    <div class="drow"><span class="dlabel">PermissionRequest <span class="bnew">v5.0</span></span><span class="dval">도구 호출에 <strong>권한 판정이 필요할</strong> 때</span></div>
+    <div class="drow"><span class="dlabel">PermissionDenied</span><span class="dval">auto 모드가 도구 호출을 <strong>거부</strong>했을 때. JSON으로 <code>retry: true</code>를 주면 "다시 시도해도 된다"고 모델에 알릴 수 있어요</span></div>
+
+    <div class="dtitle">③ 서브에이전트 &amp; 작업</div>
+    <div class="drow"><span class="dlabel">SubagentStart <span class="bnew">v5.0</span></span><span class="dval">서브에이전트가 <strong>생성될</strong> 때. matcher로 에이전트 종류를 걸러낼 수 있어요 (<code>general-purpose</code>·<code>Explore</code>·<code>Plan</code> 또는 커스텀 에이전트의 name)</span></div>
+    <div class="drow"><span class="dlabel">SubagentStop</span><span class="dval">서브에이전트가 끝날 때</span></div>
+    <div class="drow"><span class="dlabel">TaskCreated <span class="bnew">v5.0</span></span><span class="dval">TaskCreate로 작업이 <strong>만들어질</strong> 때. 이름 규칙 강제·설명 필수화·특정 작업 생성 차단에 활용</span></div>
+    <div class="drow"><span class="dlabel">TaskCompleted <span class="bnew">v5.0</span></span><span class="dval">작업이 <strong>완료 처리될</strong> 때. "테스트 통과·린트 통과해야 닫을 수 있다" 같은 완료 기준을 강제할 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">TeammateIdle <span class="bnew">v5.0</span></span><span class="dval">에이전트 팀의 팀메이트가 <strong>쉬려고 할</strong> 때. 막으면 계속 일해요</span></div>
+
+    <div class="dtitle">④ 턴 종료</div>
+    <div class="drow"><span class="dlabel">Stop</span><span class="dval">클로드가 응답을 마쳤을 때 — 로그 기록, 정리 작업</span></div>
+    <div class="drow"><span class="dlabel">StopFailure</span><span class="dval">API 에러로 턴이 끝났을 때</span></div>
+    <div class="drow"><span class="dlabel">MessageDisplay <span class="bnew">v5.0</span></span><span class="dval">답변 텍스트가 <strong>화면에 표시되는 동안</strong> (표시 전용)</span></div>
+    <div class="drow"><span class="dlabel">Notification</span><span class="dval">클로드가 알림을 보낼 때 — 슬랙·텔레그램 등 연동</span></div>
+
+    <div class="dtitle">⑤ 파일 &amp; 환경 변화</div>
+    <div class="drow"><span class="dlabel">CwdChanged</span><span class="dval">작업 디렉토리가 바뀔 때 (예: <code>cd</code> 실행). direnv 같은 도구와 연동에 유용</span></div>
+    <div class="drow"><span class="dlabel">DirectoryAdded <span class="bnew">v5.0</span></span><span class="dval"><code>/add-dir</code>로 세션 중에 작업 폴더가 추가될 때</span></div>
+    <div class="drow"><span class="dlabel">FileChanged</span><span class="dval">감시 중인 파일이 디스크에서 바뀔 때. <code>matcher</code>로 어떤 파일을 볼지 지정</span></div>
+    <div class="drow"><span class="dlabel">InstructionsLoaded <span class="bnew">v5.0</span></span><span class="dval">CLAUDE.md나 <code>.claude/rules/*.md</code>가 <strong>컨텍스트에 로드될</strong> 때. 세션 시작 시와 도중 지연 로드 때 발화</span></div>
+    <div class="drow"><span class="dlabel">ConfigChange <span class="bnew">v5.0</span></span><span class="dval">세션 도중 설정 파일이 바뀔 때</span></div>
+
+    <div class="dtitle">⑥ 워크트리 &amp; 압축 &amp; 모델</div>
+    <div class="drow"><span class="dlabel">WorktreeCreate <span class="bnew">v5.0</span></span><span class="dval">워크트리가 생성될 때 (<code>--worktree</code>·백그라운드 세션 등). <strong>기본 git 동작을 대체</strong>할 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">WorktreeRemove <span class="bnew">v5.0</span></span><span class="dval">세션 종료·서브에이전트 완료·백그라운드 세션 삭제 시 워크트리가 제거될 때</span></div>
+    <div class="drow"><span class="dlabel">PreCompact <span class="bnew">v5.0</span></span><span class="dval">컨텍스트 압축 <strong>전</strong>. <code>manual</code>인지 <code>auto</code>인지 구분해서 받아요</span></div>
+    <div class="drow"><span class="dlabel">PostCompact</span><span class="dval">컨텍스트 압축이 끝난 후</span></div>
+    <div class="drow"><span class="dlabel">PreModelSwitch <span class="bnew">v5.0</span></span><span class="dval">모델 전환이 적용되기 전 — <strong>전환을 막을 수도</strong> 있어요</span></div>
+    <div class="drow"><span class="dlabel">PostModelSwitch <span class="bnew">v5.0</span></span><span class="dval">세션 모델이 바뀐 후 (세션 재개 시 모델 복원 같은 자동 변경 포함)</span></div>
+
+    <div class="dtitle">⑦ MCP 연동</div>
+    <div class="drow"><span class="dlabel">Elicitation <span class="bnew">v5.0</span></span><span class="dval">MCP 서버가 도구 호출 중에 <strong>사용자 입력을 요청</strong>할 때</span></div>
+    <div class="drow"><span class="dlabel">ElicitationResult <span class="bnew">v5.0</span></span><span class="dval">사용자가 답한 뒤, 그 응답이 서버로 돌아가기 전에</span></div>
   </div>
   <div class="tip">v4.0부터 훅에 조건부 <code>if</code> 필드를 추가해 권한 규칙 구문으로 훅을 필터링할 수 있어요!</div>
   <div class="lbl">대화형 Hook 설정</div>
@@ -2570,8 +3025,11 @@ hooks/           ← Hook 설정
 <div class="cb">
   <div class="detail">
     <div class="dtitle">Fast 모드란?</div>
-    <div class="drow"><span class="dlabel">개념</span><span class="dval">같은 Opus 4.6 모델이지만 응답 출력 속도가 빨라지는 모드. 모델의 사고 품질은 동일!</span></div>
-    <div class="drow"><span class="dlabel">사용</span><span class="dval">빠른 반복 작업이나 간단한 수정에 유용. 토글 방식.</span></div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">Opus를 <strong>최대 2.5배 빠르게</strong> 돌리는 고속 설정. 다른 모델이 아니라 <strong>같은 Opus</strong>를 다른 API 설정으로 쓰는 거라 품질·능력은 동일해요. 대신 <strong>토큰당 비용이 올라가요</strong></span></div>
+    <div class="drow"><span class="dlabel">지원 모델 <span class="bnew">v5.0</span></span><span class="dval"><strong>Opus 5 · Opus 4.8</strong>에서만 동작해요. Sonnet·Haiku는 미지원 — 그 모델로 바꾸면 fast 모드가 꺼져요</span></div>
+    <div class="drow"><span class="dlabel">언제 켜나</span><span class="dval">빠른 반복·실시간 디버깅처럼 <strong>기다리는 시간이 아까울 때</strong> 켜고, 비용이 더 중요하면 끄세요</span></div>
+    <div class="drow"><span class="dlabel">상태</span><span class="dval">리서치 프리뷰 — 가격·제공 범위가 바뀔 수 있어요. Opus 4.7용 fast 모드는 2026년 7월 24일 제거됐어요</span></div>
+    <div class="drow"><span class="dlabel">VS Code</span><span class="dval">확장에서는 <code>fastMode</code> 설정을 따르고, 지원 모델일 때 <strong>Toggle fast mode</strong> 명령을 제공해요</span></div>
   </div>
   <div class="cmd"><span class="pr">/</span><span class="co">fast</span><button class="cpb" data-cmd="/fast" onclick="cp(this)">복사</button></div>
   <div class="dv"></div>
@@ -2698,9 +3156,344 @@ hooks/           ← Hook 설정
 </div>
 </div><!-- /s13 -->
 
+<div class="section" id="s14">
+<div class="sh c5"><span class="ic">⚙️</span><div><h2>자동화</h2><p>Auto 모드 · 권한 · Workflows · Routines · Goal · Loop</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">Auto모드</span><span class="ct">Auto 모드 — 권한 질문을 대신 판단해주는 모드 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Auto 모드란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">매번 "이거 해도 될까요?" 묻는 대신, <strong>분류기(다른 AI 모델)</strong>가 대신 검토해요. 안전한 작업은 그냥 지나가고 되돌릴 수 없거나 파괴적이거나 내 환경 밖을 향하는 작업만 막아요</span></div>
+    <div class="drow"><span class="dlabel">기본값 <span class="bnew">v5.0</span></span><span class="dval">2026년 8월 14일부터 <strong>Pro · Max · Team 플랜의 새 세션 기본 모드</strong>가 됐어요. 예전엔 직접 켜야 했지만 지금은 그냥 켜져 있어요</span></div>
+    <div class="drow"><span class="dlabel">전환</span><span class="dval"><strong>Shift+Tab</strong>으로 모드 순환 (CLI) · VS Code는 모드 표시기 · 데스크톱은 모드 선택기</span></div>
+    <div class="drow"><span class="dlabel">규칙 우선순위</span><span class="dval">내가 설정한 <strong>deny · ask 규칙이 분류기보다 먼저</strong> 적용돼요. 즉 "이건 무조건 물어봐"를 걸어두면 auto 모드여도 물어봐요</span></div>
+    <div class="drow"><span class="dlabel">기본 신뢰 범위</span><span class="dval">작업 디렉토리 + 현재 저장소의 원격(remote)만 신뢰해요. 회사 조직 저장소 push나 팀 클라우드 버킷 쓰기는 <strong>따로 등록해야</strong> 통과해요</span></div>
+  </div>
+  <div class="cmd"><span class="pr">키</span><span class="co">Shift+Tab  ← 권한 모드 순환</span><button class="cpb" data-cmd="Shift+Tab" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--permission-mode</span> <span class="va">auto</span></span><button class="cpb" data-cmd="claude --permission-mode auto" onclick="cp(this)">복사</button></div>
+  <div class="dv"></div>
+  <div class="detail">
+    <div class="dtitle">권한 모드 5가지 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">default (수동)</span><span class="dval">파일 수정·셸 실행·네트워크 접근 전에 매번 물어봐요. 가장 보수적</span></div>
+    <div class="drow"><span class="dlabel">auto</span><span class="dval">분류기가 대신 검토. <strong>Pro·Max·Team 기본값</strong></span></div>
+    <div class="drow"><span class="dlabel">acceptEdits</span><span class="dval">파일 편집은 자동 승인. 단 코드를 실행시킬 수 있는 파일을 쓸 때는 물어봐요(안전 강화됨)</span></div>
+    <div class="drow"><span class="dlabel">plan</span><span class="dval">아무것도 수정하지 않고 계획만 세워요</span></div>
+    <div class="drow"><span class="dlabel">bypassPermissions</span><span class="dval">전부 통과. <strong>위험</strong> — 신뢰된 격리 환경에서만</span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">Auto 모드 설정 (settings.json)</div>
+    <div class="drow"><span class="dlabel">autoMode.environment</span><span class="dval">우리 조직이 신뢰하는 저장소·버킷·도메인을 등록. 등록해야 routine한 내부 작업이 안 막혀요</span></div>
+    <div class="drow"><span class="dlabel">permissions.ask</span><span class="dval">push나 PR 생성처럼 사람이 한 번 봐야 하는 지점에 체크포인트 추가</span></div>
+    <div class="drow"><span class="dlabel">하드 deny <span class="bnew">v5.0</span></span><span class="dval">allow 예외와 무관하게 <strong>무조건</strong> 차단하는 규칙도 만들 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">파라미터 매칭 <span class="bnew">v5.0</span></span><span class="dval">도구 파라미터까지 매칭 가능 — 예: <code>Agent(model:opus)</code></span></div>
+  </div>
+  <div class="tip">Auto 모드가 막는 대표 사례: 되돌릴 수 없는 삭제, 내 작업물을 버리는 git 명령, 확인 안 된 변수로 <code>rm -rf</code> 실행, 대화 기록 조작 시도.</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">Workflows</span><span class="ct">Dynamic Workflows — 수십~수백 에이전트 동시 지휘 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Workflow란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">클로드가 <strong>자바스크립트 스크립트를 직접 써서</strong> 수많은 서브에이전트를 지휘해요. 스크립트가 백그라운드에서 도는 동안 내 세션은 그대로 쓸 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">언제 쓰나</span><span class="dval">한 대화로는 조율이 안 되는 규모일 때 — 코드베이스 전체 버그 스윕, 500개 파일 마이그레이션, 출처를 서로 교차검증해야 하는 리서치, 여러 각도로 초안을 뽑아보고 하나 고르는 설계</span></div>
+    <div class="drow"><span class="dlabel">서브에이전트와 차이</span><span class="dval"><strong>누가 계획을 쥐고 있느냐</strong>가 달라요. 서브에이전트·스킬·에이전트팀·워크플로 중 워크플로는 계획이 <strong>읽고 다시 돌릴 수 있는 스크립트</strong>로 남아요</span></div>
+    <div class="drow"><span class="dlabel">사용 조건</span><span class="dval">모든 유료 플랜 + Anthropic API + Bedrock·Google Cloud·Microsoft Foundry. <strong>Pro는 /config의 Dynamic workflows 항목에서 켜야</strong> 해요</span></div>
+  </div>
+  <div class="lbl">실행 방법 — 프롬프트에 키워드를 넣어요</div>
+  <div class="cmd"><span class="pr">&gt;</span><span class="co">ultracode 이 코드베이스 전체에서 인증 우회 가능성을 훑어줘</span><button class="cpb" data-cmd="ultracode " onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">workflows</span><button class="cpb" data-cmd="/workflows" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">workflow-authoring  ← 스크립트 작성 레퍼런스 로드 (v2.1.248+)</span><button class="cpb" data-cmd="/workflow-authoring" onclick="cp(this)">복사</button></div>
+  <div class="detail">
+    <div class="dtitle">알아두면 좋은 점</div>
+    <div class="drow"><span class="dlabel">실수로 켜졌을 때</span><span class="dval">macOS는 <strong>Option+W</strong>, 윈도우·리눅스는 <strong>Alt+W</strong>로 이번 프롬프트만 해제. 키워드 자체를 끄려면 /config의 Ultracode keyword trigger를 OFF</span></div>
+    <div class="drow"><span class="dlabel">스크립트 위치</span><span class="dval">실행할 때마다 <code>~/.claude/projects/</code> 아래 세션 폴더에 <code>.js</code>로 저장돼요. 열어서 읽거나, 이전 실행과 비교하거나, 고쳐서 다시 돌릴 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">수정 후 재실행</span><span class="dval"><code>/reload-skills</code>로 워크플로 폴더를 다시 읽은 뒤 실행</span></div>
+  </div>
+  <div class="tip">에이전트를 수십 개 띄우는 만큼 토큰을 많이 써요. 규모가 필요한 작업인지 먼저 판단하세요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">Routines</span><span class="ct">Routines — 노트북을 닫아도 도는 자동 작업 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Routine이란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">프롬프트 + 저장소 + 커넥터를 <strong>한 번 묶어두고 자동으로 돌리는</strong> 설정. 앤트로픽 클라우드에서 실행되니 <strong>내 컴퓨터가 꺼져 있어도</strong> 돌아가요</span></div>
+    <div class="drow"><span class="dlabel">상태</span><span class="dval">리서치 프리뷰 — 동작·한도·API가 바뀔 수 있어요</span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">트리거 3종 (조합 가능)</div>
+    <div class="drow"><span class="dlabel">스케줄</span><span class="dval">매시간·매일 밤·매주 같은 주기 실행, 또는 미래 특정 시각에 1회</span></div>
+    <div class="drow"><span class="dlabel">API</span><span class="dval">루틴별 엔드포인트에 베어러 토큰과 함께 HTTP POST를 쏘면 즉시 실행</span></div>
+    <div class="drow"><span class="dlabel">GitHub</span><span class="dval">PR 생성·릴리스 같은 저장소 이벤트에 반응해서 자동 실행</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">routines</span><button class="cpb" data-cmd="/routines" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">schedule  ← 예약 실행 (클라우드 에이전트)</span><button class="cpb" data-cmd="/schedule" onclick="cp(this)">복사</button></div>
+  <div class="tip">"매일 밤 새 PR을 리뷰해줘" 같은 걸 걸어두면 아침에 결과만 확인하면 돼요. 하나의 루틴에 트리거를 여러 개 붙일 수도 있어요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">Goal</span><span class="ct">/goal — 조건을 만족할 때까지 계속 일하게 하기 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">어떻게 작동하나요?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval"><strong>완료 조건</strong>을 걸어두면 내가 매번 재촉하지 않아도 계속 일해요. 매 턴이 끝날 때마다 <strong>작고 빠른 모델</strong>이 "조건이 충족됐나?"를 판정해요</span></div>
+    <div class="drow"><span class="dlabel">계속 도는 조건</span><span class="dval">아직 조건 미충족 → 제어를 나에게 넘기지 않고 다음 턴을 스스로 시작해요</span></div>
+    <div class="drow"><span class="dlabel">자동 해제</span><span class="dval">① 조건 충족 ② 모델이 "이건 불가능하다"고 판정 ③ 사람이 고쳐야 하는 에러 발생</span></div>
+  </div>
+  <div class="lbl">잘 맞는 작업 — 끝났는지 검증 가능한 것</div>
+  <ul class="ql">
+    <li><span class="n">1</span><div>모듈을 새 API로 마이그레이션 — <strong>모든 호출부가 컴파일되고 테스트가 통과할 때까지</strong></div></li>
+    <li><span class="n">2</span><div>설계 문서 구현 — <strong>모든 인수 조건이 만족될 때까지</strong></div></li>
+    <li><span class="n">3</span><div>큰 파일 쪼개기 — <strong>각 파일이 정해둔 크기 이하가 될 때까지</strong></div></li>
+  </ul>
+  <div class="cmd"><span class="pr">/</span><span class="co">goal 모든 테스트가 통과할 때까지</span><button class="cpb" data-cmd="/goal " onclick="cp(this)">복사</button></div>
+  <div class="tip">조건은 <strong>기계가 판정할 수 있게</strong> 쓰세요. "잘 만들어줘"보다 "npm test가 전부 통과할 때까지"가 훨씬 잘 작동해요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">반복실행</span><span class="ct">/loop · 예약 작업 — 주기적으로 같은 일 시키기 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">/loop — 간격을 두고 반복</div>
+    <div class="drow"><span class="dlabel">기본</span><span class="dval">프롬프트나 슬래시 명령어를 정해진 간격으로 반복 실행해요</span></div>
+    <div class="drow"><span class="dlabel">자동 페이스 <span class="bnew">v5.0</span></span><span class="dval">간격을 <strong>생략하면 클로드가 스스로 판단</strong>해서 다음 실행 시점을 정해요. CI가 8분 걸리면 8분 뒤에 한 번 보는 식</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">loop 5m 배포 상태 확인해줘</span><button class="cpb" data-cmd="/loop 5m " onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">loop  ← 간격 생략 = 클로드가 알아서 조절</span><button class="cpb" data-cmd="/loop " onclick="cp(this)">복사</button></div>
+  <div class="dv"></div>
+  <div class="detail">
+    <div class="dtitle">체크포인트 &amp; 되돌리기</div>
+    <div class="drow"><span class="dlabel">자동 저장</span><span class="dval">내가 프롬프트를 보낼 때마다 <strong>그 직전 코드 상태</strong>를 자동으로 찍어둬요. 따로 설정할 필요 없어요</span></div>
+    <div class="drow"><span class="dlabel">/rewind</span><span class="dval">이전 상태로 되돌리기. <strong>/clear 이전 대화까지 복원</strong>할 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">요약 압축 <span class="bnew">v5.0</span></span><span class="dval">Rewind 메뉴의 <strong>"Summarize up to here"</strong>로 여기까지의 맥락을 압축해서 컨텍스트를 비울 수 있어요</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">rewind</span><button class="cpb" data-cmd="/rewind" onclick="cp(this)">복사</button></div>
+  <div class="tip">되돌리기가 있으니 과감하게 시도해도 괜찮아요. 잘못되면 /rewind로 돌아가면 돼요!</div>
+</div>
+</div>
+
+</div><!-- /s14 -->
+
+<div class="section" id="s15">
+<div class="sh c6"><span class="ic">☁️</span><div><h2>클라우드 &amp; 협업</h2><p>Artifacts · Agent View · 에이전트 팀 · 세션 간 메시지 · Ultrareview</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">Artifacts</span><span class="ct">Artifacts — 결과물을 살아있는 웹페이지로 발행 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Artifact란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">세션의 결과물을 <strong>claude.ai의 실제 웹페이지</strong>로 발행해요. 브라우저로 열면 되고, <strong>세션이 계속되면 그 페이지가 그 자리에서 갱신</strong>돼요</span></div>
+    <div class="drow"><span class="dlabel">공개 범위</span><span class="dval">기본은 <strong>비공개</strong>. 페이지 헤더에서 조직 공유나 공개 링크로 바꿀 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">사용 조건</span><span class="dval">Pro · Max · Team · Enterprise 플랜 + <code>/login</code>으로 로그인된 세션</span></div>
+    <div class="drow"><span class="dlabel">MCP 연동 <span class="bnew">v5.0</span></span><span class="dval">발행된 페이지가 <strong>보는 사람의 MCP 커넥터로 실시간 데이터를 직접 가져올</strong> 수 있어요. 열 때마다 최신 데이터가 뜨는 상태판을 만들 수 있어요</span></div>
+  </div>
+  <div class="lbl">이럴 때 쓰면 좋아요 — 터미널 텍스트로 읽기 답답한 것</div>
+  <ul class="ql">
+    <li><span class="n">1</span><div>PR을 리뷰어에게 설명 — <strong>주석 달린 diff</strong>로</div></li>
+    <li><span class="n">2</span><div>비교해야 하는 <strong>선택지 여러 개</strong>를 나란히</div></li>
+    <li><span class="n">3</span><div>차트·대시보드처럼 <strong>보는 게 읽는 것보다 빠른</strong> 출력</div></li>
+    <li><span class="n">4</span><div>열 때마다 최신 데이터를 끌어오는 <strong>상태 보드</strong></div></li>
+  </ul>
+  <div class="cmd"><span class="pr">&gt;</span><span class="co">이 분석 결과를 아티팩트로 만들어줘</span><button class="cpb" data-cmd="이 분석 결과를 아티팩트로 만들어줘" onclick="cp(this)">복사</button></div>
+  <div class="tip">클로드가 알아서 아티팩트로 만들 때도 있어요. 발행은 현재 <strong>권한 모드</strong>를 따라요.</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">AgentView</span><span class="ct">Agent View — 모든 세션을 한 화면에서 관리 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Agent View란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval"><code>claude agents</code>로 여는 <strong>모든 백그라운드 세션의 관제탑</strong>. 뭐가 돌고 있고, 뭐가 내 답을 기다리고, 뭐가 끝났는지 한눈에 보여요</span></div>
+    <div class="drow"><span class="dlabel">그룹</span><span class="dval">입력 대기(Needs input) · 작업 중(Working) · 완료(Completed)로 묶여서 표시돼요</span></div>
+    <div class="drow"><span class="dlabel">백그라운드 세션</span><span class="dval">터미널이 붙어 있지 않아도 계속 도는 <strong>완전한 대화</strong>예요. 아무 때나 열어서 답하고 나올 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">상태 표시 <span class="bnew">v5.0</span></span><span class="dval">각 줄에 색깔 있는 상태 단어 + <strong>분류기가 써주는 한 줄 요약</strong>이 떠서 열어보지 않아도 뭘 하는지 알 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">상태</span><span class="dval">리서치 프리뷰 — 인터페이스와 단축키가 바뀔 수 있어요</span></div>
+  </div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude agents</span><button class="cpb" data-cmd="claude agents" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">tasks  ← 실행 중인 작업 확인</span><button class="cpb" data-cmd="/tasks" onclick="cp(this)">복사</button></div>
+  <div class="tip">버그 수정 · PR 리뷰 · 불안정한 테스트 조사를 각각 띄워두고, 다른 창에서 일하다가 "나 필요함" 표시가 뜬 줄만 열어보면 돼요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">세션메시지</span><span class="ct">세션 간 메시지 — 클로드끼리 대화하게 하기 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Cross-session messaging</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">내 클로드 세션끼리 <strong>메시지를 주고받아요.</strong> A 세션의 변경이 B 세션이 만들던 걸 깨뜨리면, 내가 눈치채기 전에 A가 B에게 경고할 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">뭐가 오가나</span><span class="dval">보내는 쪽이 <strong>쓴 텍스트만</strong> 가요. 대화 기록이나 파일은 안 넘어가요. 대화 전체를 옮기려면 세션을 이어받으세요(/resume)</span></div>
+    <div class="drow"><span class="dlabel">도구</span><span class="dval"><code>ListAgents</code>로 닿을 수 있는 상대를 찾고, <code>SendMessage</code>로 이름을 지정해 보내요</span></div>
+    <div class="drow"><span class="dlabel">필요 버전</span><span class="dval">macOS·Linux(WSL2 포함)는 <strong>v2.1.224+</strong>, 네이티브 윈도우는 <strong>v2.1.234+</strong>. 조건만 맞으면 <strong>따로 켤 필요 없이</strong> 켜져 있어요</span></div>
+    <div class="drow"><span class="dlabel">@ 멘션 <span class="bnew">v5.0</span></span><span class="dval">프롬프트에 <strong>@</strong>를 치면 다른 세션을 이름으로 멘션할 수 있어요</span></div>
+  </div>
+  <div class="cmd"><span class="pr">&gt;</span><span class="co">@다른세션이름 이 API 시그니처 바꿨어, 참고해</span><button class="cpb" data-cmd="@" onclick="cp(this)">복사</button></div>
+  <div class="dv"></div>
+  <div class="detail">
+    <div class="dtitle">에이전트 팀 (실험 기능)</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">여러 클로드가 <strong>팀으로</strong> 일해요. 한 세션이 팀 리드가 돼서 일을 나눠주고 결과를 종합해요. 팀메이트끼리 직접 대화도 하고, 내가 특정 팀메이트에게 직접 말을 걸 수도 있어요</span></div>
+    <div class="drow"><span class="dlabel">켜는 법</span><span class="dval">기본 <strong>비활성</strong>. settings.json이나 환경변수에 <code>CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1</code>을 넣어야 해요</span></div>
+    <div class="drow"><span class="dlabel">먼저 검토</span><span class="dval">더 가벼운 선택지가 있어요 — <strong>서브에이전트</strong>(한 세션 안에서) 또는 <strong>세션 간 메시지</strong>(내가 직접 띄운 세션끼리). 이걸로 되면 팀은 과해요</span></div>
+    <div class="drow"><span class="dlabel">한계</span><span class="dval">세션 재개·작업 조율·종료 동작에 알려진 제약이 있어요</span></div>
+  </div>
+  <div class="tip">세션 간 메시지는 켜져 있고, 에이전트 팀은 꺼져 있어요. 대부분은 세션 간 메시지로 충분해요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tb">코드리뷰</span><span class="ct">/code-review · Ultrareview — 클라우드 버그 사냥 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">/code-review — 로컬 리뷰</div>
+    <div class="drow"><span class="dlabel">기능</span><span class="dval">현재 변경분·PR·브랜치를 리뷰해서 <strong>정확성 버그</strong>와 정리 가능한 지점을 찾아줘요</span></div>
+    <div class="drow"><span class="dlabel">레벨</span><span class="dval">low·medium(확신 높은 것만 소수) → high·max(범위 넓게, 불확실한 것 포함)</span></div>
+    <div class="drow"><span class="dlabel">백그라운드 <span class="bnew">v5.0</span></span><span class="dval">서브에이전트로 <strong>백그라운드에서</strong> 돌아서 리뷰 중에도 계속 일할 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">옵션</span><span class="dval"><code>--comment</code> PR에 인라인 코멘트로 게시 · <code>--fix</code> 발견된 것을 바로 적용</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">code-review</span><button class="cpb" data-cmd="/code-review" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">code-review high --fix</span><button class="cpb" data-cmd="/code-review high --fix" onclick="cp(this)">복사</button></div>
+  <div class="dv"></div>
+  <div class="detail">
+    <div class="dtitle">Ultrareview — 클라우드 정밀 리뷰</div>
+    <div class="drow"><span class="dlabel">명령어</span><span class="dval">정식 명령은 <code>/code-review ultra</code>. 계정에 기능이 열려 있으면 <code>/ultrareview</code>도 별칭으로 동작해요</span></div>
+    <div class="drow"><span class="dlabel">동작</span><span class="dval">원격 샌드박스에 <strong>리뷰어 에이전트 함대</strong>를 띄워서 브랜치나 PR의 버그를 찾아요</span></div>
+    <div class="drow"><span class="dlabel">로컬과 차이</span><span class="dval">보고되는 모든 발견을 <strong>독립적으로 재현·검증</strong>해요. 그래서 스타일 지적이 아니라 진짜 버그만 남아요</span></div>
+    <div class="drow"><span class="dlabel">주의</span><span class="dval">리서치 프리뷰 · <strong>사용자가 직접 실행</strong>해야 하고 별도 과금돼요. git 저장소 필요</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">code-review ultra</span><button class="cpb" data-cmd="/code-review ultra" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude ultrareview  ← CI·스크립트에서</span><button class="cpb" data-cmd="claude ultrareview" onclick="cp(this)">복사</button></div>
+  <div class="tip">머지 전 마지막 관문으로 쓰면 좋아요. 검증을 거친 결과만 올라오니 노이즈가 적어요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tm">웹·세션</span><span class="ct">웹 · 세션 관리 · 제거된 기능</span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">세션 관리 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">이어하기</span><span class="dval"><code>--continue</code> 마지막 세션 즉시 이어받기 · <code>--resume</code> 목록에서 고르기 · <code>/resume</code> 세션 중 피커 열기</span></div>
+    <div class="drow"><span class="dlabel">PR로 찾기 <span class="bnew">v5.0</span></span><span class="dval"><code>--from-pr</code> 또는 <strong>/resume에 PR URL을 붙여넣으면</strong> 그 PR을 만든 세션을 찾아줘요</span></div>
+    <div class="drow"><span class="dlabel">이름 붙이기</span><span class="dval"><code>/rename</code>으로 세션에 이름을 주면 나중에 찾기 쉬워요. <code>-n</code> / <code>--name</code>으로 시작할 때 지정도 가능</span></div>
+    <div class="drow"><span class="dlabel">분기</span><span class="dval"><code>/branch</code>로 대화를 갈라서 다른 접근을 시도 (<code>/fork</code>는 별칭)</span></div>
+    <div class="drow"><span class="dlabel">백그라운드 <span class="bnew">v5.0</span></span><span class="dval">백그라운드 세션도 <code>/resume</code> 목록에 뜨고, 고정(pin)해두면 계속 살아 있어요</span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">Claude Code on the web</div>
+    <div class="drow"><span class="dlabel">주소</span><span class="dval">claude.ai/code — 브라우저에서 클라우드 세션 실행. 세션 사이드바 + 드래그앤드롭 레이아웃으로 개편됐어요</span></div>
+    <div class="drow"><span class="dlabel">PR 자동수정</span><span class="dval">웹에서 PR auto-fix를 켤 수 있고, 터미널에서는 <code>/autofix-pr</code>로 켜요</span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">⚠️ 제거된 기능 — Ultraplan</div>
+    <div class="drow"><span class="dlabel">상태</span><span class="dval"><strong>Ultraplan 리서치 프리뷰는 제거됐어요.</strong> <code>/ultraplan</code> 명령어, <code>ultraplan</code> 키워드 트리거, 계획 승인창의 관련 옵션이 모두 사라졌어요</span></div>
+    <div class="drow"><span class="dlabel">대체</span><span class="dval">로컬 계획은 <strong>Plan 모드</strong>, 클라우드 세션은 <strong>Claude Code on the web</strong>을 쓰세요</span></div>
+  </div>
+  <div class="tip">리서치 프리뷰 기능은 언제든 바뀌거나 사라질 수 있어요. 중요한 워크플로를 프리뷰 기능 위에 얹지 마세요!</div>
+</div>
+</div>
+
+</div><!-- /s15 -->
+
+<div class="section" id="s16">
+<div class="sh c1"><span class="ic">🖥️</span><div><h2>데스크톱 &amp; 모바일</h2><p>데스크톱 앱 · 폰에서 쓰기 · Remote Control · Chrome · 음성</p></div></div>
+
+<div class="card open">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">데스크톱</span><span class="ct">Claude Code Desktop — 앱으로 쓰기 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">데스크톱 앱 구성</div>
+    <div class="drow"><span class="dlabel">3개 탭</span><span class="dval"><strong>Chat</strong>(대화) · <strong>Cowork</strong>(Dispatch·긴 자율 작업) · <strong>Code</strong>(개발 작업)</span></div>
+    <div class="drow"><span class="dlabel">설치</span><span class="dval">macOS(인텔·애플실리콘 통합 빌드) · 윈도우(x64) · <strong>리눅스</strong>(우분투·데비안 apt 또는 .deb) <span class="bnew">v5.0</span></span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">주요 기능 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">병렬 세션</span><span class="dval">여러 세션을 <strong>Git으로 격리</strong>해서 동시에 굴려요. 서로 파일을 안 건드려요</span></div>
+    <div class="drow"><span class="dlabel">내장 브라우저</span><span class="dval">앱 안에 브라우저가 있어서 클로드가 <strong>문서·디자인·사이트를 직접 열고 조작</strong>해요. 로컬 개발 서버 미리보기도 같은 방식</span></div>
+    <div class="drow"><span class="dlabel">iOS 시뮬레이터</span><span class="dval">시뮬레이터 창을 열어서 <strong>클로드가 앱을 실행하고 직접 탭하며</strong> 확인해요 (퍼블릭 베타)</span></div>
+    <div class="drow"><span class="dlabel">화면 구성</span><span class="dval">드래그앤드롭 페인 배치 · 통합 터미널 · 파일 에디터 · 사이드 챗 · 시각적 diff 리뷰 · PR 모니터링</span></div>
+    <div class="drow"><span class="dlabel">한도 자동 재개</span><span class="dval">사용 한도에 걸리면 한도 카드의 <strong>"Auto-continue when limits reset"</strong>을 체크해두면 한도가 풀릴 때 중단된 턴을 <strong>알아서 다시 시도</strong>해요</span></div>
+    <div class="drow"><span class="dlabel">예약 작업</span><span class="dval">데스크톱에서 작업을 예약해두고 정해진 시각에 실행시킬 수 있어요</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">desktop</span><button class="cpb" data-cmd="/desktop" onclick="cp(this)">복사</button></div>
+  <div class="tip">터미널이 익숙하지 않다면 데스크톱 앱이 훨씬 편해요. diff를 눈으로 보면서 승인할 수 있어요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">모바일</span><span class="ct">폰에서 쓰기 — 3가지 경로 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">먼저 알아둘 것</div>
+    <div class="drow"><span class="dlabel">전용 앱 없음</span><span class="dval">Claude Code 전용 모바일 앱은 <strong>없어요.</strong> iOS·안드로이드용 <strong>Claude 앱의 Code 탭</strong>에서 씁니다 (아이패드는 같은 iOS 앱)</span></div>
+    <div class="drow"><span class="dlabel">역할</span><span class="dval">폰은 <strong>코드가 도는 곳이 아니라 조종석</strong>이에요. 시작·모니터링·방향 지시를 해요</span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">폰에서 닿는 3가지</div>
+    <div class="drow"><span class="dlabel">① 클라우드 세션</span><span class="dval">앱에서 바로 클라우드 세션을 띄우고 진행 상황을 봐요</span></div>
+    <div class="drow"><span class="dlabel">② Remote Control</span><span class="dval"><strong>내 컴퓨터에서 도는 세션</strong>에 폰으로 접속해서 이어서 지시해요</span></div>
+    <div class="drow"><span class="dlabel">③ Dispatch</span><span class="dval">데스크톱 앱에 작업을 <strong>메시지로 던져두면</strong> 데스크톱이 처리해요</span></div>
+    <div class="drow"><span class="dlabel">기기 카드 <span class="bnew">v5.0</span></span><span class="dval"><code>claude remote-control</code>이 도는 컴퓨터는 폰의 Code 탭에 <strong>기기 카드</strong>로 떠요. 카드를 눌러 그 컴퓨터에서 세션을 시작할 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">푸시 알림</span><span class="dval">긴 작업이 끝나거나 클로드가 나를 찾을 때 <strong>폰으로 알림</strong>이 와요</span></div>
+  </div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude remote-control</span><button class="cpb" data-cmd="claude remote-control" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">remote-control</span><button class="cpb" data-cmd="/remote-control" onclick="cp(this)">복사</button></div>
+  <div class="tip">긴 작업을 돌려놓고 나갔다가, 폰에서 알림 받고 확인하는 흐름이 제일 실용적이에요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">Chrome·컴퓨터</span><span class="ct">Claude in Chrome · Computer Use — 화면을 직접 조작 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Claude in Chrome</div>
+    <div class="drow"><span class="dlabel">상태</span><span class="dval"><strong>정식 출시</strong> — 앤트로픽 직접 결제 플랜 전체에서 사용 가능해요</span></div>
+    <div class="drow"><span class="dlabel">기능</span><span class="dval">내 크롬 세션 안에서 페이지를 열고 <strong>클릭·입력·스크린샷·콘솔 로그 확인</strong>을 해요. 로그인 상태를 그대로 쓰니 인증된 페이지도 다뤄요</span></div>
+    <div class="drow"><span class="dlabel">권한</span><span class="dval">사이트별 권한을 <strong>확장 프로그램에서 먼저 허용</strong>해야 동작해요</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">chrome</span><button class="cpb" data-cmd="/chrome" onclick="cp(this)">복사</button></div>
+  <div class="dv"></div>
+  <div class="detail">
+    <div class="dtitle">Computer Use — 네이티브 앱 조작</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">터미널에서 <strong>네이티브 앱을 열고 UI를 클릭</strong>하며 변경사항을 확인해요. GUI로만 검증되는 것을 끝까지 마무리할 때 유용해요</span></div>
+    <div class="drow"><span class="dlabel">상태</span><span class="dval">리서치 프리뷰. CLI와 데스크톱 앱 양쪽에서 사용 가능</span></div>
+  </div>
+  <div class="dv"></div>
+  <div class="detail">
+    <div class="dtitle">음성 입력 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">기능</span><span class="dval">말로 프롬프트를 입력해요. <strong>Space 키를 누르고 있는 동안</strong> 녹음되는 push-to-talk 방식</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">voice</span><button class="cpb" data-cmd="/voice" onclick="cp(this)">복사</button></div>
+  <div class="tip">긴 설명을 타이핑하기 귀찮을 때 음성이 편해요. 코드 이름은 오인식될 수 있으니 확인하세요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tb">샌드박스</span><span class="ct">샌드박스 — 물어보지 않고도 안전하게 실행 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Bash 샌드박스란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">명령마다 승인받는 대신, <strong>어떤 파일과 어떤 도메인에 닿을 수 있는지 경계를 미리 정해두면</strong> 운영체제가 그 경계를 강제해요. 모든 Bash 명령과 그 자식 프로세스에 적용돼요</span></div>
+    <div class="drow"><span class="dlabel">지원 환경</span><span class="dval">macOS · Linux · WSL2. <strong>네이티브 윈도우는 미지원</strong> — 윈도우에서는 WSL2 안에서 실행하세요</span></div>
+    <div class="drow"><span class="dlabel">내장</span><span class="dval">Claude Code에 <strong>기본 내장</strong>돼 있어 따로 설치할 게 없어요</span></div>
+    <div class="drow"><span class="dlabel">더 강한 격리</span><span class="dval">dev container·커스텀 컨테이너·가상머신 같은 선택지는 별도 문서(Sandbox environments) 참고</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">sandbox</span><button class="cpb" data-cmd="/sandbox" onclick="cp(this)">복사</button></div>
+  <div class="tip">샌드박스는 <strong>Bash 전용</strong>이에요. 다른 도구의 권한 질문을 줄이려면 권한 모드(auto)를 쓰세요!</div>
+</div>
+</div>
+
+</div><!-- /s16 -->
+
+
 
 <div class="footer">
-  📚 클로드 코드 완전 바이블 v4.0<br>
+  📚 클로드 코드 완전 바이블 v5.0<br>
+  <span style="font-size:.65rem;opacity:.75">기준 Claude Code v2.1.252 · 2026년 9월 1일 개정</span><br>
   모르는 게 있으면 언제든 클로드한테 물어보세요!<br>
   <br>
   <span style="color:#2a2a4a">핸드폰 브라우저에서 열기 → 홈화면에 추가 → 앱처럼 사용 📱</span>
