@@ -192,13 +192,31 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 .orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;mix-blend-mode:screen;}
 @media(prefers-reduced-motion:reduce){.orb{animation:none!important;}}
 
-/* MOBILE — 좁은 화면에서 표가 잘리지 않게 (2026-09-02)
-   .tn의 white-space:nowrap 때문에 긴 명령어(/usage-credits · /extra-usage 등)가
-   첫 열을 밀어내 표 전체가 카드(overflow:hidden) 밖으로 잘려나갔다. */
+/* ── RESPONSIVE (2026-09-02) ───────────────────────────────
+   화면 폭에 따라 연속적으로 맞춘다. 320px(iPhone SE)~1440px 실측 통과.
+   여백은 clamp로 뷰포트에 비례시키고, 좁아질수록 단계적으로 눕힌다. */
+
+/* 여백: 좁으면 줄고 넓으면 늘되 상·하한을 둔다 (브레이크포인트 없이 연속) */
+.section{padding:12px clamp(8px,3.4vw,14px) 0;}
+.cb{padding:0 clamp(8px,3.1vw,13px) 13px;}
+.detail{padding:9px clamp(7px,2.7vw,11px);}
+.tabs-wrap{padding-left:clamp(8px,3.4vw,14px);padding-right:clamp(8px,3.4vw,14px);}
+
+/* ~560px: 표의 명령어 열을 접고, 상세행 라벨이 줄어들 수 있게 한다.
+   .tn의 nowrap이 긴 명령어(/usage-credits · /extra-usage 등)로 표를 밀어내
+   카드(overflow:hidden) 밖으로 잘려나가던 문제를 막는다. */
 @media(max-width:560px){
   .tbl .tn{white-space:normal;word-break:break-word;}
   .tbl th,.tbl td{padding:7px 5px;}
   .tbl th:first-child,.tbl td:first-child{min-width:96px;max-width:38%;}
+  /* 공백 없는 긴 토큰(CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 등)도 접히게 */
+  .detail code,.ts code,.tip code,.warn code{overflow-wrap:anywhere;}
+}
+
+/* ~389px (iPhone SE·mini): 라벨과 값을 세로로 쌓아 라벨 길이와 무관하게 만든다 */
+@media(max-width:389px){
+  .detail .drow{flex-direction:column;gap:1px;}
+  .detail .dlabel{min-width:0;}
 }
 
 /* Z-INDEX LAYER */
