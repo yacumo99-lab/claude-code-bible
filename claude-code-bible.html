@@ -284,18 +284,20 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </div>
 
 <div class="card open">
-<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">사전준비</span><span class="ct">Node.js 설치 확인 (필수!)</span></div><span class="ca">▼</span></div>
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">사전준비</span><span class="ct">Node.js는 이제 필수가 아니에요 <span class="bnew">UPD</span></span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
-    <div class="dtitle">왜 Node.js가 필요한가?</div>
-    <div class="drow"><span class="dlabel">이유</span><span class="dval">클로드 코드 자체가 Node.js 기반으로 만들어진 프로그램이에요. Node.js가 없으면 설치 자체가 안 돼요.</span></div>
-    <div class="drow"><span class="dlabel">버전</span><span class="dval">Node.js 18 이상이 필요해요. 낮은 버전이면 오류가 나요.</span></div>
+    <div class="dtitle">달라진 점 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">예전</span><span class="dval">클로드 코드가 Node.js 기반이라 <strong>Node.js 18 이상이 반드시</strong> 있어야 했어요</span></div>
+    <div class="drow"><span class="dlabel">지금</span><span class="dval">2026년 4월부터 <strong>네이티브 바이너리</strong>로 바뀌어서, 네이티브 설치(<code>install.sh</code>·brew)를 쓰면 <strong>Node.js 없이도 돌아가요</strong></span></div>
+    <div class="drow"><span class="dlabel">언제 필요한가</span><span class="dval">① <strong>npm으로 설치</strong>할 때 (Node.js 18+) ② MCP 서버 상당수가 <code>npx</code>로 실행돼요 — 예: <code>npx @modelcontextprotocol/server-filesystem</code></span></div>
+    <div class="drow"><span class="dlabel">윈도우 <span class="bnew">v5.0</span></span><span class="dval"><strong>Git for Windows(Git Bash)도 더 이상 필요 없어요.</strong> Bash가 없으면 PowerShell을 셸 도구로 써요</span></div>
   </div>
-  <div class="lbl">현재 버전 확인</div>
+  <div class="lbl">Node.js가 있는지 확인 (npm 설치·MCP를 쓸 거면)</div>
   <div class="cmd"><span class="pr">$</span><span class="co">node --version</span><button class="cpb" data-cmd="node --version" onclick="cp(this)">복사</button></div>
-  <div class="desc">v20.0.0 처럼 나오면 정상. v18 미만이면 nodejs.org에서 새 버전 설치</div>
+  <div class="desc">v20.0.0 처럼 나오면 정상. v18 미만이거나 명령어가 없으면 nodejs.org에서 설치</div>
   <div class="cmd"><span class="pr">$</span><span class="co">npm --version</span><button class="cpb" data-cmd="npm --version" onclick="cp(this)">복사</button></div>
-  <div class="tip">Node.js 설치하면 npm은 자동으로 같이 설치돼요!</div>
+  <div class="tip">처음 설치라면 <strong>네이티브 설치</strong>가 제일 간단해요 — 아래 설치 카드의 ①번을 보세요. Node.js를 따로 안 깔아도 돼요!</div>
 </div>
 </div>
 
@@ -303,14 +305,23 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">설치</span><span class="ct">클로드 코드 설치 · 업데이트 · 제거</span></div><span class="ca">▼</span></div>
 <div class="cb">
   <div class="detail">
-    <div class="dtitle">npm install -g 란?</div>
-    <div class="drow"><span class="dlabel">-g</span><span class="dval">global(전역)의 줄임말. 내 컴퓨터 어디서나 claude 명령어를 쓸 수 있게 설치해줘요.</span></div>
-    <div class="drow"><span class="dlabel">@</span><span class="dval">@anthropic-ai/claude-code 는 패키지 이름이에요. npm 저장소에서 자동으로 내려받아요.</span></div>
+    <div class="dtitle">설치 방법이 늘었어요 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">네이티브 설치</span><span class="dval"><strong>지금은 이게 기본</strong>이에요. Node.js 없이도 돌아가는 단일 실행파일로 설치돼요 (2026년 4월 네이티브 바이너리 전환)</span></div>
+    <div class="drow"><span class="dlabel">npm 설치</span><span class="dval">기존 방식도 그대로 동작해요. Node.js 18 이상 필요</span></div>
+    <div class="drow"><span class="dlabel">Homebrew</span><span class="dval">맥 사용자는 brew로도 설치 가능. 단 <strong>brew 설치본은 자동 업데이트가 안 돼요</strong></span></div>
+    <div class="drow"><span class="dlabel">윈도우 <span class="bnew">v5.0</span></span><span class="dval"><strong>Git for Windows(Git Bash)가 더 이상 필요 없어요.</strong> Bash가 없으면 PowerShell을 셸 도구로 써요</span></div>
   </div>
-  <div class="lbl">처음 설치 (최초 1회)</div>
+  <div class="lbl">처음 설치 ① 네이티브 — macOS · Linux (권장)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">curl -fsSL https://claude.ai/install.sh | bash</span><button class="cpb" data-cmd="curl -fsSL https://claude.ai/install.sh | bash" onclick="cp(this)">복사</button></div>
+  <div class="lbl">처음 설치 ② 네이티브 — 윈도우</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">curl -fsSL https://claude.ai/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</span><button class="cpb" data-cmd="curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd" onclick="cp(this)">복사</button></div>
+  <div class="lbl">처음 설치 ③ Homebrew (macOS)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">brew install --cask claude-code</span><button class="cpb" data-cmd="brew install --cask claude-code" onclick="cp(this)">복사</button></div>
+  <div class="lbl">처음 설치 ④ npm (Node.js 18+)</div>
   <div class="cmd"><span class="pr">$</span><span class="co">npm install -g @anthropic-ai/claude-code</span><button class="cpb" data-cmd="npm install -g @anthropic-ai/claude-code" onclick="cp(this)">복사</button></div>
-  <div class="lbl">최신 버전으로 업데이트</div>
-  <div class="cmd"><span class="pr">$</span><span class="co">npm update -g @anthropic-ai/claude-code</span><button class="cpb" data-cmd="npm update -g @anthropic-ai/claude-code" onclick="cp(this)">복사</button></div>
+  <div class="lbl">최신 버전으로 업데이트 (설치 방식 무관)</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude update</span><button class="cpb" data-cmd="claude update" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">npm update -g @anthropic-ai/claude-code  ← npm으로 설치했다면</span><button class="cpb" data-cmd="npm update -g @anthropic-ai/claude-code" onclick="cp(this)">복사</button></div>
   <div class="desc">새 기능이 추가되거나 버그가 고쳐지면 업데이트하면 돼요.</div>
   <div class="lbl">설치된 버전 확인</div>
   <div class="cmd"><span class="pr">$</span><span class="co">claude --version</span><button class="cpb" data-cmd="claude --version" onclick="cp(this)">복사</button></div>
@@ -463,7 +474,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <div class="card">
 <div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">PR리뷰</span><span class="ct">/review — PR 코드 품질 리뷰 <span style="color:var(--a1);font-size:.65rem;">DEPRECATED</span></span></div><span class="ca">▼</span></div>
 <div class="cb">
-  <div class="warn">/review는 deprecated 되었습니다. <strong>code-review 플러그인</strong>으로 대체되었어요. <code>claude plugin install code-review</code>로 설치 후 사용하세요.</div>
+  <div class="warn">/review는 deprecated 되었습니다. <strong><code>/code-review</code></strong>로 대체됐어요 — <strong>번들 스킬이라 따로 설치할 필요 없이</strong> 바로 쓸 수 있어요. 클라우드 정밀 리뷰는 <code>/code-review ultra</code>. <span class="bnew">UPD</span></div>
   <div class="detail">
     <div class="dtitle">/review 기능 (레거시)</div>
     <div class="drow"><span class="dlabel">기능</span><span class="dval">GitHub PR의 코드 품질·정확성·보안·테스트 커버리지를 분석해 리뷰. PR 번호를 넘기거나 생략 시 열린 PR 목록을 표시.</span></div>
@@ -735,7 +746,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/effort [level]</span></td>
-  <td><span class="td">Effort Level 직접 조정 <span class="bnew">v4.0</span></span><div class="ts">low / medium / high / max / auto 중 선택. max는 Opus 4.6 전용. auto는 기본값 복원.</div><div class="tex">/effort high</div></td>
+  <td><span class="td">Effort Level 직접 조정 <span class="bnew">UPD</span></span><div class="ts">low / medium / high / <strong>xhigh</strong> / max 중 선택. <strong>기본값은 high</strong>예요. Fable 5 · Opus 5 · Sonnet 5 · Opus 4.8 · 4.7이 지원하고, 미지원 모델에 걸면 조용히 한 단계 아래로 내려가요. 모델별로 따로 기억돼요.</div><div class="tex">/effort xhigh</div></td>
 </tr>
 <tr>
   <td><span class="tn">/context</span></td>
@@ -747,9 +758,9 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 </tr>
 <tr>
   <td><span class="tn">/output-style [style]</span></td>
-  <td><span class="td">출력 스타일 변경 <span style="color:var(--a1);font-size:.65rem;">DEPRECATED</span></span>
-    <div class="ts"><strong>Default</strong>: 일반 모드 | <strong>Explanatory</strong>: 구현 결정 이유·패턴 교육적 설명 추가 | <strong>Learning</strong>: 중간중간 직접 코드 작성 과제 출제 (학습용)</div>
-    <div class="tex">/output-style explanatory</div></td>
+  <td><span class="td">출력 스타일 변경 <span style="color:var(--a1);font-size:.65rem;">제거됨</span> <span class="bnew">UPD</span></span>
+    <div class="ts"><strong>⚠️ 이 명령어는 더 이상 없어요</strong> — v2.1.73에 deprecated, <strong>v2.1.91에서 완전히 제거</strong>됐어요. 대신 <code>/config</code>를 쓰거나 설정 파일의 <code>outputStyle</code> 값을 직접 고치세요.<br>스타일 종류 — <strong>Default</strong>: 일반 | <strong>Explanatory</strong>: 구현 이유·패턴을 교육적으로 설명 | <strong>Learning</strong>: 직접 코드 작성 과제 출제 | <strong>Concise</strong> <span class="bnew">v5.0</span>: 서론 없이 결과부터</div>
+    <div class="tex">/config</div></td>
 </tr>
 <tr>
   <td><span class="tn">/compact [지시어]</span></td>
@@ -1267,7 +1278,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
   <div class="fd">
     <div class="desc">사용할 <strong>AI 모델을 지정</strong>해요</div>
     <div class="why">언제: 특별히 강력한 Opus나 빠른 Haiku를 쓰고 싶을 때</div>
-    <div class="ex">claude --model claude-opus-4-6</div>
+    <div class="ex">claude --model claude-opus-5</div>
     <div class="ex">claude -m claude-haiku-4-5</div>
   </div>
 </div>
@@ -1402,7 +1413,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
   <div class="fd">
     <div class="desc">기본 모델 과부하 시 대체 모델 지정</div>
     <div class="why">Opus가 바쁠 때 Sonnet으로 자동 전환</div>
-    <div class="ex">claude --fallback-model claude-sonnet-4-6</div>
+    <div class="ex">claude --fallback-model claude-sonnet-5</div>
   </div>
 </div>
 
@@ -1549,17 +1560,17 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
 <div class="cb">
 
 <div class="fi">
-  <div class="fn">--allowed-tools "패턴" <span class="bnew">UPD</span></div>
+  <div class="fn">--allowed-tools &nbsp;/&nbsp; --allowedTools "패턴"</div>
   <div class="fd">
     <div class="desc">허가 요청 없이 자동 실행 허용할 도구 지정</div>
     <div class="why">특정 git 명령 등 자주 쓰는 안전한 도구를 매번 승인 없이 실행할 때</div>
     <div class="ex">claude --allowed-tools "Bash(git log *)" "Bash(git diff *)" "Read"</div>
-    <div class="why">표기 주의: 공식 표기는 하이픈 형태 <code>--allowed-tools</code>예요 (구 <code>--allowedTools</code>에서 변경)</div>
+    <div class="why">표기: <code>--allowed-tools</code>와 <code>--allowedTools</code> <strong>둘 다 받아줘요</strong> (문서는 하이픈 표기를 씁니다). 쉼표나 공백으로 여러 개 나열</div>
   </div>
 </div>
 
 <div class="fi">
-  <div class="fn">--disallowed-tools "패턴" <span class="bnew">UPD</span></div>
+  <div class="fn">--disallowed-tools &nbsp;/&nbsp; --disallowedTools "패턴"</div>
   <div class="fd">
     <div class="desc">특정 도구를 컨텍스트에서 완전히 제거 (사용 불가)</div>
     <div class="why">파일 수정을 막고 읽기 전용으로 실행할 때</div>
@@ -1711,7 +1722,7 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
   <div class="lbl">파일 분석 후 결과만 출력하고 종료</div>
   <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">-p</span> <span class="va">"버그 찾아줘"</span> main.py</span><button class="cpb" data-cmd="claude -p &quot;버그 찾아줘&quot; main.py" onclick="cp(this)">복사</button></div>
   <div class="lbl">Opus 모델로 대화형 시작</div>
-  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--model</span> <span class="va">claude-opus-4-6</span></span><button class="cpb" data-cmd="claude --model claude-opus-4-6" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--model</span> <span class="va">claude-opus-5</span></span><button class="cpb" data-cmd="claude --model claude-opus-5" onclick="cp(this)">복사</button></div>
   <div class="lbl">자동승인 + 비대화형 + 최대 3회</div>
   <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">-p</span> <span class="va">"테스트 작성해줘"</span> <span class="op">--auto-approve --max-turns</span> <span class="va">3</span></span><button class="cpb" data-cmd="claude -p &quot;테스트 작성해줘&quot; --auto-approve --max-turns 3" onclick="cp(this)">복사</button></div>
   <div class="lbl">역할 지정 + 대화형</div>
@@ -1920,6 +1931,52 @@ mark{background:rgba(255,190,11,.3);border-radius:2px;color:inherit;}
   </div>
 </div>
 
+
+<div class="fi">
+  <div class="fn">--autocompact &lt;auto|토큰수&gt;</div>
+  <div class="fd">
+    <div class="desc">컨텍스트 <strong>자동 압축이 시작되는 시점</strong>을 조절 (auto 또는 100k~1M 토큰)</div>
+    <div class="why">언제: 긴 세션에서 압축이 너무 자주 또는 너무 늦게 일어날 때</div>
+    <div class="ex">claude --autocompact 500k</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--bg &nbsp;(--background 축약)</div>
+  <div class="fd">
+    <div class="desc">백그라운드로 시작하고 <strong>짧은 id를 출력</strong>한 뒤 즉시 종료</div>
+    <div class="why">언제: <code>claude attach</code>·<code>logs</code>·<code>stop</code>·<code>rm</code>으로 나중에 다룰 작업</div>
+    <div class="ex">claude --bg -p "리팩토링해줘"</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--allow-dangerously-skip-permissions</div>
+  <div class="fd">
+    <div class="desc">권한 우회를 <strong>선택지로만 열어두기</strong> — 기본 활성은 아님</div>
+    <div class="why">언제: 인터넷이 차단된 샌드박스에서만 권장. <code>--dangerously-skip-permissions</code>(전부 통과)와 다르니 혼동 주의</div>
+    <div class="ex">claude --allow-dangerously-skip-permissions</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--debug-file &lt;경로&gt;</div>
+  <div class="fd">
+    <div class="desc">디버그 로그를 <strong>지정한 파일</strong>에 기록</div>
+    <div class="why">언제: 문제 상황을 파일로 남겨 나중에 분석하거나 공유할 때</div>
+    <div class="ex">claude -d --debug-file ./debug.log</div>
+  </div>
+</div>
+
+<div class="fi">
+  <div class="fn">--file &lt;스펙...&gt;</div>
+  <div class="fd">
+    <div class="desc">시작할 때 <strong>파일 리소스를 미리 받아두기</strong></div>
+    <div class="why">언제: 세션 시작 시점에 필요한 자료를 미리 붙여둘 때</div>
+    <div class="ex">claude --file ./spec.md</div>
+  </div>
+</div>
+
 <div class="tip">플래그가 많지만 실제로 자주 쓰는 건 <strong>-w(워크트리) · --safe-mode(문제 진단) · --background(던져두기)</strong> 셋이에요!</div>
 </div>
 </div>
@@ -2072,6 +2129,53 @@ logs/      - 거래 로그
 </div>
 </div>
 
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tp">자동메모리</span><span class="ct">Auto Memory — 클로드가 스스로 기억하기 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">Auto Memory란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">내가 아무것도 안 써도 <strong>클로드가 세션을 넘나들며 지식을 쌓아요.</strong> 일하면서 스스로 메모를 남기고, 다음 세션에서 그 메모를 불러와요</span></div>
+    <div class="drow"><span class="dlabel">저장 위치</span><span class="dval">프로젝트별 메모리 폴더에 <strong>한 파일에 사실 하나씩</strong> 저장되고, <code>MEMORY.md</code>가 목차 역할을 해요</span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">기록하는 4가지 종류 (frontmatter의 type 필드)</div>
+    <div class="drow"><span class="dlabel">user</span><span class="dval">내가 누구인지 — 역할·전문 분야·일하는 방식 선호</span></div>
+    <div class="drow"><span class="dlabel">feedback</span><span class="dval">내가 준 지적과, 내가 좋다고 확인해준 접근법</span></div>
+    <div class="drow"><span class="dlabel">project</span><span class="dval">진행 중인 작업·마감·결정 — <strong>코드나 git 기록만 봐서는 알 수 없는</strong> 것들</span></div>
+    <div class="drow"><span class="dlabel">reference</span><span class="dval">프로젝트 밖 정보의 위치 — 이슈 트래커·대시보드 링크 등</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">memories  ← 저장된 메모리 확인</span><button class="cpb" data-cmd="/memories" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">pause-memory  ← 자동 기록 잠시 멈추기</span><button class="cpb" data-cmd="/pause-memory" onclick="cp(this)">복사</button></div>
+  <div class="tip">CLAUDE.md는 <strong>내가 쓰는 지시문</strong>, Auto Memory는 <strong>클로드가 스스로 남기는 메모</strong>예요. 둘은 별개로 돌아가요!</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">rules</span><span class="ct">.claude/rules/ — 지시문을 주제별로 쪼개기 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">왜 쪼개나요?</div>
+    <div class="drow"><span class="dlabel">문제</span><span class="dval">CLAUDE.md 하나가 길어지면 관리도 어렵고 컨텍스트도 잡아먹어요</span></div>
+    <div class="drow"><span class="dlabel">해법</span><span class="dval"><code>.claude/rules/</code> 폴더에 <strong>주제당 파일 하나씩</strong> 두면 돼요 — <code>testing.md</code>, <code>api-design.md</code> 처럼. 하위 폴더(<code>frontend/</code>·<code>backend/</code>)도 재귀적으로 다 읽어요</span></div>
+    <div class="drow"><span class="dlabel">경로별 적용 <span class="bnew">v5.0</span></span><span class="dval">특정 파일 경로에만 걸리게 <strong>범위를 정할 수</strong> 있어요. 그 파일을 다룰 때만 로드되니 평소엔 컨텍스트를 안 써요</span></div>
+    <div class="drow"><span class="dlabel">스킬과 구분</span><span class="dval">rules는 <strong>매 세션 로드</strong>(또는 해당 파일 열 때). 항상 떠 있을 필요 없는 작업별 지시는 <strong>스킬</strong>이 맞아요 — 스킬은 부를 때만 로드돼요</span></div>
+  </div>
+  <div class="detail">
+    <div class="dtitle">AGENTS.md를 이미 쓰고 있다면</div>
+    <div class="drow"><span class="dlabel">주의</span><span class="dval">클로드 코드는 <strong>CLAUDE.md만 읽고 AGENTS.md는 안 읽어요.</strong> 다른 코딩 에이전트용으로 AGENTS.md가 이미 있다면, CLAUDE.md를 만들어 <strong>거기서 import</strong> 하세요. 그러면 두 도구가 같은 지시문을 보면서 중복이 안 생겨요</span></div>
+  </div>
+  <div class="fb">
+    <div class="fb-name">📄 CLAUDE.md — AGENTS.md 가져오기</div>
+    <div class="fb-code">@AGENTS.md
+
+<span class="cm"># 아래에 클로드 전용 지시를 덧붙이면 돼요</span>
+- 커밋 메시지는 한국어로</div>
+  </div>
+  <div class="tip">프로젝트가 커지면 CLAUDE.md 하나로 버티지 말고 rules로 쪼개세요. 팀에서 관리하기도 훨씬 편해요!</div>
+</div>
+</div>
+
 </div><!-- /s4 -->
 
 
@@ -2192,6 +2296,21 @@ logs/      - 거래 로그
 </div>
 </div>
 
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">MCP인증</span><span class="ct">MCP 서버 로그인 — 터미널에서 바로 인증 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">뭐가 달라졌나요?</div>
+    <div class="drow"><span class="dlabel">예전</span><span class="dval">세션 안에서 <code>/mcp</code> 메뉴를 열어 대화형으로 인증해야 했어요</span></div>
+    <div class="drow"><span class="dlabel">지금 <span class="bnew">v5.0</span></span><span class="dval">셸에서 <strong>바로 로그인</strong>할 수 있어요. 스크립트·자동화에서도 쓸 수 있게 됐어요</span></div>
+  </div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude mcp login <span class="va">서버이름</span></span><button class="cpb" data-cmd="claude mcp login 서버이름" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude mcp logout <span class="va">서버이름</span>  ← 저장된 인증정보 삭제</span><button class="cpb" data-cmd="claude mcp logout 서버이름" onclick="cp(this)">복사</button></div>
+  <div class="tip">MCP 서버가 인증을 요구하는데 자꾸 실패하면 <code>logout</code> 후 다시 <code>login</code> 해보세요!</div>
+</div>
+</div>
+
 </div><!-- /s5 -->
 
 
@@ -2258,7 +2377,7 @@ logs/      - 거래 로그
   <div class="fb-code"><span class="kw">---</span>
 <span class="st">name:</span> code-reviewer
 <span class="st">description:</span> 코드 품질과 보안 취약점 전문 리뷰어
-<span class="st">model:</span> claude-sonnet-4-6
+<span class="st">model:</span> claude-sonnet-5
 <span class="st">tools:</span> [Read, Grep, Glob]
 <span class="kw">---</span>
 
@@ -2417,6 +2536,22 @@ logs/      - 거래 로그
   <div class="tip">한국투자증권 API 키도 같은 방식으로 .env 파일에 저장하면 보안상 안전해요!</div>
 </div>
 </div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag to">장기토큰</span><span class="ct">claude setup-token — CI·자동화용 장기 토큰 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">언제 필요한가요?</div>
+    <div class="drow"><span class="dlabel">문제</span><span class="dval">GitHub Actions·cron·서버 스크립트처럼 <strong>사람이 로그인 창을 누를 수 없는 곳</strong>에서는 <code>/login</code>을 못 써요</span></div>
+    <div class="drow"><span class="dlabel">해법</span><span class="dval"><code>claude setup-token</code>으로 <strong>오래 가는 인증 토큰</strong>을 한 번 만들어두면 돼요. 별도 API 키를 사지 않고 <strong>내 구독을 그대로</strong> 쓸 수 있어요</span></div>
+    <div class="drow"><span class="dlabel">조건</span><span class="dval">Claude 구독이 있어야 해요 (Pro·Max 등)</span></div>
+  </div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude setup-token</span><button class="cpb" data-cmd="claude setup-token" onclick="cp(this)">복사</button></div>
+  <div class="warn">토큰은 <strong>비밀번호와 같아요.</strong> 코드나 공개 저장소에 절대 넣지 말고, GitHub Secrets 같은 안전한 곳에 보관하세요.</div>
+  <div class="tip">API 키(<code>sk-ant-</code>)는 종량 과금이고, setup-token은 <strong>내 구독 한도를 쓰는</strong> 방식이에요. 자동화엔 대개 이쪽이 유리해요!</div>
+</div>
+</div>
+
 </div><!-- /s7 -->
 
 
@@ -2988,6 +3123,25 @@ hooks/           ← Hook 설정
 </div>
 </div>
 </div>
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag ty">번들스킬</span><span class="ct">번들 스킬 — 설치 없이 바로 쓰는 것들 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">번들 스킬이란?</div>
+    <div class="drow"><span class="dlabel">개념</span><span class="dval">클로드 코드에 <strong>기본으로 들어 있는 스킬</strong>들이에요. 따로 설치할 필요 없이 <code>/</code> 뒤에 이름만 치면 돼요</span></div>
+    <div class="drow"><span class="dlabel">빌트인 명령어와 차이</span><span class="dval">빌트인 명령어는 <strong>정해진 로직을 그대로 실행</strong>하고, 번들 스킬은 <strong>클로드에게 자세한 지시를 주고 도구로 알아서 해내게</strong> 해요</span></div>
+    <div class="drow"><span class="dlabel">대표 예</span><span class="dval"><code>/doctor</code> · <code>/code-review</code> · <code>/batch</code> · <code>/debug</code> · <code>/loop</code> · <code>/claude-api</code> · <code>/verify</code> · <code>/workflow-authoring</code></span></div>
+    <div class="drow"><span class="dlabel">자동 발동</span><span class="dval">일부는 <strong>상황에 맞으면 클로드가 알아서</strong> 불러요. 반대로 <code>/verify</code> 같은 건 <strong>내가 부를 때만</strong> 돌아요 — 오래 걸리고 토큰을 쓰니 시점을 내가 정하라는 뜻이에요</span></div>
+    <div class="drow"><span class="dlabel">조건부</span><span class="dval">대부분 모든 세션에서 쓸 수 있지만, <code>/workflow-authoring</code>처럼 <strong>특정 기능이 켜져 있을 때만</strong> 나오는 것도 있어요</span></div>
+  </div>
+  <div class="cmd"><span class="pr">/</span><span class="co">skills  ← 지금 쓸 수 있는 스킬 목록</span><button class="cpb" data-cmd="/skills" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">skill-doctor  ← 스킬이 제대로 발동되는지 진단</span><button class="cpb" data-cmd="/skill-doctor" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">/</span><span class="co">reload-skills  ← 스킬 파일 수정 후 다시 읽기</span><button class="cpb" data-cmd="/reload-skills" onclick="cp(this)">복사</button></div>
+  <div class="tip">"이 기능 플러그인 설치해야 하나?" 싶으면 먼저 <code>/skills</code>로 확인하세요. 이미 들어 있을 수 있어요!</div>
+</div>
+</div>
+
 </div><!-- /s12 -->
 
 
@@ -3108,6 +3262,8 @@ hooks/           ← Hook 설정
 <div class="cb">
   <div class="detail">
     <div class="dtitle">Channels (리서치 프리뷰)</div>
+    <div class="drow"><span class="dlabel">제약 <span class="bnew">v5.0</span></span><span class="dval">claude.ai 로그인 또는 Console API 키로 <strong>앤트로픽 인증</strong>이 필요해요. <strong>Bedrock · Google Cloud · Microsoft Foundry에서는 못 써요.</strong> Team·Enterprise 조직은 관리자가 <strong>따로 켜줘야</strong> 해요</span></div>
+    <div class="drow"><span class="dlabel">동작 조건</span><span class="dval">이벤트는 <strong>세션이 열려 있는 동안만</strong> 도착해요. 항상 받으려면 백그라운드 프로세스나 계속 켜둔 터미널에서 돌려야 해요</span></div>
     <div class="drow"><span class="dlabel">개념</span><span class="dval">MCP 서버를 통해 외부 메신저(Telegram, Discord, iMessage)에서 실행 중인 Claude 세션에 메시지를 보내고 응답 받기.</span></div>
     <div class="drow"><span class="dlabel">양방향</span><span class="dval">Claude가 채널을 통해 사용자에게 응답을 보낼 수도 있어요.</span></div>
     <div class="drow"><span class="dlabel">권한</span><span class="dval">원격에서 도구 승인 요청을 릴레이할 수 있음.</span></div>
@@ -3394,6 +3550,37 @@ hooks/           ← Hook 설정
     <div class="drow"><span class="dlabel">대체</span><span class="dval">로컬 계획은 <strong>Plan 모드</strong>, 클라우드 세션은 <strong>Claude Code on the web</strong>을 쓰세요</span></div>
   </div>
   <div class="tip">리서치 프리뷰 기능은 언제든 바뀌거나 사라질 수 있어요. 중요한 워크플로를 프리뷰 기능 위에 얹지 마세요!</div>
+</div>
+</div>
+
+
+<div class="card">
+<div class="ch" onclick="tc(this)"><div class="chl"><span class="tag tg">백그라운드</span><span class="ct">백그라운드 세션 관리 — claude 서브커맨드 <span class="bnew">v5.0</span></span></div><span class="ca">▼</span></div>
+<div class="cb">
+  <div class="detail">
+    <div class="dtitle">터미널을 안 붙잡고 일 시키기</div>
+    <div class="drow"><span class="dlabel">시작</span><span class="dval"><code>claude --bg</code> (또는 <code>--background</code>)로 띄우면 <strong>짧은 id를 출력하고 바로 빠져나와요.</strong> 그 id로 아래 명령들을 써요</span></div>
+    <div class="drow"><span class="dlabel">목록</span><span class="dval"><code>claude agents</code>가 돌고 있는 것들을 다 보여줘요</span></div>
+  </div>
+  <div class="lbl">백그라운드 세션 다루기</div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude <span class="op">--bg</span> <span class="op">-p</span> <span class="va">"전체 테스트 고쳐줘"</span>  ← 띄우고 id 받기</span><button class="cpb" data-cmd="claude --bg -p &quot;전체 테스트 고쳐줘&quot;" onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude attach <span class="va">&lt;id&gt;</span>  ← 이 터미널에서 그 대화 열기</span><button class="cpb" data-cmd="claude attach " onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude logs <span class="va">&lt;id&gt;</span>  ← 최근 출력만 훑어보기</span><button class="cpb" data-cmd="claude logs " onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude stop <span class="va">&lt;id&gt;</span>  ← 멈추기 (대화는 보존, 나중에 attach 가능)</span><button class="cpb" data-cmd="claude stop " onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude respawn <span class="va">&lt;id&gt;</span>  ← 현재 버전으로 재시작 (--all 로 전부)</span><button class="cpb" data-cmd="claude respawn " onclick="cp(this)">복사</button></div>
+  <div class="cmd"><span class="pr">$</span><span class="co">claude rm <span class="va">&lt;id&gt;</span>  ← 삭제 (안전하면 워크트리까지 정리)</span><button class="cpb" data-cmd="claude rm " onclick="cp(this)">복사</button></div>
+  <div class="dv"></div>
+  <div class="detail">
+    <div class="dtitle">그 밖의 서브커맨드 <span class="bnew">v5.0</span></div>
+    <div class="drow"><span class="dlabel">claude auth</span><span class="dval">인증 관리</span></div>
+    <div class="drow"><span class="dlabel">claude auto-mode</span><span class="dval">auto 모드 분류기 설정을 확인하거나 초기화</span></div>
+    <div class="drow"><span class="dlabel">claude doctor</span><span class="dval">설치 상태 점검. <strong>세션 안에서 <code>/doctor</code></strong>를 쓰면 고치는 것까지 해주는 전체 점검이에요</span></div>
+    <div class="drow"><span class="dlabel">claude import</span><span class="dval">다른 AI 코딩 에이전트의 설정을 <strong>가져오기</strong></span></div>
+    <div class="drow"><span class="dlabel">claude install</span><span class="dval">네이티브 빌드 설치. 버전 지정 가능 (<code>stable</code>·<code>latest</code>·특정 버전)</span></div>
+    <div class="drow"><span class="dlabel">claude project</span><span class="dval">프로젝트 상태 관리 (<code>purge</code>로 로컬 상태 정리)</span></div>
+    <div class="drow"><span class="dlabel">claude update</span><span class="dval">업데이트 확인 후 설치 (<code>upgrade</code>도 같은 명령)</span></div>
+  </div>
+  <div class="tip"><code>claude stop</code>은 대화를 <strong>지우지 않아요</strong> — 멈춘 뒤에도 <code>claude attach</code>나 <code>--resume</code>으로 다시 열 수 있어요!</div>
 </div>
 </div>
 
